@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+* {
+  font-family: Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4.5rem; /* Height Header */
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  line-height: 1.9rem;
+  @apply bg-white dark:bg-dark-500 text-black dark:text-white;
+}
+
+pre {
+  color: #fff;
+  display: block;
+  padding: 30px;
+  border: 1px solid;
+  border-radius: 10px;
+  background-color: rgb(15 25 38);
+  margin: 10px 0;
+}
+
+.highlight {
+  color: #fff;
+  background-color: rgb(15 25 38);
+  padding: 2px;
+  border-radius: 5px;
+}
+
+/* Main Level */
+ul {
+  margin-left: 10px;
+}
+
+/* Second Level */
+ul ul {
+  margin-left: 15px;
+}
+
+/* Third Level */
+ul ul ul {
+  margin-left: 20px;
+}
