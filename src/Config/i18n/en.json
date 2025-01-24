@@ -1,5 +1,9 @@
 {
   "translations": {
+    "COLLAPSE": "Collapse",
+    "EXPAND": "Expand",
+    "DATEPICKER_MEGA_PAGE_1": "This component was created by me using only an external library ({{lib}}), I developed it in the composition pattern and I'm updating it whenever possible.",
+    "IMPLEMENTS_COMPONENT": "Implements component",
     "ON_CHANGE": "On Change",
     "NO_RESULT": "No Results",
     "DISABLED_DATES": "Disabled Dates",

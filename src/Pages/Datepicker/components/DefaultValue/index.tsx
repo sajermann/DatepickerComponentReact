@@ -9,7 +9,7 @@ import { useTranslation } from '~/Hooks/UseTranslation';
 export function DefaultValue() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DEFAULT_VALUES')} variant="h3">
+    <Section title={translate('DEFAULT_VALUES')} variant="h2">
       <ComponentBlock className="flex flex-col !items-start">
         <ContainerInput>
           <Label>{translate('DATE')}</Label>

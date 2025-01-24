@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Main } from '~/Components/Shared/Main';
+import { Section } from '~/Components/Shared/Section';
+import { TodoList } from '~/Components/Shared/TodoList';
 import { useTranslation } from '~/Hooks/UseTranslation';
+import { managerClassNames } from '~/Utils/ManagerClassNames';
 import { Composition } from './components/Composition';
 import { Controlled } from './components/Controlled';
 import { DefaultValue } from './components/DefaultValue';
@@ -15,6 +18,12 @@ export function DatepickerPage() {
 
   return (
     <Main data-content="content-main">
+      <Section title="Datepicker Mega" variant="h1">
+        <p>{`${translate('IMPLEMENTS_COMPONENT')} Datepicker Mega`}</p>
+        <p>{`${translate('DATEPICKER_MEGA_PAGE_1', { lib: '@rehookify/datepicker' })}`}</p>
+      </Section>
+
+      <TodoList />
       <OnChange />
       <DefaultValue />
       <Controlled />
@@ -23,14 +32,7 @@ export function DatepickerPage() {
       <ReadOnly />
       <Trigger />
       <Timer />
-      <p>Todos: </p>
-      <p>Criar Picker pra hora </p>
-      <p>Range de datas (talvez) </p>
-      <p>Hook Forms </p>
-      <p>Formatar, por exemplo dia 1 para 01 </p>
-      <p>Composition - Deixar os calendarios mais composition possivel</p>
-      <p>Exclude Month</p>
-      <p>Exclude Year</p>
+
       {/* <Section title={translate('DATE')} variant="h2">
 				<ComponentBlock>
 					<ContainerInput className="w-48">

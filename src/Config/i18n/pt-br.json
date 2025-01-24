@@ -1,5 +1,9 @@
 {
   "translations": {
+    "COLLAPSE": "Recolher",
+    "EXPAND": "Expandir",
+    "DATEPICKER_MEGA_PAGE_1": "Esse componente foi criado por mim utlizando apenas uma lib externa ({{lib}}), fiz ela no padrão de composição e estou atualizando ela sempre que possível.",
+    "IMPLEMENTS_COMPONENT": "Implementação do componente",
     "ON_CHANGE": "Na Mudança",
     "NO_RESULT": "Sem Resultados",
     "DISABLED_DATES": "Datas Desabilitadas",
