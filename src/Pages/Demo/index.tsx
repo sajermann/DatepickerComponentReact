@@ -1,10 +1,9 @@
-import { Button } from '~/Components/Shared/Button';
-import { ComponentBlock } from '~/Components/Shared/ComponentBlock';
+import { ComponentBlock } from '~/components/shared/ComponentBlock';
 
-import { Main } from '~/Components/Shared/Main';
-import { Section } from '~/Components/Shared/Section';
+import { Main } from '~/components/shared/Main';
+import { Section } from '~/components/shared/Section';
 
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function DemoPage() {
   const { translate } = useTranslation();

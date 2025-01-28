@@ -1,6 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { TFeedbackProps } from '~/Components/Shared/Input/Types/TFeedbackProps';
-import { showInDevelopment } from '~/Utils/ShowInDevelopment';
+import { TFeedbackProps } from '~/components/shared/Input/Types/TFeedbackProps';
+import { showInDevelopment } from '~/utils/showInDevelopment';
 
 interface IEndIcon
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

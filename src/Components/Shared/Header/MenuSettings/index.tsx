@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import { Drawer } from '~/Components/Shared/Drawer';
-import { HeaderButton } from '~/Components/Shared/Header/HeaderButton';
-import { SwitchLanguage } from '~/Components/Shared/Header/SwitchLanguage';
-import { SwitchTheme } from '~/Components/Shared/Header/SwitchTheme';
-import { Icons } from '~/Components/Shared/Icons';
-import { Main } from '~/Components/Shared/Main';
-import { Nav } from '~/Components/Shared/Nav';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { Drawer } from '~/components/shared/Drawer';
+import { HeaderButton } from '~/components/shared/Header/HeaderButton';
+import { SwitchLanguage } from '~/components/shared/Header/SwitchLanguage';
+import { SwitchTheme } from '~/components/shared/Header/SwitchTheme';
+import { Icons } from '~/components/shared/Icons';
+import { Main } from '~/components/shared/Main';
+import { Nav } from '~/components/shared/Nav';
+import { useTranslation } from '~/hooks/useTranslation';
 import { Button } from '../../Button';
 import { SwitchAccessibility } from '../SwitchAccessibility';
 

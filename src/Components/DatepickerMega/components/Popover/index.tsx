@@ -1,6 +1,6 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { managerClassNames } from '~/utils/managerClassNames';
 
 const Popover = PopoverPrimitive.Root;
 

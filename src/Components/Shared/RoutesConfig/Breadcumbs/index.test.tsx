@@ -4,8 +4,8 @@
 import { render } from '@testing-library/react';
 import * as useLocationMock from 'react-router';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
-import * as useBreadcrumbsMock from '~/Hooks/UseBreadcrumbs';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
+import * as useBreadcrumbsMock from '~/hooks/useBreadcrumbs';
 
 import Breadcrumbs from '.';
 

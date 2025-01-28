@@ -3,7 +3,7 @@ import { it, describe, expect } from 'vitest';
 
 import { useWindow } from '.';
 
-describe('Hooks/UseWindow', () => {
+describe('Hooks/useWindow', () => {
 	it(`must render data`, async () => {
 		const { result } = renderHook(() => useWindow());
 		expect(result.current.view).toEqual({ width: 1024, height: 768 });

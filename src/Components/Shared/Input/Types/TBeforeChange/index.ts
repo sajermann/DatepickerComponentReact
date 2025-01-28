@@ -1,8 +1,8 @@
 import { ChangeEvent } from 'react';
-import { TCep } from '~/Components/Shared/Input/Types/TCep';
-import { TCnpj } from '~/Components/Shared/Input/Types/TCnpj';
-import { TCpf } from '~/Components/Shared/Input/Types/TCpf';
-import { TCurrency } from '~/Components/Shared/Input/Types/TCurrency';
+import { TCep } from '~/components/shared/Input/Types/TCep';
+import { TCnpj } from '~/components/shared/Input/Types/TCnpj';
+import { TCpf } from '~/components/shared/Input/Types/TCpf';
+import { TCurrency } from '~/components/shared/Input/Types/TCurrency';
 
 export type TBeforeChange = {
   removeNumber?: boolean;

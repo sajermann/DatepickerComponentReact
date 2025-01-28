@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { showInDevelopment } from '~/Utils/ShowInDevelopment';
+import { showInDevelopment } from '~/utils/showInDevelopment';
 
 type IStartIcon = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,

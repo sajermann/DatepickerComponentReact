@@ -3,10 +3,10 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
 import { _Credits } from '.';
 
-describe('Components/Shared/RoutesConfig/Sidebar/Credits', () => {
+describe('Components/shared/RoutesConfig/Sidebar/Credits', () => {
   it(`should render component`, async () => {
     const { queryByText } = render(
       <InjectorProviders>

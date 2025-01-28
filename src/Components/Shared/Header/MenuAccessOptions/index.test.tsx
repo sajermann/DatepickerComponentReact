@@ -3,10 +3,10 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
 import { _MenuAccessOptions } from '.';
 
-describe('Components/Shared/Header/MenuAccessOptions', () => {
+describe('Components/shared/Header/MenuAccessOptions', () => {
   it(`must render`, async () => {
     const { getAllByText } = render(
       <InjectorProviders noLayout>

@@ -2,7 +2,7 @@
 /* eslint-disable react/prop-types */
 import { LabelHTMLAttributes, forwardRef } from 'react';
 import { tv } from 'tailwind-variants';
-import { removeProp } from '~/Utils/removeProp';
+import { removeProp } from '~/utils/removeProp';
 
 type TLabel = React.DetailedHTMLProps<
   LabelHTMLAttributes<HTMLLabelElement>,

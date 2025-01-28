@@ -1,7 +1,7 @@
 import JsonView from '@uiw/react-json-view';
 import { darkTheme } from '@uiw/react-json-view/dark';
 import { lightTheme } from '@uiw/react-json-view/light';
-import { useDarkModeZustand } from '~/Hooks/UseDarkMode';
+import { useDarkModeZustand } from '~/hooks/useDarkMode';
 
 interface JsonViewerProps {
   value?: object;

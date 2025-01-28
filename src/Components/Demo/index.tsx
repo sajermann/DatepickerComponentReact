@@ -1,4 +1,4 @@
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { useTranslation } from '~/hooks/useTranslation';
 import en from './i18n/en.json';
 import ptBr from './i18n/pt-br.json';
 

@@ -3,13 +3,13 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import { OtherComponents } from '.';
 
 describe('Components/Sidebar/OtherComponents', () => {
-  vi.mock('~/Hooks/UseRoutesMenu');
+  vi.mock('~/hooks/useRoutesMenu');
   it(`should render prev and next`, async () => {
     const prev = {
       name: 'Home',

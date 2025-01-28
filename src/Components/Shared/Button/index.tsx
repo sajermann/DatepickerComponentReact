@@ -1,8 +1,8 @@
 /* eslint-disable react/button-has-type */
 import { AllHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 import { tv } from 'tailwind-variants';
-import { TFeedbackProps } from '~/Components/Shared/Input/Types/TFeedbackProps';
-import { showInDevelopment } from '~/Utils/ShowInDevelopment';
+import { TFeedbackProps } from '~/components/shared/Input/Types/TFeedbackProps';
+import { showInDevelopment } from '~/utils/showInDevelopment';
 import Children from './Children';
 import EndIcon from './EndIcon';
 import FeedbackIcon from './FeedbackIcon';

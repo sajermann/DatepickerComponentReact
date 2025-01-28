@@ -1,4 +1,4 @@
-import { Icons } from '~/Components/Shared/Icons';
+import { Icons } from '~/components/shared/Icons';
 import { Main } from '../Main';
 
 export function _Credits() {

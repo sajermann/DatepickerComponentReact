@@ -1,4 +1,4 @@
-import { testIdOnlyDev } from '~/Utils/ShowInDevelopment';
+import { testIdOnlyDev } from '~/utils/showInDevelopment';
 import { _Credits } from './Credits';
 import { OtherComponents } from './OtherComponents';
 import { TableOfContents } from './TableOfContents';

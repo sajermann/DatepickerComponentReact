@@ -1,7 +1,5 @@
 import {
-  Dispatch,
   ReactNode,
-  SetStateAction,
   createContext,
   useContext,
   useEffect,
@@ -9,10 +7,10 @@ import {
   useState,
 } from 'react';
 import { useLocation } from 'react-router';
-import { useRoutesMenu } from '../UseRoutesMenu';
-import { useTranslation } from '../UseTranslation';
-import { _getBreadcrumbs } from './Utils';
+import { useRoutesMenu } from '../useRoutesMenu';
+import { useTranslation } from '../useTranslation';
 import { TBreadcrumb, TBreadcrumbsContextType } from './types';
+import { _getBreadcrumbs } from './utils';
 
 const BreadcrumbsContext = createContext<TBreadcrumbsContextType>(
   {} as TBreadcrumbsContextType,

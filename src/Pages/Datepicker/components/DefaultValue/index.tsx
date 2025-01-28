@@ -1,10 +1,10 @@
 import { CalendarIcon } from 'lucide-react';
-import * as DatepickerMega from '~/Components/DatepickerMega';
-import { ComponentBlock } from '~/Components/Shared/ComponentBlock';
-import { ContainerInput } from '~/Components/Shared/ContainerInput';
-import { Label } from '~/Components/Shared/Label';
-import { Section } from '~/Components/Shared/Section';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import * as DatepickerMega from '~/components/DatepickerMega';
+import { ComponentBlock } from '~/components/shared/ComponentBlock';
+import { ContainerInput } from '~/components/shared/ContainerInput';
+import { Label } from '~/components/shared/Label';
+import { Section } from '~/components/shared/Section';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function DefaultValue() {
   const { translate } = useTranslation();

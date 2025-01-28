@@ -2,9 +2,9 @@ import { useDatePicker } from '@rehookify/datepicker';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
-import { Button } from '~/Components/Shared/Button';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { Button } from '~/components/shared/Button';
+import { useTranslation } from '~/hooks/useTranslation';
+import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
 import {
   getMonthClassName,

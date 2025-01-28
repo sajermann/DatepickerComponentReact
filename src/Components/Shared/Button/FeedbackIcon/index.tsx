@@ -1,5 +1,5 @@
-import { Icons } from '~/Components/Shared/Icons';
-import { TFeedbackProps } from '~/Components/Shared/Input/Types/TFeedbackProps';
+import { Icons } from '~/components/shared/Icons';
+import { TFeedbackProps } from '~/components/shared/Input/Types/TFeedbackProps';
 
 interface IFeedbackIcon {
   withFeedback?: TFeedbackProps;

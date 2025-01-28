@@ -1,7 +1,7 @@
-import { Icons } from '~/Components/Shared/Icons';
-import { useDarkModeZustand } from '~/Hooks/UseDarkMode';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { Icons } from '~/components/shared/Icons';
+import { useDarkModeZustand } from '~/hooks/useDarkMode';
+import { useTranslation } from '~/hooks/useTranslation';
+import { managerClassNames } from '~/utils/managerClassNames';
 
 export function SwitchTheme() {
   const { darkMode, toggleDarkMode } = useDarkModeZustand();

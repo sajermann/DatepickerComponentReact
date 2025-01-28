@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { managerClassNames } from '~/utils/managerClassNames';
 import { TMenuAccessOptionsProps } from '../types';
 
 export function _BuildNormalOption({

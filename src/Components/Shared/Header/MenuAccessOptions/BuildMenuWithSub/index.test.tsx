@@ -2,14 +2,14 @@
  * @vitest-environment jsdom
  */
 import { render } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
+import { describe, it } from 'vitest';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
 import { _BuildMenuWithSub } from '.';
 import { TMenuAccessOptionsProps } from '../types';
 
-describe('Components/Shared/Header/MenuAccessOptions/BuildMenuWithSub', () => {
+describe('Components/shared/Header/MenuAccessOptions/BuildMenuWithSub', () => {
   it(`must render`, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders noLayout>
         <_BuildMenuWithSub
           hideMenu={false}

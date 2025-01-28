@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
 
 export const _sortCustomName = (a: TRoutesMenu, b: TRoutesMenu) => {
   if (a.name < b.name) {

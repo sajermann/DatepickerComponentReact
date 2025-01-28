@@ -2,10 +2,10 @@
  * @vitest-environment jsdom
  */
 import { describe, expect, it } from 'vitest';
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
 import { _sortCustomName, _sortCustomOrder } from '.';
 
-describe('Hooks/Use/Routes/Menu/Utils/sortCustom', () => {
+describe('Hooks/use/Routes/Menu/Utils/sortCustom', () => {
   it(`should sort`, async () => {
     const result: TRoutesMenu[] = [
       {

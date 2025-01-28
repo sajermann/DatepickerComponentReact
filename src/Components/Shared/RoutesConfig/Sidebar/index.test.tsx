@@ -6,7 +6,7 @@ import { describe, expect, it } from 'vitest';
 import { _Sidebar } from '.';
 import { InjectorProviders } from '../../InjectorProviders';
 
-describe('Components/Shared/RoutesConfig/Sidebar', () => {
+describe('Components/shared/RoutesConfig/Sidebar', () => {
   it(`should render component`, async () => {
     const { queryByTestId } = render(
       <InjectorProviders>

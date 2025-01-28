@@ -1,15 +1,15 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
 
 import { DatepickerPage } from '.';
 
 describe('Pages/DatepickerPage', () => {
   it(`must render DatepickerPage`, async () => {
-    const { getAllByText } = render(
+    render(
       <InjectorProviders>
         <DatepickerPage />
       </InjectorProviders>,

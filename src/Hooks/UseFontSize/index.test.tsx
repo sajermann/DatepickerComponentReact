@@ -21,7 +21,7 @@ function TestComponent() {
   );
 }
 
-describe('Hooks/UseFontSize', () => {
+describe('Hooks/useFontSize', () => {
   it(`should render component`, async () => {
     const { getByText } = render(
       <FontSizeProvider>

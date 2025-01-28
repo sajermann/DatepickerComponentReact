@@ -3,7 +3,7 @@
  */
 import { fireEvent, render } from '@testing-library/react';
 import { useState } from 'react';
-import { it, describe, expect, vi } from 'vitest';
+import { it, describe, expect } from 'vitest';
 import ErrorBoundary from '.';
 
 function Mock1() {

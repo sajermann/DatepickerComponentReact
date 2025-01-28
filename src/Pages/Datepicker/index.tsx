@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import { Main } from '~/Components/Shared/Main';
-import { Section } from '~/Components/Shared/Section';
-import { TodoList } from '~/Components/Shared/TodoList';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { Main } from '~/components/shared/Main';
+import { Section } from '~/components/shared/Section';
+import { TodoList } from '~/components/shared/TodoList';
+import { useTranslation } from '~/hooks/useTranslation';
 import { Composition } from './components/Composition';
 import { Controlled } from './components/Controlled';
 import { DefaultValue } from './components/DefaultValue';

@@ -4,7 +4,7 @@
 import { it, describe, expect } from 'vitest';
 import { useDarkModeZustand } from '.';
 
-describe('Store/UseDarkModeZustand', () => {
+describe('Store/useDarkModeZustand', () => {
 	it(`should change state`, async () => {
 		useDarkModeZustand.setState({
 			darkMode: false,

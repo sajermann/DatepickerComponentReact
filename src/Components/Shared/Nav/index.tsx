@@ -1,18 +1,15 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { tv } from 'tailwind-variants';
+
+const navVariant = tv({
+  base: [
+    'h-16 flex items-center justify-center p-4',
+    'border-b border-b-dark-400',
+    'dark:bg-dark-500/70',
+  ],
+});
 
 type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>;
 export function Nav({ children, className }: Props) {
-	return (
-		<nav
-			className={managerClassNames({
-				'h-16 flex items-center justify-center p-4': true,
-				'border-b border-b-dark-400': true,
-				'dark:bg-dark-500/70': true,
-				[className as string]: className,
-			})}
-		>
-			{children}
-		</nav>
-	);
+  return <nav className={navVariant({ class: className })}>{children}</nav>;
 }

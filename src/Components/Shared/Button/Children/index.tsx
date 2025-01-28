@@ -5,9 +5,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { TFeedbackProps } from '~/Components/Shared/Input/Types/TFeedbackProps';
-import { useWindowSize } from '~/Hooks/UseWindowSize';
-import { showInDevelopment } from '~/Utils/ShowInDevelopment';
+import { TFeedbackProps } from '~/components/shared/Input/Types/TFeedbackProps';
+import { useWindowSize } from '~/hooks/useWindowSize';
+import { showInDevelopment } from '~/utils/showInDevelopment';
 
 interface IChildren
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {

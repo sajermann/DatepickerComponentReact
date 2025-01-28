@@ -6,20 +6,20 @@ import {
   _sortCustomName,
   _sortCustomOrder,
   getTriRoutes,
-} from '~/Hooks/UseRoutesMenu/Utils';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { Home } from '~/Pages/Home';
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
-import { TTriRoutes } from './Types';
+} from '~/hooks/useRoutesMenu/utils';
+import { useTranslation } from '~/hooks/useTranslation';
+import { Home } from '~/pages/Home';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { TTriRoutes } from './types';
 
 const NotFoundPage = lazy(() =>
-  import('~/Pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
+  import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
     default: NotFound,
   })),
 );
 
 const DatepickerPage = lazy(() =>
-  import('~/Pages/Datepicker').then(({ DatepickerPage: Datepicker }) => ({
+  import('~/pages/Datepicker').then(({ DatepickerPage: Datepicker }) => ({
     default: Datepicker,
   })),
 );

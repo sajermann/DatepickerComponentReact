@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { useTranslation } from '~/hooks/useTranslation';
+import { managerClassNames } from '~/utils/managerClassNames';
 import { Button } from '../Button';
 import { Section } from '../Section';
 

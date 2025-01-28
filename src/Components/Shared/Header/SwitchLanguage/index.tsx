@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { useTranslation } from '~/hooks/useTranslation';
 import { Icons } from '../../Icons';
 
 export function SwitchLanguage() {

@@ -1,13 +1,13 @@
 import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
-import * as DatepickerMega from '~/Components/DatepickerMega';
-import { TDate } from '~/Components/DatepickerMega/types';
-import { ComponentBlock } from '~/Components/Shared/ComponentBlock';
-import { ContainerInput } from '~/Components/Shared/ContainerInput';
-import { JsonViewer } from '~/Components/Shared/JsonViewer';
-import { Label } from '~/Components/Shared/Label';
-import { Section } from '~/Components/Shared/Section';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import * as DatepickerMega from '~/components/DatepickerMega';
+import { TDate } from '~/components/DatepickerMega/types';
+import { ComponentBlock } from '~/components/shared/ComponentBlock';
+import { ContainerInput } from '~/components/shared/ContainerInput';
+import { JsonViewer } from '~/components/shared/JsonViewer';
+import { Label } from '~/components/shared/Label';
+import { Section } from '~/components/shared/Section';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function Controlled() {
   const { translate } = useTranslation();

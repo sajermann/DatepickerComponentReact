@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import { Link } from 'react-router';
 
-import { Icons } from '~/Components/Shared/Icons';
-import { Main } from '~/Components/Shared/Main';
+import { Icons } from '~/components/shared/Icons';
+import { Main } from '~/components/shared/Main';
 
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
-import { useTranslation } from '~/Hooks/UseTranslation';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
+import { useTranslation } from '~/hooks/useTranslation';
+import { managerClassNames } from '~/utils/managerClassNames';
 
 export function Home() {
   const { translate } = useTranslation();

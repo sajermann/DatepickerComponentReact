@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { Icons } from '~/Components/Shared/Icons';
+import { Icons } from '~/components/shared/Icons';
 
-import { Input } from '~/Components/Shared/Input';
-import { Main } from '~/Components/Shared/Main';
-import { useBreadcrumbs } from '~/Hooks/UseBreadcrumbs';
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { Input } from '~/components/shared/Input';
+import { Main } from '~/components/shared/Main';
+import { useBreadcrumbs } from '~/hooks/useBreadcrumbs';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function NotFoundPage() {
   const [search, setSearch] = useState('');

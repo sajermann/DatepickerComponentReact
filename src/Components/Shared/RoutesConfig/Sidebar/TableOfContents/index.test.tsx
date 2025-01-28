@@ -3,8 +3,8 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
-import * as useLoadingLazyMock from '~/Hooks/UseLoadingLazy';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
+import * as useLoadingLazyMock from '~/hooks/useLoadingLazy';
 import { TableOfContents } from '.';
 
 describe('Components/Sidebar/TableOfContents', () => {

@@ -1,12 +1,12 @@
 import { Fragment, useMemo, useRef, useState } from 'react';
 
-import { HeaderButton } from '~/Components/Shared/Header/HeaderButton';
-import { Icons } from '~/Components/Shared/Icons';
-import { Input } from '~/Components/Shared/Input';
-import { Main } from '~/Components/Shared/Main';
-import { Nav } from '~/Components/Shared/Nav';
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { HeaderButton } from '~/components/shared/Header/HeaderButton';
+import { Icons } from '~/components/shared/Icons';
+import { Input } from '~/components/shared/Input';
+import { Main } from '~/components/shared/Main';
+import { Nav } from '~/components/shared/Nav';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
+import { useTranslation } from '~/hooks/useTranslation';
 import BlockRightToLeftTransition from './BlockRightToLeftTransition';
 import BoxScroll from './BoxScroll';
 import { _BuildMenuWithSub } from './BuildMenuWithSub';

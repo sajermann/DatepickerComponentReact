@@ -2,7 +2,7 @@ import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
-import { delay } from '~/Utils/Delay';
+import { delay } from '~/utils/delay';
 import { Button } from '.';
 
 describe('Components/Button', () => {

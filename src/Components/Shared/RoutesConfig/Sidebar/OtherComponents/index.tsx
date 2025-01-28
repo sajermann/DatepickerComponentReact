@@ -1,8 +1,8 @@
 import { Link } from 'react-router';
 
-import { Icons } from '~/Components/Shared/Icons';
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { Icons } from '~/components/shared/Icons';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
+import { useTranslation } from '~/hooks/useTranslation';
 import { Main } from '../Main';
 
 export function OtherComponents() {

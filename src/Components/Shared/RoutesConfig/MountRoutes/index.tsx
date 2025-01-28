@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 import { Fragment } from 'react/jsx-runtime';
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
 import ErrorBoundary from '../ErrorBoundary';
 
 export function _MountRoutes({ routes }: { routes: TRoutesMenu[] }) {

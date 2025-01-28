@@ -3,7 +3,7 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
-import * as useLoadingLazyMock from '~/Hooks/UseLoadingLazy';
+import * as useLoadingLazyMock from '~/hooks/useLoadingLazy';
 import { TableOfContents } from '.';
 import { InjectorProviders } from '../../InjectorProviders';
 

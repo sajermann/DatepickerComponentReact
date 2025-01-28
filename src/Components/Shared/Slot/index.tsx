@@ -1,4 +1,4 @@
-import React, { forwardRef, isValidElement, cloneElement } from 'react';
+import React, { isValidElement, cloneElement } from 'react';
 
 type SlotProps = {
   children: React.ReactNode;

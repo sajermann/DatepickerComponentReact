@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useLoadingLazy } from '~/Hooks/UseLoadingLazy';
-import { useTranslation } from '~/Hooks/UseTranslation';
+import { useLoadingLazy } from '~/hooks/useLoadingLazy';
+import { useTranslation } from '~/hooks/useTranslation';
 
 export function IsLoading() {
   const { translate } = useTranslation();

@@ -1,4 +1,4 @@
-import { TRealFormat } from '~/Components/Shared/Input/Types/TRealFormat';
+import { TRealFormat } from '~/components/shared/Input/Types/TRealFormat';
 
 // function real({
 // 	value = '',

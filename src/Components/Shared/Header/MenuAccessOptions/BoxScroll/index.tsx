@@ -1,5 +1,5 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
-import { managerClassNames } from '~/Utils/ManagerClassNames';
+import { managerClassNames } from '~/utils/managerClassNames';
 
 export default function _BoxScroll(
   props: DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement>,

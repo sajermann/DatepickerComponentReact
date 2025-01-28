@@ -1,5 +1,5 @@
 import { tv } from 'tailwind-variants';
-import { Slot } from '~/Components/Shared/Slot';
+import { Slot } from '~/components/shared/Slot';
 import { useDatepickerMega } from '../../hooks';
 
 const button = tv({

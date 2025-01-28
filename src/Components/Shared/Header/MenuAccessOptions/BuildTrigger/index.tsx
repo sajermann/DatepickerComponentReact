@@ -1,5 +1,5 @@
-import { Icons } from '~/Components/Shared/Icons';
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { Icons } from '~/components/shared/Icons';
 import { _BuildNormalOption } from '../BuildNormalOption';
 
 export function _BuildTrigger({

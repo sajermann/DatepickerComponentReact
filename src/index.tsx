@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
-import { RoutesConfig } from '~/Components/Shared/RoutesConfig';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
+import { RoutesConfig } from '~/components/shared/RoutesConfig';
 
-import './global.css';
+import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

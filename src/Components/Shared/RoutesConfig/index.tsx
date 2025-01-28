@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useLocation } from 'react-router';
 
-import { useRoutesMenu } from '~/Hooks/UseRoutesMenu';
+import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import _Breadcrumbs from './Breadcumbs';
 import { IsLoading } from './IsLoading';
 import { _MountRoutes } from './MountRoutes';

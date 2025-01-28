@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
 
 export function _getPrev(
   options: TRoutesMenu[],

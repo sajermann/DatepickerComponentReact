@@ -3,7 +3,7 @@
  */
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { InjectorProviders } from '~/Components/Shared/InjectorProviders';
+import { InjectorProviders } from '~/components/shared/InjectorProviders';
 import { Demo } from '.';
 
 describe('Components/Demo', () => {

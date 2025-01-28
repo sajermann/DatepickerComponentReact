@@ -1,4 +1,4 @@
-import { TRoutesMenu } from '~/Types/TRoutesMenu';
+import { TRoutesMenu } from '~/types/TRoutesMenu';
 import { _filterSubs } from '../filterSubs';
 
 export function _getMenus(globalRoutes: TRoutesMenu[], search: string) {
