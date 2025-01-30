@@ -2,10 +2,9 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
 import { useLoadingLazy } from '~/hooks/useLoadingLazy';
-import { useWindow } from '~/hooks/useWindow';
 import { useTranslation } from '~/hooks/useTranslation';
+import { useWindow } from '~/hooks/useWindow';
 import { managerClassNames } from '~/utils/managerClassNames';
-import { Main } from '../Main';
 
 type TMenu = {
   type: string;
@@ -68,7 +67,8 @@ export function TableOfContents() {
   }
 
   return (
-    <Main heading={translate('TABLE_OF_CONTENTS')}>
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+      <p>{translate('TABLE_OF_CONTENTS')}</p>
       <nav>
         <ul>
           {optionsMenu.map(item => (
@@ -92,6 +92,6 @@ export function TableOfContents() {
           ))}
         </ul>
       </nav>
-    </Main>
+    </main>
   );
 }

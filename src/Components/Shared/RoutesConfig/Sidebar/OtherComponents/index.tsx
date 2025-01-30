@@ -1,9 +1,8 @@
+import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 import { Link } from 'react-router';
 
-import { Icons } from '~/components/shared/Icons';
 import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import { useTranslation } from '~/hooks/useTranslation';
-import { Main } from '../Main';
 
 export function OtherComponents() {
   const { globalRoutes: options, triRoutes } = useRoutesMenu();
@@ -14,7 +13,8 @@ export function OtherComponents() {
   }
 
   return (
-    <Main heading={translate('OTHERS_COMPONENTS')}>
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+      <p>{translate('OTHERS_COMPONENTS')}</p>
       <div className="flex justify-between items-center">
         <div>
           {triRoutes.prev && (
@@ -22,7 +22,7 @@ export function OtherComponents() {
               className="flex items-center justify-center hover:text-primary-700 transition-colors duration-500"
               to={triRoutes.prev.path}
             >
-              <Icons nameIcon="arrowSingleLeft" width="2rem" />
+              <ArrowLeftIcon width="2rem" />
               <span>{triRoutes.prev.label}</span>
             </Link>
           )}
@@ -34,11 +34,11 @@ export function OtherComponents() {
               to={triRoutes.next.path}
             >
               {triRoutes.next.label}
-              <Icons nameIcon="arrowSingleRight" width="2rem" />
+              <ArrowRightIcon width="2rem" />
             </Link>
           )}
         </div>
       </div>
-    </Main>
+    </main>
   );
 }

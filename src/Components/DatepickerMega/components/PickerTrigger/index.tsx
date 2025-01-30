@@ -1,6 +1,6 @@
 import { tv } from 'tailwind-variants';
-import { Slot } from '~/components/shared/Slot';
 import { useDatepickerMega } from '../../hooks';
+import { Slot } from '../Slot';
 
 const button = tv({
   base: 'ring-0 outline-none flex items-center justify-center h-8 p-1 hover:text-blue-500 transition-colors duration-500 cursor-pointer',

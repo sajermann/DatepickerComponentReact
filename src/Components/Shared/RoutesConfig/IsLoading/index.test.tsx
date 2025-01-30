@@ -9,7 +9,7 @@ import { InjectorProviders } from '../../InjectorProviders';
 describe('Components/RoutesConfig/IsLoading', () => {
   it(`should render component`, async () => {
     const { getByText } = render(
-      <InjectorProviders noLayout>
+      <InjectorProviders>
         <IsLoading />
       </InjectorProviders>,
     );

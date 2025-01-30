@@ -2,7 +2,6 @@ import { useDatePicker } from '@rehookify/datepicker';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
-import { Button } from '~/components/shared/Button';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
@@ -11,6 +10,7 @@ import {
   getYearClassName,
   onChangeDatepicker,
 } from '../../utils';
+import { Button } from '../Button';
 import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
 
 export function SingleMonthPicker() {

@@ -1,25 +1,23 @@
+import { EyeIcon } from 'lucide-react';
 import { Link } from 'react-router';
-
-import { Icons } from '~/components/shared/Icons';
-import { Main } from '~/components/shared/Main';
-
 import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
+const APPLICATION_NAME = import.meta.env.VITE_APPLICATION_NAME;
 
 export function Home() {
   const { translate } = useTranslation();
   const { globalRoutes: options } = useRoutesMenu();
 
   return (
-    <Main>
+    <main className="h-full gap-5 flex flex-col">
       <div className="flex flex-col items-center justify-center gap-2">
         <p>
-          <strong>{translate('WELCOME')}</strong>
+          <strong>{`${translate('WELCOME')} - ${APPLICATION_NAME}`}</strong>
         </p>
         <p>{translate('HOME_MESSAGE_PRESENTATION')}</p>
         <a
-          href="https://github.com/sajermann/MyImplementationsInReact/"
+          href="https://github.com/sajermann/DatepickerComponentReact/"
           target="_blank"
           rel="noreferrer"
         >
@@ -32,7 +30,7 @@ export function Home() {
         </a>
       </div>
 
-      <div className="grid grid-cols-12 gap-2">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {options.map(
           opt =>
             opt.name !== 'Home' &&
@@ -41,33 +39,26 @@ export function Home() {
                 key={opt.path}
                 className={managerClassNames([
                   { 'flex flex-col border border-solid': true },
-                  { 'w-full h-80 dark:border-white text-xl ': true },
-                  { 'overflow-auto rounded-2xl': true },
-                  {
-                    'col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3': true,
-                  },
+                  { 'dark:border-white text-xl ': true },
+                  { 'overflow-auto rounded-2xl w-64': true },
                   { [opt.className as string]: opt.className },
                 ])}
               >
-                <header className="border-b-2 p-2 flex justify-center items-center bg-dark-500 rounded-t-2xl text-white">
+                <header className="h-16 p-2 flex justify-center items-center bg-dark-500 rounded-t-2xl text-white">
                   {opt.name}
                 </header>
 
-                <main className="w-full p-2 flex items-center justify-center flex-1 m-auto">
-                  {opt.description}
-                </main>
-
-                <footer className="border-t-2 flex bg-dark-500">
+                <footer className="h-16  flex items-center justify-center bg-dark-500">
                   <Link
                     to={opt.path}
                     className={managerClassNames([
-                      { 'flex flex-col flex-1 items-center': true },
+                      { 'flex flex-col items-center': true },
                       { 'justify-center gap-1 p-1 text-sm': true },
                       { 'text-white duration-500 transition-colors': true },
                       { 'hover:text-primary-700 ': true },
                     ])}
                   >
-                    <Icons nameIcon="eye" width="30px" />
+                    <EyeIcon width="30px" />
                     Demo
                   </Link>
                 </footer>
@@ -75,6 +66,6 @@ export function Home() {
             ),
         )}
       </div>
-    </Main>
+    </main>
   );
 }

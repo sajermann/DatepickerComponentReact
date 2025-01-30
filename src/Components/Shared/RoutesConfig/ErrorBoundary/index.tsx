@@ -1,6 +1,4 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
-import { Button } from '../../Button';
-import { Main } from '../../Main';
 
 interface Props {
   children?: ReactNode;
@@ -45,7 +43,7 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <Main>
+        <main className="h-full gap-2 flex flex-col">
           <div className="flex flex-col m-auto gap-2 items-center justify-center">
             <h1 className="font-bold">Ocorreu um erro na aplicação</h1>
 
@@ -56,11 +54,11 @@ class ErrorBoundary extends Component<Props, State> {
                 <span>{this.state.errorDescription.stack}</span>
               </div>
             )}
-            <Button onClick={() => window.location.reload()}>
+            <button type="button" onClick={() => window.location.reload()}>
               Atualizar página
-            </Button>
+            </button>
           </div>
-        </Main>
+        </main>
       );
     }
 

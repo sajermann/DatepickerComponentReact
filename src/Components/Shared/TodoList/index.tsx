@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
-import { Button } from '../Button';
 import { Section } from '../Section';
 
 export function TodoList() {
@@ -79,13 +78,14 @@ export function TodoList() {
       </main>
 
       <footer className="flex justify-center h-12 absolute bottom-0 left-0 right-0 1backdrop-blur-md bg-dark-500/70">
-        <Button
-          variant="option"
-          colorStyle="mono"
+        <button
+          type="button"
+          // variant="option"
+          // colorStyle="mono"
           onClick={() => setIsExpanded(prev => !prev)}
         >
           {isExpanded ? translate('COLLAPSE') : translate('EXPAND')}
-        </Button>
+        </button>
       </footer>
     </div>
   );

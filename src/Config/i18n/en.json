@@ -1,5 +1,6 @@
 {
   "translations": {
+    "OTHERS_COMPONENTS": "Others Components",
     "COLLAPSE": "Collapse",
     "EXPAND": "Expand",
     "DATEPICKER_MEGA_PAGE_1": "This component was created by me using only an external library ({{lib}}), I developed it in the composition pattern and I'm updating it whenever possible.",
@@ -38,7 +39,7 @@
     "LOADING": "Loading",
     "MY_DEMO": "My Demo",
     "WELCOME": "Welcome",
-    "HOME_MESSAGE_PRESENTATION": "Project created to demonstrate how I do my implementations in React.",
+    "HOME_MESSAGE_PRESENTATION": "Project created to demonstrate how I implement the Datepicker component for React.",
     "TABLE_OF_CONTENTS": "Table of Content",
     "SECTION_DEMO": "Section Demo",
     "SECTION": "Section",

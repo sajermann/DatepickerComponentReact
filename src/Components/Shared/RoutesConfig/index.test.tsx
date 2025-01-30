@@ -22,7 +22,7 @@ describe('Components/RoutesConfig', () => {
         }) as any,
     );
     const { getByText } = render(
-      <InjectorProviders noLayout>
+      <InjectorProviders>
         <RoutesConfig />
       </InjectorProviders>,
     );

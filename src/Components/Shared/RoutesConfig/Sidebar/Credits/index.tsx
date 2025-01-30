@@ -1,9 +1,9 @@
 import { Icons } from '~/components/shared/Icons';
-import { Main } from '../Main';
 
 export function _Credits() {
   return (
-    <Main heading="🛠 by Bruno Sajermann">
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+      <p>🛠 by Bruno Sajermann</p>
       <div className="flex gap-2 items-center justify-center">
         <a
           className="hover:text-primary-700 transition-colors duration-500"
@@ -26,6 +26,6 @@ export function _Credits() {
           </div>
         </a>
       </div>
-    </Main>
+    </main>
   );
 }

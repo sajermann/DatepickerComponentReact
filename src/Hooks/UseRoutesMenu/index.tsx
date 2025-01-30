@@ -12,12 +12,6 @@ import { Home } from '~/pages/Home';
 import { TRoutesMenu } from '~/types/TRoutesMenu';
 import { TTriRoutes } from './types';
 
-const NotFoundPage = lazy(() =>
-  import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
-    default: NotFound,
-  })),
-);
-
 const DatepickerPage = lazy(() =>
   import('~/pages/Datepicker').then(({ DatepickerPage: Datepicker }) => ({
     default: Datepicker,
@@ -46,9 +40,16 @@ export function useRoutesMenu() {
           label: 'Datepicker Mega',
         },
         {
+          name: 'Datepicker Mega 2',
+          path: '/datepicker-mega-2',
+          description: 'Datepicker Mega 2',
+          element: <DatepickerPage />,
+          label: 'Datepicker Mega 2',
+        },
+        {
           name: 'NotFound',
           path: '*',
-          element: <NotFoundPage />,
+          element: <Home />,
           label: translate('NOT_FOUND'),
           hideTriRoutes: true,
           hideMenu: true,

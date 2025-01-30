@@ -1,4 +1,3 @@
-import { Main } from '~/components/shared/Main';
 import { Section } from '~/components/shared/Section';
 import { TodoList } from '~/components/shared/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
@@ -15,7 +14,7 @@ export function DatepickerPage() {
   const { translate } = useTranslation();
 
   return (
-    <Main data-content="content-main">
+    <main className="h-full gap-2 flex flex-col" data-content="content-main">
       <Section title="Datepicker Mega" variant="h1">
         <p>{`${translate('IMPLEMENTS_COMPONENT')} Datepicker Mega`}</p>
         <p>{`${translate('DATEPICKER_MEGA_PAGE_1', { lib: '@rehookify/datepicker' })}`}</p>
@@ -204,7 +203,7 @@ export function DatepickerPage() {
 					</Button>
 				</ComponentBlock>
 			</Section> */}
-    </Main>
+    </main>
   );
 }
 

@@ -2,7 +2,6 @@ import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
-import { ComponentBlock } from '~/components/shared/ComponentBlock';
 import { ContainerInput } from '~/components/shared/ContainerInput';
 import { JsonViewer } from '~/components/shared/JsonViewer';
 import { Label } from '~/components/shared/Label';
@@ -23,73 +22,71 @@ export function Controlled() {
   });
   return (
     <Section title={translate('CONTROLLED')} variant="h2">
-      <ComponentBlock className="flex flex-col !items-start">
-        <div className="flex items-baseline gap-2">
-          <ContainerInput>
-            <Label>{translate('DATE')}</Label>
-            <DatepickerMega.Root
-              onChange={setDate}
-              defaultDate={date.date || undefined}
-            >
-              <DatepickerMega.Day value={String(date.day || '')} />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Month value={String(date.month || '')} />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Year value={String(date.year || '')} />
-              <DatepickerMega.PickerTrigger>
-                <CalendarIcon />
-              </DatepickerMega.PickerTrigger>
-              <DatepickerMega.SingleDayPicker />
-            </DatepickerMega.Root>
-          </ContainerInput>
+      <div className="flex items-baseline gap-2">
+        <ContainerInput>
+          <Label>{translate('DATE')}</Label>
+          <DatepickerMega.Root
+            onChange={setDate}
+            defaultDate={date.date || undefined}
+          >
+            <DatepickerMega.Day value={String(date.day || '')} />
+            <DatepickerMega.Divider />
+            <DatepickerMega.Month value={String(date.month || '')} />
+            <DatepickerMega.Divider />
+            <DatepickerMega.Year value={String(date.year || '')} />
+            <DatepickerMega.PickerTrigger>
+              <CalendarIcon />
+            </DatepickerMega.PickerTrigger>
+            <DatepickerMega.SingleDayPicker />
+          </DatepickerMega.Root>
+        </ContainerInput>
 
-          <div className="flex ">
-            <label htmlFor="native" className="flex flex-col">
-              Native Input
-              <input
-                onChange={e => {
-                  const { value } = e.target;
-                  if (!value) {
-                    setDate({
-                      date: null,
-                      day: null,
-                      month: null,
-                      hour: null,
-                      minute: null,
-                      year: null,
-                      iso: null,
-                      clockType: null,
-                    });
-                    return;
-                  }
-                  const [year, month, day] = value.split('-').map(Number);
-                  const dateComplete = new Date(year, month - 1, day);
+        <div className="flex ">
+          <label htmlFor="native" className="flex flex-col">
+            Native Input
+            <input
+              onChange={e => {
+                const { value } = e.target;
+                if (!value) {
+                  setDate({
+                    date: null,
+                    day: null,
+                    month: null,
+                    hour: null,
+                    minute: null,
+                    year: null,
+                    iso: null,
+                    clockType: null,
+                  });
+                  return;
+                }
+                const [year, month, day] = value.split('-').map(Number);
+                const dateComplete = new Date(year, month - 1, day);
 
-                  setDate(prev => ({
-                    ...prev,
-                    date: dateComplete,
-                    day: dateComplete.getDate(),
-                    month: dateComplete.getMonth() + 1,
-                    year: dateComplete.getFullYear(),
-                    iso: dateComplete.toISOString(),
-                  }));
-                }}
-                type="date"
-                className="border bg-transparent ring-0 outline-none rounded h-11"
-                id="native"
-                value={date.iso?.substring(0, 10)}
-              />
-            </label>
-          </div>
+                setDate(prev => ({
+                  ...prev,
+                  date: dateComplete,
+                  day: dateComplete.getDate(),
+                  month: dateComplete.getMonth() + 1,
+                  year: dateComplete.getFullYear(),
+                  iso: dateComplete.toISOString(),
+                }));
+              }}
+              type="date"
+              className="border bg-transparent ring-0 outline-none rounded h-11"
+              id="native"
+              value={date.iso?.substring(0, 10)}
+            />
+          </label>
         </div>
-        <div className="w-full">
-          <h1>{translate('THIS_IS_STATE')}</h1>
-          <JsonViewer value={date} />
-        </div>
-        <h3 className="text-sm italic font-bold">
-          * {translate('MEGA_DATE_PICKER_CAUTION')}
-        </h3>
-      </ComponentBlock>
+      </div>
+      <div className="w-full">
+        <h1>{translate('THIS_IS_STATE')}</h1>
+        <JsonViewer value={date} />
+      </div>
+      <h3 className="text-sm italic font-bold">
+        * {translate('MEGA_DATE_PICKER_CAUTION')}
+      </h3>
     </Section>
   );
 }

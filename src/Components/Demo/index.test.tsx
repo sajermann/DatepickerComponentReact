@@ -9,7 +9,7 @@ import { Demo } from '.';
 describe('Components/Demo', () => {
   it(`must render`, async () => {
     const { getAllByText } = render(
-      <InjectorProviders noLayout>
+      <InjectorProviders>
         <Demo />
       </InjectorProviders>,
     );

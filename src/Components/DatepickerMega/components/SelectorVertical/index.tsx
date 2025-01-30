@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { Button } from '~/components/shared/Button';
+import { Button } from '../Button';
 
 type TProps = {
   data: { label: string; disabled: boolean }[];

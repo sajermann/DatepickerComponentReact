@@ -2,7 +2,6 @@ import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
-import { ComponentBlock } from '~/components/shared/ComponentBlock';
 import { ContainerInput } from '~/components/shared/ContainerInput';
 import { JsonViewer } from '~/components/shared/JsonViewer';
 import { Label } from '~/components/shared/Label';
@@ -14,33 +13,29 @@ export function OnChange() {
     useState<TDate | null>(null);
   const { translate } = useTranslation();
   return (
-    <Section title={translate('ON_CHANGE')} variant="h2">
-      <Section title={translate('EVENT_ONCHANGE_ROOT')} variant="h3">
-        <ComponentBlock className="flex flex-col !items-start">
-          <ContainerInput>
-            <Label htmlFor="date">{translate('DATE')}</Label>
-            <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
-              <DatepickerMega.Day id="date" />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Month />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Year />
-              {/* <DatepickerMega.Divider> - </DatepickerMega.Divider>
+    <Section title={translate('EVENT_ONCHANGE_ROOT')} variant="h2">
+      <ContainerInput>
+        <Label htmlFor="date">{translate('DATE')}</Label>
+        <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
+          <DatepickerMega.Day id="date" />
+          <DatepickerMega.Divider />
+          <DatepickerMega.Month />
+          <DatepickerMega.Divider />
+          <DatepickerMega.Year />
+          {/* <DatepickerMega.Divider> - </DatepickerMega.Divider>
 								<DatepickerMega.Hour />
 								<DatepickerMega.Divider> : </DatepickerMega.Divider>
 								<DatepickerMega.Minute /> */}
-              <DatepickerMega.PickerTrigger>
-                <CalendarIcon />
-              </DatepickerMega.PickerTrigger>
-              <DatepickerMega.SingleDayPicker />
-            </DatepickerMega.Root>
-          </ContainerInput>
-          <div className="w-full">
-            <h1>{translate('LAST_EVENT_ONCHANGE_IS_NOT_STATE')}</h1>
-            <JsonViewer value={lastEventOnChangeRoot || {}} />
-          </div>
-        </ComponentBlock>
-      </Section>
+          <DatepickerMega.PickerTrigger>
+            <CalendarIcon />
+          </DatepickerMega.PickerTrigger>
+          <DatepickerMega.SingleDayPicker />
+        </DatepickerMega.Root>
+      </ContainerInput>
+      <div className="w-full">
+        <h1>{translate('LAST_EVENT_ONCHANGE_IS_NOT_STATE')}</h1>
+        <JsonViewer value={lastEventOnChangeRoot || {}} />
+      </div>
     </Section>
   );
 }
