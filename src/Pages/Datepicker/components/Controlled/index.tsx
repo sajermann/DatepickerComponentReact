@@ -2,10 +2,8 @@ import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
-import { ContainerInput } from '~/components/shared/ContainerInput';
-import { JsonViewer } from '~/components/shared/JsonViewer';
-import { Label } from '~/components/shared/Label';
-import { Section } from '~/components/shared/Section';
+import { JsonViewer } from '~/components/JsonViewer';
+import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function Controlled() {
@@ -23,8 +21,8 @@ export function Controlled() {
   return (
     <Section title={translate('CONTROLLED')} variant="h2">
       <div className="flex items-baseline gap-2">
-        <ContainerInput>
-          <Label>{translate('DATE')}</Label>
+        <DatepickerMega.ContainerInput>
+          <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
           <DatepickerMega.Root
             onChange={setDate}
             defaultDate={date.date || undefined}
@@ -39,7 +37,7 @@ export function Controlled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </ContainerInput>
+        </DatepickerMega.ContainerInput>
 
         <div className="flex ">
           <label htmlFor="native" className="flex flex-col">

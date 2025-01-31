@@ -1,9 +1,7 @@
 import { addDays } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { ContainerInput } from '~/components/shared/ContainerInput';
-import { Label } from '~/components/shared/Label';
-import { Section } from '~/components/shared/Section';
+import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function Disabled() {
@@ -11,8 +9,10 @@ export function Disabled() {
   return (
     <Section title={translate('DISABLED_DATES')} variant="h2">
       <div className="flex gap-2 flex-wrap items-end">
-        <ContainerInput className="w-max">
-          <Label>{translate('YESTERDAY_AND_TOMORROW')}</Label>
+        <DatepickerMega.ContainerInput className="w-max">
+          <DatepickerMega.Label>
+            {translate('YESTERDAY_AND_TOMORROW')}
+          </DatepickerMega.Label>
           <DatepickerMega.Root
             disabledDates={[addDays(new Date(), -1), addDays(new Date(), +1)]}
           >
@@ -26,9 +26,11 @@ export function Disabled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </ContainerInput>
-        <ContainerInput className="w-max">
-          <Label>{translate('SATURDAYS_AND_SUNDAYS')}</Label>
+        </DatepickerMega.ContainerInput>
+        <DatepickerMega.ContainerInput className="w-max">
+          <DatepickerMega.Label>
+            {translate('SATURDAYS_AND_SUNDAYS')}
+          </DatepickerMega.Label>
           <DatepickerMega.Root disabledWeeks={[0, 6]}>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />
@@ -40,9 +42,9 @@ export function Disabled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </ContainerInput>
-        <ContainerInput className="w-max">
-          <Label>{translate('MIN_DATE')}</Label>
+        </DatepickerMega.ContainerInput>
+        <DatepickerMega.ContainerInput className="w-max">
+          <DatepickerMega.Label>{translate('MIN_DATE')}</DatepickerMega.Label>
           <DatepickerMega.Root minDate={addDays(new Date(), -7)}>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />
@@ -54,9 +56,9 @@ export function Disabled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </ContainerInput>
-        <ContainerInput className="w-max">
-          <Label>{translate('MAX_DATE')}</Label>
+        </DatepickerMega.ContainerInput>
+        <DatepickerMega.ContainerInput className="w-max">
+          <DatepickerMega.Label>{translate('MAX_DATE')}</DatepickerMega.Label>
           <DatepickerMega.Root maxDate={addDays(new Date(), 7)}>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />
@@ -68,7 +70,7 @@ export function Disabled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </ContainerInput>
+        </DatepickerMega.ContainerInput>
       </div>
     </Section>
   );

@@ -4,16 +4,16 @@
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { InjectorProviders } from '~/components/InjectorProviders';
-import { DemoPage } from '.';
+import { _Credits } from '.';
 
-describe('Pages/DemoPage', () => {
-  it(`must change Select components`, async () => {
-    const { getAllByText } = render(
+describe('Components/shared/RoutesConfig/Sidebar/Credits', () => {
+  it(`should render component`, async () => {
+    const { queryByText } = render(
       <InjectorProviders>
-        <DemoPage />
+        <_Credits />
       </InjectorProviders>,
     );
-    const text = await getAllByText('Demo')[0];
-    expect(text).toBeInTheDocument();
+
+    expect(queryByText(/Bruno Sajermann/g)).toBeTruthy();
   });
 });

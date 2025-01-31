@@ -10,3 +10,5 @@ export * from './components/AmPmToggle';
 export * from './components/SingleDayPicker';
 export * from './components/SingleMonthPicker';
 export * from './components/SingleYearPicker';
+export * from './components/ContainerInput';
+export * from './components/Label';

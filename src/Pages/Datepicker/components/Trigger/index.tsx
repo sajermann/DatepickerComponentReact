@@ -1,16 +1,14 @@
 import { CalendarIcon } from 'lucide-react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { ContainerInput } from '~/components/shared/ContainerInput';
-import { Label } from '~/components/shared/Label';
-import { Section } from '~/components/shared/Section';
+import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function Trigger() {
   const { translate } = useTranslation();
   return (
     <Section title={translate('TRIGGER')} variant="h2">
-      <ContainerInput className="w-max">
-        <Label>Input</Label>
+      <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.Label>Input</DatepickerMega.Label>
         <DatepickerMega.Root>
           <DatepickerMega.PickerTrigger className="cursor-pointer">
             <DatepickerMega.Day readOnly className="cursor-pointer" />
@@ -21,9 +19,9 @@ export function Trigger() {
           </DatepickerMega.PickerTrigger>
           <DatepickerMega.SingleDayPicker />
         </DatepickerMega.Root>
-      </ContainerInput>
-      <ContainerInput className="w-max">
-        <Label>{translate('BY_ICON')}</Label>
+      </DatepickerMega.ContainerInput>
+      <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.Label>{translate('BY_ICON')}</DatepickerMega.Label>
         <DatepickerMega.Root>
           <DatepickerMega.Day />
           <DatepickerMega.Divider />
@@ -35,7 +33,7 @@ export function Trigger() {
           </DatepickerMega.PickerTrigger>
           <DatepickerMega.SingleDayPicker />
         </DatepickerMega.Root>
-      </ContainerInput>
+      </DatepickerMega.ContainerInput>
     </Section>
   );
 }

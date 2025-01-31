@@ -1,17 +1,14 @@
 import { CalendarIcon } from 'lucide-react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-
-import { ContainerInput } from '~/components/shared/ContainerInput';
-import { Label } from '~/components/shared/Label';
-import { Section } from '~/components/shared/Section';
+import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function ReadOnly() {
   const { translate } = useTranslation();
   return (
     <Section title={translate('READ_ONLY')} variant="h2">
-      <ContainerInput className="w-max">
-        <Label>{translate('DATE')}</Label>
+      <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
         <DatepickerMega.Root>
           <DatepickerMega.Day readOnly />
           <DatepickerMega.Divider />
@@ -23,7 +20,7 @@ export function ReadOnly() {
           </DatepickerMega.PickerTrigger>
           <DatepickerMega.SingleDayPicker />
         </DatepickerMega.Root>
-      </ContainerInput>
+      </DatepickerMega.ContainerInput>
     </Section>
   );
 }

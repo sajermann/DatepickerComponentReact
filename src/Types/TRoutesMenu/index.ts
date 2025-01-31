@@ -5,12 +5,15 @@ export type TRoutesMenu = {
   element: React.ReactNode;
   subs?: TRoutesMenu[];
   expandedMenu?: boolean;
-  hideMenu?: boolean;
   label: string;
-  hideTriRoutes?: boolean;
   className?: string;
   router?: {
     index?: boolean;
+  };
+  hide?: {
+    menu?: boolean;
+    otherComponents?: boolean;
+    home?: boolean;
   };
   order?: number;
 };

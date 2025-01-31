@@ -29,7 +29,10 @@ export function useRoutesMenu() {
           path: '/',
           element: <Home />,
           label: 'Home',
-          hideTriRoutes: true,
+          hide: {
+            home: true,
+            otherComponents: true,
+          },
           order: 0,
         },
         {
@@ -40,19 +43,14 @@ export function useRoutesMenu() {
           label: 'Datepicker Mega',
         },
         {
-          name: 'Datepicker Mega 2',
-          path: '/datepicker-mega-2',
-          description: 'Datepicker Mega 2',
-          element: <DatepickerPage />,
-          label: 'Datepicker Mega 2',
-        },
-        {
           name: 'NotFound',
           path: '*',
           element: <Home />,
           label: translate('NOT_FOUND'),
-          hideTriRoutes: true,
-          hideMenu: true,
+          hide: {
+            home: true,
+            otherComponents: true,
+          },
         },
       ]
         .sort(_sortCustomName)

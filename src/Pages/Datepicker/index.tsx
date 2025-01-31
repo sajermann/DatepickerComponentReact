@@ -1,5 +1,5 @@
-import { Section } from '~/components/shared/Section';
-import { TodoList } from '~/components/shared/TodoList';
+import { Section } from '~/components/Section';
+import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
 import { Composition } from './components/Composition';
 import { Controlled } from './components/Controlled';

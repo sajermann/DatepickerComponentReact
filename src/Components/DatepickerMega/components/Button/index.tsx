@@ -1,14 +1,5 @@
-/* eslint-disable react/button-has-type */
-import { AllHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
-import { showInDevelopment } from '~/utils/showInDevelopment';
-import Children from './Children';
-import EndIcon from './EndIcon';
-import FeedbackIcon from './FeedbackIcon';
-import LoadingIcon from './LoadingIcon';
-import MainFeedback from './MainFeedback';
-import StartIcon from './StartIcon';
-import { TFeedbackProps } from './types/TFeedbackProps';
 
 const buttonVariants = tv({
   slots: {
@@ -19,13 +10,6 @@ const buttonVariants = tv({
       'active:opacity-50 focus:ring-2 hover:opacity-70',
       'disabled:opacity-50 disabled:active:opacity-50 disabled:hover:opacity-50',
       'transition-all duration-500',
-    ],
-    containerInsideInternal: [
-      'flex items-center justify-center w-full h-full gap-1',
-    ],
-    containerIconInternal: ['h-full'],
-    containerChildrenInternal: [
-      'w-full overflow-hidden whitespace-nowrap text-ellipsis flex-1',
     ],
   },
   variants: {
@@ -119,37 +103,13 @@ const buttonVariants = tv({
 });
 
 interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
-  startIcon?: ReactNode;
-  endIcon?: ReactNode;
-  containerIconsProps?: AllHTMLAttributes<HTMLDivElement>;
-  containerInsideProps?: AllHTMLAttributes<HTMLDivElement>;
-  containerChildrenProps?: AllHTMLAttributes<HTMLDivElement>;
-  withFeedback?: TFeedbackProps;
   variant?: 'default' | 'outlined' | 'option';
   colorStyle?: 'primary' | 'secondary' | 'success' | 'warning' | 'mono';
   iconButton?: 'rounded' | 'squared';
-  type?: 'submit' | 'reset' | 'button';
 }
 
-function Button({
-  withFeedback,
-  children,
-  startIcon,
-  endIcon,
-  containerIconsProps,
-  containerInsideProps,
-  containerChildrenProps,
-  colorStyle,
-  variant,
-  iconButton,
-  ...rest
-}: IButton) {
-  const {
-    buttonPropsInternal,
-    containerInsideInternal,
-    containerIconInternal,
-    containerChildrenInternal,
-  } = buttonVariants({
+function Button({ colorStyle, variant, iconButton, ...rest }: IButton) {
+  const { buttonPropsInternal } = buttonVariants({
     color: colorStyle,
     variant,
     iconButton,
@@ -161,51 +121,7 @@ function Button({
       className={buttonPropsInternal({
         className: rest.className,
       })}
-    >
-      <div
-        {...showInDevelopment({ 'data-content': 'containerInsideButton' })}
-        {...containerInsideProps}
-        className={containerInsideInternal({
-          className: containerInsideProps?.className,
-        })}
-      >
-        <StartIcon
-          className={containerIconInternal({
-            className: containerIconsProps?.className,
-          })}
-        >
-          {startIcon}
-        </StartIcon>
-        <Children
-          withFeedback={withFeedback}
-          className={containerChildrenInternal({
-            className: [
-              containerChildrenProps?.className,
-              iconButton ? 'flex justify-center' : '',
-            ],
-          })}
-        >
-          {children}
-        </Children>
-        <MainFeedback
-          withFeedback={withFeedback}
-          className={containerIconInternal({
-            className: containerIconsProps?.className,
-          })}
-        >
-          <LoadingIcon withFeedback={withFeedback} />
-          <FeedbackIcon withFeedback={withFeedback} />
-        </MainFeedback>
-        <EndIcon
-          withFeedback={withFeedback}
-          className={containerIconInternal({
-            className: containerIconsProps?.className,
-          })}
-        >
-          {endIcon}
-        </EndIcon>
-      </div>
-    </button>
+    />
   );
 }
 

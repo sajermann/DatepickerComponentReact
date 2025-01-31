@@ -1,19 +1,19 @@
 /**
  * @vitest-environment jsdom
  */
-import { it, describe, expect } from 'vitest';
-import { useDarkModeZustand } from '.';
+import { describe, expect, it } from 'vitest';
+import { useDarkMode } from '.';
 
-describe('Store/useDarkModeZustand', () => {
-	it(`should change state`, async () => {
-		useDarkModeZustand.setState({
-			darkMode: false,
-		});
+describe('hooks/useDarkMode', () => {
+  it(`should change state`, async () => {
+    useDarkMode.setState({
+      darkMode: false,
+    });
 
-		expect(useDarkModeZustand.getState().darkMode).toBeFalsy();
+    expect(useDarkMode.getState().darkMode).toBeFalsy();
 
-		useDarkModeZustand.getState().toggleDarkMode();
+    useDarkMode.getState().toggleDarkMode();
 
-		expect(useDarkModeZustand.getState().darkMode).toBeTruthy();
-	});
+    expect(useDarkMode.getState().darkMode).toBeTruthy();
+  });
 });

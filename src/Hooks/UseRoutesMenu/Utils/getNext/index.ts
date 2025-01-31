@@ -5,6 +5,8 @@ export function _getNext(
   indexOpt: number,
 ): TRoutesMenu | null {
   const next = options[indexOpt + 1] || null;
-  const realNext = next?.hideTriRoutes ? _getNext(options, indexOpt + 1) : next;
+  const realNext = next?.hide?.otherComponents
+    ? _getNext(options, indexOpt + 1)
+    : next;
   return realNext;
 }

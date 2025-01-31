@@ -1,4 +1,4 @@
-import { Section } from '~/components/shared/Section';
+import { Section } from '~/components/Section';
 
 import { useTranslation } from '~/hooks/useTranslation';
 

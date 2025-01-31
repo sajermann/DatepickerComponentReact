@@ -38,20 +38,6 @@ describe('Components/Button', () => {
   });
 
   it(`should be disabled`, async () => {
-    const funcs = {
-      loadingOptions: {
-        isLoading: false,
-      },
-      successOptions: {
-        setSuccess: vi.fn(),
-        success: false,
-      },
-      failedOptions: {
-        setFailed: vi.fn(),
-        failed: false,
-      },
-    };
-
     let ttt = false;
 
     const onClick = () => {
@@ -64,17 +50,6 @@ describe('Components/Button', () => {
         colorStyle="warning"
         type="button"
         onClick={onClick}
-        withFeedback={{
-          loadingOptions: {
-            isLoading: funcs.loadingOptions.isLoading,
-          },
-          successOptions: {
-            success: funcs.successOptions.success,
-          },
-          failedOptions: {
-            failed: funcs.failedOptions.failed,
-          },
-        }}
       >
         Clique aqui
       </Button>,

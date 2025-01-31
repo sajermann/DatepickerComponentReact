@@ -5,6 +5,8 @@ export function _getPrev(
   indexOpt: number,
 ): TRoutesMenu | null {
   const prev = options[indexOpt - 1] || null;
-  const realPrev = prev?.hideTriRoutes ? _getPrev(options, indexOpt - 1) : prev;
+  const realPrev = prev?.hide?.otherComponents
+    ? _getPrev(options, indexOpt - 1)
+    : prev;
   return realPrev;
 }

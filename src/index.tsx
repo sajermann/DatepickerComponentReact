@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { InjectorProviders } from '~/components/shared/InjectorProviders';
-import { RoutesConfig } from '~/components/shared/RoutesConfig';
+import { InjectorProviders } from '~/components/InjectorProviders';
+import { RoutesConfig } from '~/components/RoutesConfig';
 
 import './index.css';
 
