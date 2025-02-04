@@ -3,8 +3,11 @@ import { _Credits } from './Credits';
 import { OtherComponents } from './OtherComponents';
 import { TableOfContents } from './TableOfContents';
 
+const URL_BASENAME = `#/${import.meta.env.VITE_URL_BASENAME}`;
+const HOME_URL = [URL_BASENAME, '/', '#/', ''];
+
 export function _Sidebar() {
-  if (location.pathname === '/') {
+  if (HOME_URL.includes(location.hash)) {
     return null;
   }
   return (

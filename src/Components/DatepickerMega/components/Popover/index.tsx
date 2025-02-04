@@ -1,5 +1,5 @@
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
+import { ComponentPropsWithoutRef } from 'react';
 import { managerClassNames } from '~/utils/managerClassNames';
 
 const Popover = PopoverPrimitive.Root;
@@ -19,28 +19,28 @@ const PopoverArrow = ({
   />
 );
 
-const PopoverContent = forwardRef<
-  ElementRef<typeof PopoverPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = 'center', sideOffset = 4, ...props }, ref) => (
+const PopoverContent = ({
+  className,
+  align = 'center',
+  sideOffset = 4,
+  ...props
+}: ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
-      ref={ref}
       align={align}
       sideOffset={sideOffset}
       className={managerClassNames(
         [
-          { 'data-[state=open]:animate-enter rounded-lg bg-transparent': true },
-          { 'data-[state=closed]:animate-leave z-[1] backdrop-blur-md': true },
-          { 'shadow-lg shadow-black/25 dark:shadow-white/25 p-1': true },
-          { 'border h-full': true },
+          'data-[state=open]:animate-enter rounded-lg bg-transparent',
+          'data-[state=closed]:animate-leave z-[1] backdrop-blur-md',
+          'shadow-lg shadow-black/25 dark:shadow-white/25 p-1 border h-full',
         ],
         className,
       )}
       {...props}
     />
   </PopoverPrimitive.Portal>
-));
+);
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
 export {
