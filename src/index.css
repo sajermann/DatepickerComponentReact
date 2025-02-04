@@ -82,7 +82,7 @@ a {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 4.5rem; /* Height Header */
+  scroll-padding-top: 1rem; /* Height Header */
 }
 
 body {

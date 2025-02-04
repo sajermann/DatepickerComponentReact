@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { useEffect } from 'react';
+// biome-ignore lint/nursery/noRestrictedImports: This is root factory
 import { useTranslation as useTranslationOficial } from 'react-i18next';
 
 type TUseTranslationProps = {

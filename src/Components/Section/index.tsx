@@ -31,7 +31,7 @@ export const Section = memo(
   ({ children, className, title, variant }: Props) => (
     <section
       className={managerClassNames([
-        { 'flex flex-col gap-2 w-full': true },
+        'flex flex-col gap-2 w-fit',
         { [className as string]: className },
       ])}
     >

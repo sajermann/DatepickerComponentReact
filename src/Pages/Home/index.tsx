@@ -9,8 +9,6 @@ export function Home() {
   return (
     <main className="h-full gap-5 flex flex-col">
       <div className="flex flex-col items-center justify-center gap-2">
-        arrumar o tamanho do main, no mobile colocar um padd pequeno e arrumar
-        barra rolagem
         <p>
           <strong>{`${translate('WELCOME')} - ${APPLICATION_NAME}`}</strong>
         </p>

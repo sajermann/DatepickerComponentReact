@@ -51,6 +51,16 @@
         "noMisleadingInstantiator": "error",
         "noUnsafeDeclarationMerging": "error",
         "useNamespaceKeyword": "error"
+      },
+      "nursery": {
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "react-i18next": "Try import from '~/hooks/useTranslation'"
+            }
+          }
+        }
       }
     },
     "ignore": ["**/node_modules"]

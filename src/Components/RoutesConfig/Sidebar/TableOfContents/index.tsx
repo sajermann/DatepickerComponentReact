@@ -21,6 +21,11 @@ export function TableOfContents() {
   const { scrollPosition } = useWindow();
   const { translate, currentLanguage } = useTranslation();
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    element?.scrollIntoView();
+  };
+
   function load() {
     if (isLoadingLazy) return;
 
@@ -74,20 +79,23 @@ export function TableOfContents() {
           {optionsMenu.map(item => (
             <li
               key={`#${item.anchor}`}
-              className={managerClassNames({
-                'pl-6': item.type === 'H2',
-                'pl-12': item.type === 'H3',
-              })}
+              className={managerClassNames([
+                'hover:opacity-70 transition-opacity duration-300',
+                {
+                  'pl-6': item.type === 'H2',
+                  'pl-12': item.type === 'H3',
+                },
+              ])}
             >
-              <a
+              <button
                 className={managerClassNames({
                   '!text-primary-700 border-l-4 border-primary-700 pl-1':
                     item.active,
                 })}
-                href={`#${item.anchor}`}
+                onClick={() => scrollToSection(item.anchor)}
               >
                 {item.title}
-              </a>
+              </button>
             </li>
           ))}
         </ul>

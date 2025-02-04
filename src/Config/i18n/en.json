@@ -1,5 +1,7 @@
 {
   "translations": {
+    "LIGHT_THEME": "Light Theme",
+    "DARK_THEME": "Dark Theme",
     "OTHERS_COMPONENTS": "Others Components",
     "COLLAPSE": "Collapse",
     "EXPAND": "Expand",

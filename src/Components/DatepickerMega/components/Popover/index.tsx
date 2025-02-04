@@ -23,12 +23,14 @@ const PopoverContent = ({
   className,
   align = 'center',
   sideOffset = 4,
+  collisionPadding = 5,
   ...props
 }: ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>) => (
   <PopoverPrimitive.Portal>
     <PopoverPrimitive.Content
       align={align}
       sideOffset={sideOffset}
+      collisionPadding={collisionPadding}
       className={managerClassNames(
         [
           'data-[state=open]:animate-enter rounded-lg bg-transparent',
