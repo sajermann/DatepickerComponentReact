@@ -10,12 +10,15 @@ export default defineConfig(({ mode }) => {
   console.log({ VITE_URL_BASENAME, mode });
 
   return {
+    base: `/${VITE_URL_BASENAME}`,
+
     server: {
       port: 5000,
+      host: true,
     },
-    base: VITE_URL_BASENAME,
     preview: {
       port: 8080,
+      host: true,
     },
     plugins: [react(), tailwindcss(), Pages()],
     resolve: {
