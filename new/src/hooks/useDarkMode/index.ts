@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { _handleChangeDarkModeInDom } from '~/hooks/useDarkMode/Utils';
-import { IUseDarkModeZustand } from './Interface';
+import { _handleChangeDarkModeInDom } from '~/hooks/useDarkMode/utils';
+import { IUseDarkModeZustand } from './interface';
 
 const IDENTIFIER = `${import.meta.env.VITE_APPLICATION_IDENTIFIER}:darkMode`;
 
