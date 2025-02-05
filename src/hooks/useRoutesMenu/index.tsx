@@ -18,6 +18,12 @@ const DatepickerPage = lazy(() =>
   })),
 );
 
+const NotFoundPage = lazy(() =>
+  import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
+    default: NotFound,
+  })),
+);
+
 export function useRoutesMenu() {
   const { translate, currentLanguage } = useTranslation();
   const location = useLocation();
@@ -45,7 +51,7 @@ export function useRoutesMenu() {
         {
           name: 'NotFound',
           path: '*',
-          element: <Home />,
+          element: <NotFoundPage />,
           label: translate('NOT_FOUND'),
           hide: {
             home: true,
