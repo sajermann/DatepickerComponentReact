@@ -2,7 +2,6 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 // biome-ignore lint/nursery/noRestrictedImports: Config file
 import { initReactI18next } from 'react-i18next';
-import { i18nextPlugin } from 'translation-check';
 import en from './en.json';
 import ptBr from './pt-br.json';
 
@@ -11,7 +10,6 @@ const IS_PRODUCTION_MODE = import.meta.env.VITE_MODE === 'production';
 i18n
   .use(LanguageDetector)
   .use(initReactI18next)
-  .use(i18nextPlugin)
   .init({
     // we init with resources
     resources: {
