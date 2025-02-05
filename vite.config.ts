@@ -7,12 +7,13 @@ import Pages from 'vite-plugin-pages';
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const { VITE_URL_BASENAME } = { ...loadEnv(mode, process.cwd()) };
-  console.log({ VITE_URL_BASENAME });
-
+  console.log({ VITE_URL_BASENAME, mode });
+  const base = mode !== 'development' ? VITE_URL_BASENAME : undefined;
   return {
     server: {
       port: 5000,
     },
+    base,
     preview: {
       port: 8080,
     },
