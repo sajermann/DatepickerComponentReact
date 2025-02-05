@@ -10,7 +10,7 @@ const LAST_COMMIT_DATE = import.meta.env.VITE_LAST_COMMIT_DATE;
 const TOTAL_COMMITS = import.meta.env.VITE_TOTAL_COMMITS;
 
 export function Version() {
-  console.log({
+  console.table({
     DEPLOY_VERSION,
     DEPLOY_TIME,
     COMMIT_HASH,
