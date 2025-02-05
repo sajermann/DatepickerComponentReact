@@ -17,6 +17,12 @@ export default defineConfig(({ mode }) => {
     preview: {
       port: 8080,
     },
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        // error: './404.html',
+      },
+    },
     plugins: [react(), tailwindcss(), Pages()],
     resolve: {
       alias: {
