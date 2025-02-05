@@ -8,7 +8,7 @@ import Pages from 'vite-plugin-pages';
 export default defineConfig(({ mode }) => {
   const { VITE_URL_BASENAME } = { ...loadEnv(mode, process.cwd()) };
   console.log({ VITE_URL_BASENAME, mode });
-  const base = mode !== 'development' ? VITE_URL_BASENAME : undefined;
+
   return {
     server: {
       port: 5000,
@@ -16,12 +16,6 @@ export default defineConfig(({ mode }) => {
     base: VITE_URL_BASENAME,
     preview: {
       port: 8080,
-    },
-    rollupOptions: {
-      input: {
-        main: './index.html',
-        // error: './404.html',
-      },
     },
     plugins: [react(), tailwindcss(), Pages()],
     resolve: {

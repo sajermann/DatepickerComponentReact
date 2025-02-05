@@ -3,13 +3,6 @@ import { BreadcrumbsProvider } from '~/hooks/useBreadcrumbs';
 import { FontSizeProvider } from '~/hooks/useFontSize';
 import { Config } from './Config';
 
-const BASENAME =
-  import.meta.env.VITE_MODE === 'production'
-    ? import.meta.env.VITE_URL_BASENAME
-    : undefined;
-
-const t = import.meta.env.VITE_URL_BASENAME;
-
 import '~/config/i18n';
 
 export function InjectorProviders({ children }: { children: React.ReactNode }) {
