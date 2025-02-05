@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 5000,
     },
-    base,
+    base: VITE_URL_BASENAME,
     preview: {
       port: 8080,
     },

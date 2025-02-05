@@ -8,11 +8,13 @@ const BASENAME =
     ? import.meta.env.VITE_URL_BASENAME
     : undefined;
 
+const t = import.meta.env.VITE_URL_BASENAME;
+
 import '~/config/i18n';
 
 export function InjectorProviders({ children }: { children: React.ReactNode }) {
   return (
-    <HashRouter basename={BASENAME}>
+    <HashRouter>
       <BreadcrumbsProvider>
         <FontSizeProvider>
           <Config />
