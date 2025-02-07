@@ -1,3 +1,5 @@
+import { Fragment } from 'react/jsx-runtime';
+import { Divider } from '~/components/Divider';
 import { Section } from '~/components/Section';
 import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
@@ -10,6 +12,18 @@ import { ReadOnly } from './components/ReadOnly';
 import { Timer } from './components/Timer';
 import { Trigger } from './components/Trigger';
 
+const COMPONENTS = [
+  // { e: <TodoList /> },
+  // { e: <OnChange /> },
+  // { e: <DefaultValue /> },
+  // { e: <Controlled /> },
+  // { e: <Composition /> },
+  // { e: <Disabled /> },
+  // { e: <ReadOnly /> },
+  // { e: <Trigger /> },
+  { e: <Timer /> },
+];
+
 export function DatepickerPage() {
   const { translate } = useTranslation();
 
@@ -18,17 +32,14 @@ export function DatepickerPage() {
       <Section title="Datepicker Mega" variant="h1">
         <p>{`${translate('IMPLEMENTS_COMPONENT')} Datepicker Mega`}</p>
         <p>{`${translate('DATEPICKER_MEGA_PAGE_1', { lib: '@rehookify/datepicker' })}`}</p>
-      </Section>
 
-      <TodoList />
-      <OnChange />
-      <DefaultValue />
-      <Controlled />
-      <Composition />
-      <Disabled />
-      <ReadOnly />
-      <Trigger />
-      <Timer />
+        {COMPONENTS.map(({ e }, i) => (
+          <Fragment key={i}>
+            {e}
+            <Divider />
+          </Fragment>
+        ))}
+      </Section>
 
       {/* <Section title={translate('DATE')} variant="h2">
 				<ComponentBlock>

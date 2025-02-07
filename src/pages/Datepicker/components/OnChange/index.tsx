@@ -22,10 +22,6 @@ export function OnChange() {
           <DatepickerMega.Month />
           <DatepickerMega.Divider />
           <DatepickerMega.Year />
-          {/* <DatepickerMega.Divider> - </DatepickerMega.Divider>
-								<DatepickerMega.Hour />
-								<DatepickerMega.Divider> : </DatepickerMega.Divider>
-								<DatepickerMega.Minute /> */}
           <DatepickerMega.PickerTrigger>
             <CalendarIcon />
           </DatepickerMega.PickerTrigger>

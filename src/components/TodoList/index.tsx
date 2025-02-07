@@ -16,7 +16,7 @@ export function TodoList() {
       ])}
     >
       <header className="border-b">
-        <Section title="Todo List" className="ml-7 my-2" variant="h2" />
+        <Section title="Todo List" className="pl-7 my-2" variant="h2" />
       </header>
 
       <main
