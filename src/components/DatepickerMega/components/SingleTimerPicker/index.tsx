@@ -1,20 +1,13 @@
 import {
-  useContextTime,
-  useContextTimePropGetters,
-  useDatePicker,
   useDatePickerState,
   useTime,
   useTimePropGetter,
 } from '@rehookify/datepicker';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
-import { getDayClassName, onChangeDatepicker } from '../../utils';
-import { Button } from '../Button';
+import { getTimesClassName, onChangeTimepicker } from '../../utils';
 import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
-import SelectorVertical from '../SelectorVertical';
 
 export function SingleTimerPicker() {
   const { currentLanguage } = useTranslation();
@@ -22,36 +15,31 @@ export function SingleTimerPicker() {
     date,
     setDate,
     onChange,
-    inputDayRef,
-    inputMonthRef,
-    inputYearRef,
+    inputMinuteRef,
     setIsOpenCalendar,
     rootRef,
-    disabledDates,
-    disabledWeeks,
-    minDate,
-    maxDate,
+    intervalTime = 30,
+    inputHourRef,
+    isAmPmMode,
   } = useDatepickerMega();
-  const t = date?.current.date ? [date.current.date] : [];
   const dpState = useDatePickerState({
-    selectedDates: date?.current.date ? [date.current.date] : [],
-    onDatesChange: console.log,
+    selectedDates: date?.current.date ? [date.current.date] : [new Date()],
+    focusDate: date?.current.date ? date.current.date : new Date(),
+    onDatesChange: () => {},
     time: {
-      interval: 12,
+      interval: intervalTime,
+      // minTime: {
+      //   h: 1,
+      //   m: 10,
+      // },
+    },
+    locale: {
+      hour12: isAmPmMode,
     },
   });
 
   const { time } = useTime(dpState);
   const { timeButton } = useTimePropGetter(dpState);
-  const [isOpenSelectorMonthYear, setIsOpenSelectorMonthYear] = useState(false);
-
-  console.log({ t });
-
-  const getTimesClassName = (className: string, { selected, disabled }: any) =>
-    managerClassNames(className, {
-      'bg-slate-700 text-white hover:bg-slate-700 opacity-100': selected,
-      'opacity-25 cursor-not-allowed': disabled,
-    });
 
   return (
     <PopoverPortal>
@@ -59,7 +47,7 @@ export function SingleTimerPicker() {
         <PopoverArrow />
 
         <section
-          className={managerClassNames('flex flex-col min-w-48')}
+          className={managerClassNames('flex flex-col h-56 overflow-auto')}
           style={{
             width: rootRef.current?.getBoundingClientRect().width
               ? rootRef.current.getBoundingClientRect().width - 10
@@ -69,10 +57,30 @@ export function SingleTimerPicker() {
           <main>
             <ul>
               {time.map(t => (
-                <li key={t.$date.toString()}>
+                <li
+                  className="flex items-center justify-center p-2"
+                  key={t.$date.toString()}
+                >
                   <button
-                    className={getTimesClassName('text-xs px-8', t)}
+                    className={getTimesClassName(
+                      'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs px-4',
+                      t,
+                    )}
                     {...timeButton(t)}
+                    onClick={e => {
+                      timeButton(t).onClick?.(e);
+                      console.log(t.time)
+                      onChangeTimepicker({
+                        date: t.$date,
+                        hourRef: inputHourRef,
+                        minuteRef: inputMinuteRef,
+                        setDate,
+                        onChange,
+                        isAmPmMode,
+                      });
+
+                      setIsOpenCalendar(false);
+                    }}
                   >
                     {t.time}
                   </button>

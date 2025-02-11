@@ -1,6 +1,7 @@
-import { DPDay, DPMonth, DPYear } from '@rehookify/datepicker';
+import { DPDay, DPMonth, DPTime, DPYear } from '@rehookify/datepicker';
 /* eslint-disable no-param-reassign */
 import { isValid, lastDayOfMonth, parse } from 'date-fns';
+import { RefObject } from 'react';
 import { managerClassNames } from '~/utils/managerClassNames';
 import {
   TAdjustDay,
@@ -64,7 +65,8 @@ export const adjustDay = ({ date, dayRef, setDate, onChange }: TAdjustDay) => {
 };
 
 export const formatTwoNumbers = (value: string) => {
-  if (Number(value) < 10 && Number(value) > 0) {
+  console.log({ value });
+  if (Number(value) < 10 && Number(value) > -1) {
     return `0${Number(value)}`;
   }
   return value;
@@ -367,10 +369,18 @@ export const onChangeMinute = ({
 export const onClickToggleAmPm = ({ setDate, onChange }: TClickToggleAmPm) => {
   setDate(prev => {
     if (prev.date) {
+      console.log('TESTAR MEIO DIA TA DANDO RUIm', prev.hour, prev.clockType);
       if (prev.clockType === 'pm') {
         prev.date.setHours(prev.date.getHours() - 12);
+        // esse if ta zuando os horarios 0
+        if (prev?.hour) {
+          prev.hour = prev.hour - 12;
+        }
       } else {
         prev.date.setHours(prev.date.getHours() + 12);
+        if (prev?.hour) {
+          prev.hour = prev.hour + 12;
+        }
       }
 
       prev.iso = prev.date.toISOString();
@@ -379,6 +389,7 @@ export const onClickToggleAmPm = ({ setDate, onChange }: TClickToggleAmPm) => {
       ...prev,
       clockType: prev.clockType === 'am' ? 'pm' : 'am',
     };
+
     if (onChange) {
       onChange(newValues);
     }
@@ -424,6 +435,62 @@ export const onChangeDatepicker = ({
   });
 };
 
+type TChangeTimepicker = {
+  date: Date;
+  onChange?: (data: TDate) => void;
+  setDate: (value: TDate | ((prevState: TDate) => TDate)) => void;
+  hourRef: RefObject<HTMLInputElement | null>;
+  minuteRef: RefObject<HTMLInputElement | null>;
+  isAmPmMode?: boolean;
+};
+
+export const onChangeTimepicker = ({
+  date,
+  onChange,
+  setDate,
+  hourRef,
+  minuteRef,
+  isAmPmMode,
+}: TChangeTimepicker) => {
+  setDate(prev => {
+    const newValues = {
+      ...prev,
+      date,
+      hour: date.getHours() ?? null,
+      minute: date.getMinutes() ?? null,
+      iso: date.toISOString() || null,
+      clockType: date.getHours() > 11 ? 'pm' : 'am',
+    };
+    if (hourRef?.current) {
+      let fixHour = 0;
+      if (isAmPmMode && (newValues.hour === 0 || newValues.hour === 12)) {
+        console.log(`aqui 1`);
+        fixHour = 12;
+      }
+      if (isAmPmMode && newValues.hour > 0) {
+        console.log(`aqui 2`);
+        fixHour = newValues.hour;
+      }
+      if (isAmPmMode && newValues.hour > 12) {
+        console.log(`aqui 3`);
+        fixHour = newValues.hour - 12;
+      }
+      console.log({ fixHour, hour: newValues.hour, isAmPmMode });
+      hourRef.current.value = formatTwoNumbers(fixHour.toString() || '');
+    }
+    if (minuteRef?.current) {
+      minuteRef.current.value = formatTwoNumbers(
+        newValues.minute?.toString() || '',
+      );
+    }
+    if (onChange) {
+      onChange(newValues);
+    }
+
+    return newValues;
+  });
+};
+
 export const getDayClassName = (
   className: string,
   { selected, disabled, inCurrentMonth, now }: DPDay,
@@ -456,3 +523,15 @@ export const getYearClassName = (
     'border border-dashed border-slate-500': active && !selected,
     'opacity-25 cursor-not-allowed': disabled,
   });
+
+export const getTimesClassName = (
+  className: string,
+  { selected, disabled, now }: DPTime,
+) =>
+  managerClassNames(className, [
+    {
+      'bg-slate-700 text-white hover:bg-slate-700 opacity-100': selected,
+      'opacity-25 cursor-not-allowed': disabled,
+      'border border-slate-500': now,
+    },
+  ]);

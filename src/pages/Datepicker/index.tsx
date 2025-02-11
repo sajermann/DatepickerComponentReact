@@ -14,7 +14,7 @@ import { Trigger } from './components/Trigger';
 
 const COMPONENTS = [
   // { e: <TodoList /> },
-  // { e: <OnChange /> },
+  { e: <OnChange /> },
   // { e: <DefaultValue /> },
   // { e: <Controlled /> },
   // { e: <Composition /> },
