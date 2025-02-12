@@ -299,18 +299,22 @@ export const onChangeHour = ({
   temp.target.value = valueTemp;
 
   setDate(prev => {
+    const date = prev.date || new Date();
+    date.setSeconds(0);
+    date.setMilliseconds(0);
     const hourStandard = Number(valueTemp);
     const hourAmPm =
       isAmPm && prev.clockType === 'am' ? hourStandard : hourStandard + 12;
     const adjustedHour = !isAmPm ? hourStandard : hourAmPm;
+    date.setHours(adjustedHour);
 
-    console.log({ adjustedHour });
-    if (prev.date) {
-      prev.date.setHours(adjustedHour);
-      prev.iso = prev.date.toISOString();
-    }
     const newValues = {
       ...prev,
+      date,
+      day: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+      iso: date.toISOString(),
       hour: adjustedHour || null,
     };
     if (onChange) {
@@ -345,12 +349,15 @@ export const onChangeMinute = ({
   temp.target.value = valueTemp;
 
   setDate(prev => {
-    if (prev.date) {
-      prev.date.setMinutes(Number(valueTemp));
-      prev.iso = prev.date.toISOString();
-    }
+    const date = prev.date || new Date();
+    date.setMinutes(Number(valueTemp));
     const newValues = {
       ...prev,
+      date,
+      day: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
+      iso: date.toISOString(),
       minute: Number(valueTemp) || null,
     };
     if (onChange) {
@@ -366,30 +373,30 @@ export const onChangeMinute = ({
   }
 };
 
-export const onClickToggleAmPm = ({ setDate, onChange }: TClickToggleAmPm) => {
+export const onClickToggleAmPm = ({
+  setDate,
+  onChange,
+  inputAmPmRef,
+}: TClickToggleAmPm) => {
   setDate(prev => {
     if (prev.date) {
-      console.log('TESTAR MEIO DIA TA DANDO RUIm', prev.hour, prev.clockType);
       if (prev.clockType === 'pm') {
         prev.date.setHours(prev.date.getHours() - 12);
-        // esse if ta zuando os horarios 0
-        if (prev?.hour) {
-          prev.hour = prev.hour - 12;
-        }
+        prev.hour = prev.date.getHours();
       } else {
         prev.date.setHours(prev.date.getHours() + 12);
-        if (prev?.hour) {
-          prev.hour = prev.hour + 12;
-        }
+        prev.hour = prev.date.getHours();
       }
-
       prev.iso = prev.date.toISOString();
     }
     const newValues: TDate = {
       ...prev,
       clockType: prev.clockType === 'am' ? 'pm' : 'am',
     };
-
+    if (inputAmPmRef.current) {
+      inputAmPmRef.current.value = newValues.clockType || '';
+    }
+    console.log(`opaopaopa`, newValues);
     if (onChange) {
       onChange(newValues);
     }
@@ -453,29 +460,31 @@ export const onChangeTimepicker = ({
   isAmPmMode,
 }: TChangeTimepicker) => {
   setDate(prev => {
-    const newValues = {
+    const newValues: TDate = {
       ...prev,
       date,
+      day: date.getDate(),
+      month: date.getMonth() + 1,
+      year: date.getFullYear(),
       hour: date.getHours() ?? null,
       minute: date.getMinutes() ?? null,
       iso: date.toISOString() || null,
       clockType: date.getHours() > 11 ? 'pm' : 'am',
     };
     if (hourRef?.current) {
-      let fixHour = 0;
+      let fixHour = date.getHours();
       if (isAmPmMode && (newValues.hour === 0 || newValues.hour === 12)) {
         console.log(`aqui 1`);
         fixHour = 12;
       }
-      if (isAmPmMode && newValues.hour > 0) {
+      if (isAmPmMode && newValues.hour !== null && newValues.hour > 0) {
         console.log(`aqui 2`);
         fixHour = newValues.hour;
       }
-      if (isAmPmMode && newValues.hour > 12) {
+      if (isAmPmMode && newValues.hour !== null && newValues.hour > 12) {
         console.log(`aqui 3`);
         fixHour = newValues.hour - 12;
       }
-      console.log({ fixHour, hour: newValues.hour, isAmPmMode });
       hourRef.current.value = formatTwoNumbers(fixHour.toString() || '');
     }
     if (minuteRef?.current) {

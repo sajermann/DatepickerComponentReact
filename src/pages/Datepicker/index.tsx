@@ -9,19 +9,21 @@ import { DefaultValue } from './components/DefaultValue';
 import { Disabled } from './components/Disabled';
 import { OnChange } from './components/OnChange';
 import { ReadOnly } from './components/ReadOnly';
-import { Timer } from './components/Timer';
+import { TimerDefaultValue } from './components/TimerDefaultValue';
+import { TimerOnchange } from './components/TimerOnchange';
 import { Trigger } from './components/Trigger';
 
 const COMPONENTS = [
-  // { e: <TodoList /> },
+  { e: <TodoList /> },
   { e: <OnChange /> },
-  // { e: <DefaultValue /> },
+  { e: <DefaultValue /> },
   // { e: <Controlled /> },
   // { e: <Composition /> },
   // { e: <Disabled /> },
   // { e: <ReadOnly /> },
   // { e: <Trigger /> },
-  { e: <Timer /> },
+  { e: <TimerOnchange /> },
+  { e: <TimerDefaultValue /> },
 ];
 
 export function DatepickerPage() {

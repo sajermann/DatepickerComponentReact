@@ -17,6 +17,7 @@ type DatepickerMegaContextType = {
   inputYearRef: RefObject<HTMLInputElement | null>;
   inputHourRef: RefObject<HTMLInputElement | null>;
   inputMinuteRef: RefObject<HTMLInputElement | null>;
+  inputAmPmRef: RefObject<HTMLInputElement | null>;
   rootRef: RefObject<HTMLDivElement | null>;
   onChange?: (data: TDate) => void;
   defaultDate?: Date;
@@ -71,7 +72,6 @@ export function DatepickerMegaProvider({
     minute: null,
     year: null,
     iso: null,
-    // clockType: isAmPm ? 'pm' : 'am',
     clockType: 'am',
   });
 
@@ -80,6 +80,7 @@ export function DatepickerMegaProvider({
   const inputYearRef = useRef<HTMLInputElement>(null);
   const inputHourRef = useRef<HTMLInputElement>(null);
   const inputMinuteRef = useRef<HTMLInputElement>(null);
+  const inputAmPmRef = useRef<HTMLInputElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
   const setDate = (value: TDate | ((prevState: TDate) => TDate)) => {
@@ -95,11 +96,17 @@ export function DatepickerMegaProvider({
     setDate(prev => {
       const hourNew =
         isAmPmMode && prev.hour && prev.hour > 12 ? prev.hour - 12 : prev.hour;
+      const clockType = prev.hour && prev.hour > 12 ? 'pm' : 'am';
       const values: TDate = {
         ...prev,
         hour: hourNew,
-        clockType: prev.hour && prev.hour > 12 ? 'pm' : 'am',
+        clockType,
       };
+
+      if (inputAmPmRef.current) {
+        inputAmPmRef.current.value = clockType;
+      }
+
       if (inputHourRef.current && hourNew && hourNew > -1) {
         inputHourRef.current.value = hourNew.toString();
       }
@@ -138,6 +145,7 @@ export function DatepickerMegaProvider({
       inputYearRef,
       inputHourRef,
       inputMinuteRef,
+      inputAmPmRef,
       rootRef,
       onChange,
       defaultDate,

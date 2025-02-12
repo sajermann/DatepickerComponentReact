@@ -1,27 +1,26 @@
 import { TimerIcon } from 'lucide-react';
-import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { TDate } from '~/components/DatepickerMega/types';
-import { JsonViewer } from '~/components/JsonViewer';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
-export function Timer() {
-  const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
-    useState<TDate | null>(null);
+export function TimerDefaultValue() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('TIMER')} variant="h2">
+    <Section title={translate('DEFAULT_VALUES')} variant="h2">
+      <p>Arrumar</p>
+      <p>Default Date no AmPm</p>
+      <p>
+        Click no am pm nao funciona pq está com value nele, precisa remover pra
+        ser inserido via ref
+      </p>
+      <p>Arrumar</p>
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput className="w-max">
           <DatepickerMega.Label>{translate('24_HOURS')}</DatepickerMega.Label>
-          <DatepickerMega.Root
-            intervalTime={15}
-            onChange={setLastEventOnChangeRoot}
-          >
-            <DatepickerMega.Hour />
+          <DatepickerMega.Root>
+            <DatepickerMega.Hour defaultValue={new Date().getHours()} />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
+            <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
             <DatepickerMega.PickerTrigger>
               <TimerIcon />
             </DatepickerMega.PickerTrigger>
@@ -32,10 +31,10 @@ export function Timer() {
           <DatepickerMega.Label htmlFor="year-composition">
             {translate('AM_PM')}
           </DatepickerMega.Label>
-          <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
-            <DatepickerMega.Hour />
+          <DatepickerMega.Root onChange={console.log}>
+            <DatepickerMega.Hour defaultValue={new Date().getHours()} />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
+            <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
             <DatepickerMega.AmPmToggle />
             <DatepickerMega.PickerTrigger>
               <TimerIcon />
@@ -43,10 +42,6 @@ export function Timer() {
             <DatepickerMega.SingleTimerPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-        <div className="w-full">
-          <h1>{translate('LAST_EVENT_ONCHANGE_IS_NOT_STATE')}</h1>
-          <JsonViewer value={lastEventOnChangeRoot || {}} />
-        </div>
       </div>
     </Section>
   );
