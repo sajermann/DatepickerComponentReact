@@ -1,5 +1,6 @@
 {
   "translations": {
+    "NOTE_DEFAULT_VALUES_INPUT_HOUR": "Note: For the am/pm pattern, the default time value must be converted before being passed as a prop to the time input.",
     "NO_RESULTS": "No Results",
     "LIGHT_THEME": "Light Theme",
     "DARK_THEME": "Dark Theme",

@@ -83,7 +83,7 @@ export type TChangeMinute = {
 export type TClickToggleAmPm = {
   setDate: (value: TDate | ((prevState: TDate) => TDate)) => void;
   onChange?: (data: TDate) => void;
-  inputAmPmRef: RefObject<HTMLInputElement | null>;
+  amPmRef: RefObject<HTMLInputElement | null>;
 };
 
 export type TChangeDatepicker = {
@@ -93,4 +93,14 @@ export type TChangeDatepicker = {
   dayRef: RefObject<HTMLInputElement | null>;
   yearRef: RefObject<HTMLInputElement | null>;
   monthRef: RefObject<HTMLInputElement | null>;
+};
+
+export type TChangeTimepicker = {
+  date: Date;
+  onChange?: (data: TDate) => void;
+  setDate: (value: TDate | ((prevState: TDate) => TDate)) => void;
+  hourRef: RefObject<HTMLInputElement | null>;
+  minuteRef: RefObject<HTMLInputElement | null>;
+  amPmRef: RefObject<HTMLInputElement | null>;
+  isAmPmMode?: boolean;
 };

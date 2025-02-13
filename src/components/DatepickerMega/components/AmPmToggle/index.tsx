@@ -17,7 +17,7 @@ export function AmPmToggle() {
         onClickToggleAmPm({
           setDate,
           onChange,
-          inputAmPmRef,
+          amPmRef: inputAmPmRef,
         });
       }}
     />

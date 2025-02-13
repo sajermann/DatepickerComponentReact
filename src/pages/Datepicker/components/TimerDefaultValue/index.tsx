@@ -1,5 +1,6 @@
 import { TimerIcon } from 'lucide-react';
 import * as DatepickerMega from '~/components/DatepickerMega';
+import { convertHour24ToAmPm } from '~/components/DatepickerMega/utils';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
@@ -7,13 +8,6 @@ export function TimerDefaultValue() {
   const { translate } = useTranslation();
   return (
     <Section title={translate('DEFAULT_VALUES')} variant="h2">
-      <p>Arrumar</p>
-      <p>Default Date no AmPm</p>
-      <p>
-        Click no am pm nao funciona pq está com value nele, precisa remover pra
-        ser inserido via ref
-      </p>
-      <p>Arrumar</p>
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput className="w-max">
           <DatepickerMega.Label>{translate('24_HOURS')}</DatepickerMega.Label>
@@ -32,7 +26,12 @@ export function TimerDefaultValue() {
             {translate('AM_PM')}
           </DatepickerMega.Label>
           <DatepickerMega.Root onChange={console.log}>
-            <DatepickerMega.Hour defaultValue={new Date().getHours()} />
+            <DatepickerMega.Hour
+              defaultValue={convertHour24ToAmPm({
+                isAmPmMode: true,
+                hour24: new Date(new Date().setHours(14)).getHours(),
+              })}
+            />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
             <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
             <DatepickerMega.AmPmToggle />
@@ -43,6 +42,9 @@ export function TimerDefaultValue() {
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
       </div>
+      <p className="italic font-bold text-sm">
+        {translate('NOTE_DEFAULT_VALUES_INPUT_HOUR')}
+      </p>
     </Section>
   );
 }

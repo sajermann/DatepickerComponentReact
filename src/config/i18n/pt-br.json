@@ -1,5 +1,6 @@
 {
   "translations": {
+    "NOTE_DEFAULT_VALUES_INPUT_HOUR": "Obs: Para o padrão am/pm, o valor padrão da hora deve estar convertida antes se ser passada como prop para o input de hora.",
     "NO_RESULTS": "Sem Resultados",
     "LIGHT_THEME": "Tema Claro",
     "DARK_THEME": "Tema Escuro",

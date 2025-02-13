@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
-import { getDayClassName, onChangeDatepicker } from '../../utils';
+import { onChangeDatepicker } from '../../utils';
 import { Button } from '../Button';
 import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
 import SelectorVertical from '../SelectorVertical';
@@ -200,10 +200,16 @@ export function SingleDayPicker() {
                   <button
                     type="button"
                     key={d.$date.toString()}
-                    className={getDayClassName(
+                    className={managerClassNames([
                       'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
-                      d,
-                    )}
+                      {
+                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                          d.selected,
+                        'opacity-25 cursor-not-allowed': d.disabled,
+                        'opacity-50': !d.inCurrentMonth,
+                        'border border-slate-500': d.now,
+                      },
+                    ])}
                     {...dayButton(d)}
                   >
                     {d.day}

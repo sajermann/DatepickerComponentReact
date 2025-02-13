@@ -3,19 +3,18 @@ import {
   useTime,
   useTimePropGetter,
 } from '@rehookify/datepicker';
-import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
-import { getTimesClassName, onChangeTimepicker } from '../../utils';
+import { onChangeTimepicker } from '../../utils';
 import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
 
 export function SingleTimerPicker() {
-  const { currentLanguage } = useTranslation();
   const {
     date,
     setDate,
     onChange,
     inputMinuteRef,
+    inputAmPmRef,
     setIsOpenCalendar,
     rootRef,
     intervalTime = 30,
@@ -62,14 +61,19 @@ export function SingleTimerPicker() {
                   key={t.$date.toString()}
                 >
                   <button
-                    className={getTimesClassName(
+                    className={managerClassNames([
                       'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs px-4',
-                      t,
-                    )}
+                      {
+                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                          t.selected,
+                        'opacity-25 cursor-not-allowed': t.disabled,
+                        'border border-slate-500': t.now,
+                      },
+                    ])}
                     {...timeButton(t)}
                     onClick={e => {
                       timeButton(t).onClick?.(e);
-                      console.log(t.time)
+                      console.log(t.time);
                       onChangeTimepicker({
                         date: t.$date,
                         hourRef: inputHourRef,
@@ -77,6 +81,7 @@ export function SingleTimerPicker() {
                         setDate,
                         onChange,
                         isAmPmMode,
+                        amPmRef: inputAmPmRef,
                       });
 
                       setIsOpenCalendar(false);

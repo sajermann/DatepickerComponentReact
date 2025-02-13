@@ -5,11 +5,7 @@ import { useState } from 'react';
 import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerMega } from '../../hooks';
-import {
-  getMonthClassName,
-  getYearClassName,
-  onChangeDatepicker,
-} from '../../utils';
+import { onChangeDatepicker } from '../../utils';
 import { Button } from '../Button';
 import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
 
@@ -130,10 +126,17 @@ export function SingleMonthPicker() {
                   <button
                     type="button"
                     key={y.year.toString()}
-                    className={getYearClassName(
+                    className={managerClassNames([
                       'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
-                      y,
-                    )}
+                      {
+                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                          y.selected,
+                        'border border-slate-500': y.now && !y.selected,
+                        'border border-dashed border-slate-500':
+                          y.active && !y.selected,
+                        'opacity-25 cursor-not-allowed': y.disabled,
+                      },
+                    ])}
                     {...yearButton(y)}
                     onClick={e => {
                       yearButton?.(y).onClick?.(e);
@@ -158,10 +161,17 @@ export function SingleMonthPicker() {
                   <button
                     type="button"
                     key={m.month.toString()}
-                    className={getMonthClassName(
+                    className={managerClassNames([
                       'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
-                      m,
-                    )}
+                      {
+                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                          m.selected,
+                        'border border-slate-500': m.now && !m.selected,
+                        'border border-dashed border-slate-500':
+                          m.active && !m.selected,
+                        'opacity-25 cursor-not-allowed': m.disabled,
+                      },
+                    ])}
                     {...monthButton(m)}
                     onClick={e => {
                       monthButton?.(m).onClick?.(e);
