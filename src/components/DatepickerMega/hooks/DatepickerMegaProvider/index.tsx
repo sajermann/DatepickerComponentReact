@@ -34,6 +34,14 @@ type DatepickerMegaContextType = {
   hasTrigger?: boolean;
   setHasTrigger: (value: boolean | ((prevState: boolean) => boolean)) => void;
   intervalTime?: number;
+  minTime?: {
+    h: number;
+    m: number;
+  };
+  maxTime?: {
+    h: number;
+    m: number;
+  };
 };
 
 export const DatepickerMegaContext = createContext(
@@ -49,6 +57,14 @@ type TDatepickerMegaProviderProps = {
   minDate?: Date;
   maxDate?: Date;
   intervalTime?: number;
+  minTime?: {
+    h: number;
+    m: number;
+  };
+  maxTime?: {
+    h: number;
+    m: number;
+  };
 };
 
 export function DatepickerMegaProvider({
@@ -60,6 +76,8 @@ export function DatepickerMegaProvider({
   minDate,
   maxDate,
   intervalTime,
+  minTime,
+  maxTime,
 }: TDatepickerMegaProviderProps) {
   const [isAmPmMode, setIsAmPmMode] = useState(false);
   const [isOpenCalendar, setIsOpenCalendar] = useState(false);
@@ -160,6 +178,8 @@ export function DatepickerMegaProvider({
       hasTrigger,
       setHasTrigger,
       intervalTime,
+      minTime,
+      maxTime,
     }),
     [
       date,
@@ -171,6 +191,8 @@ export function DatepickerMegaProvider({
       maxDate,
       hasTrigger,
       intervalTime,
+      minTime,
+      maxTime,
     ],
   );
 

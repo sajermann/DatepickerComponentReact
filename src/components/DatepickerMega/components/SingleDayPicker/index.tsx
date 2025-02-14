@@ -205,7 +205,7 @@ export function SingleDayPicker() {
                       {
                         'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
                           d.selected,
-                        'opacity-25 cursor-not-allowed': d.disabled,
+                        'opacity-25 !cursor-not-allowed': d.disabled,
                         'opacity-50': !d.inCurrentMonth,
                         'border border-slate-500': d.now,
                       },

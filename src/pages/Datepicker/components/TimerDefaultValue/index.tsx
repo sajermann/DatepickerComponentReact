@@ -1,6 +1,9 @@
 import { TimerIcon } from 'lucide-react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { convertHour24ToAmPm } from '~/components/DatepickerMega/utils';
+import {
+  convertHour24ToAmPm,
+  formatTwoNumbers,
+} from '~/components/DatepickerMega/utils';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
@@ -27,13 +30,19 @@ export function TimerDefaultValue() {
           </DatepickerMega.Label>
           <DatepickerMega.Root onChange={console.log}>
             <DatepickerMega.Hour
-              defaultValue={convertHour24ToAmPm({
-                isAmPmMode: true,
-                hour24: new Date(new Date().setHours(14)).getHours(),
-              })}
+              defaultValue={formatTwoNumbers(
+                convertHour24ToAmPm({
+                  isAmPmMode: true,
+                  hour24: new Date(new Date().setHours(14)).getHours(),
+                }).toString(),
+              )}
             />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
+            <DatepickerMega.Minute
+              defaultValue={formatTwoNumbers(
+                new Date().getMinutes().toString(),
+              )}
+            />
             <DatepickerMega.AmPmToggle />
             <DatepickerMega.PickerTrigger>
               <TimerIcon />

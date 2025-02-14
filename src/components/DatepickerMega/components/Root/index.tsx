@@ -12,6 +12,14 @@ type TProps = {
   minDate?: Date;
   maxDate?: Date;
   intervalTime?: number;
+  minTime?: {
+    h: number;
+    m: number;
+  };
+  maxTime?: {
+    h: number;
+    m: number;
+  };
 };
 
 export function Root({
@@ -23,6 +31,8 @@ export function Root({
   minDate,
   maxDate,
   intervalTime,
+  minTime,
+  maxTime,
 }: TProps) {
   return (
     <DatepickerMegaProvider
@@ -33,6 +43,8 @@ export function Root({
       minDate={minDate}
       maxDate={maxDate}
       intervalTime={intervalTime}
+      minTime={minTime}
+      maxTime={maxTime}
     >
       <Container>{children}</Container>
     </DatepickerMegaProvider>

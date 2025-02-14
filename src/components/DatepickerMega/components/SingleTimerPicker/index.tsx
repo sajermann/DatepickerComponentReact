@@ -20,17 +20,19 @@ export function SingleTimerPicker() {
     intervalTime = 30,
     inputHourRef,
     isAmPmMode,
+    disabledDates,
+    minTime,
+    maxTime,
   } = useDatepickerMega();
+
   const dpState = useDatePickerState({
     selectedDates: date?.current.date ? [date.current.date] : [new Date()],
     focusDate: date?.current.date ? date.current.date : new Date(),
     onDatesChange: () => {},
     time: {
       interval: intervalTime,
-      // minTime: {
-      //   h: 1,
-      //   m: 10,
-      // },
+      minTime,
+      maxTime,
     },
     locale: {
       hour12: isAmPmMode,
@@ -39,6 +41,18 @@ export function SingleTimerPicker() {
 
   const { time } = useTime(dpState);
   const { timeButton } = useTimePropGetter(dpState);
+
+  const isDisabledTime = (date: Date) => {
+    const disabledIso = disabledDates?.map(item => item.toISOString());
+    if (date.getHours() === 11) {
+      console.log(
+        `isDisabledTime`,
+        { date: date.toISOString(), disabledIso },
+        disabledIso?.includes(date.toISOString()),
+      );
+    }
+    return disabledIso?.includes(date.toISOString());
+  };
 
   return (
     <PopoverPortal>
@@ -66,11 +80,13 @@ export function SingleTimerPicker() {
                       {
                         'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
                           t.selected,
-                        'opacity-25 cursor-not-allowed': t.disabled,
+                        'opacity-25 !cursor-not-allowed':
+                          isDisabledTime(t.$date) || t.disabled,
                         'border border-slate-500': t.now,
                       },
                     ])}
                     {...timeButton(t)}
+                    disabled={isDisabledTime(t.$date) || timeButton(t).disabled}
                     onClick={e => {
                       timeButton(t).onClick?.(e);
                       console.log(t.time);

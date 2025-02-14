@@ -8,8 +8,12 @@ export function Disabled() {
   const { translate } = useTranslation();
   return (
     <Section title={translate('DISABLED_DATES')} variant="h2">
+      <p>
+        Arrumar digitacao de data bloqueada (Se selecionar pelo datepicker
+        depois mudar no input)
+      </p>
       <div className="flex gap-2 flex-wrap items-end">
-        <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
             {translate('YESTERDAY_AND_TOMORROW')}
           </DatepickerMega.Label>
@@ -27,7 +31,7 @@ export function Disabled() {
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
             {translate('SATURDAYS_AND_SUNDAYS')}
           </DatepickerMega.Label>
@@ -43,7 +47,7 @@ export function Disabled() {
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>{translate('MIN_DATE')}</DatepickerMega.Label>
           <DatepickerMega.Root minDate={addDays(new Date(), -7)}>
             <DatepickerMega.Day />
@@ -57,7 +61,7 @@ export function Disabled() {
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput className="w-max">
+        <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>{translate('MAX_DATE')}</DatepickerMega.Label>
           <DatepickerMega.Root maxDate={addDays(new Date(), 7)}>
             <DatepickerMega.Day />
