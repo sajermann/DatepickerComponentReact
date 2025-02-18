@@ -1,88 +1,120 @@
 import { isValid, parse } from 'date-fns';
 import { ChangeEvent, FocusEvent } from 'react';
-import { adjustDay, focusNextInput } from '../../utils';
 import { useDatepickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
+import { adjustDay, focusNextInput } from '../../utils';
 
 export function useInputYearProps() {
-	const { inputDayRef, inputYearRef, date, setDate, onChange } =
-		useDatepickerMega();
-	const { isDisabledDate } = useIsValidDate();
+  const { inputDayRef, inputMonthRef, inputYearRef, date, setDate, onChange } =
+    useDatepickerMega();
+  const { isDisabledDate } = useIsValidDate();
 
-	const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
-		const { value } = event.target;
+  const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
+    const { value } = event.target;
 
-		if (inputYearRef?.current && (value === '0' || isDisabledDate())) {
-			inputYearRef.current.value = '';
-			setDate(prev => {
-				const newValues: TDate = {
-					...prev,
-					year: null,
-					date: null,
-					iso: null,
-				};
-				if (onChange) {
-					onChange(newValues);
-				}
-				return newValues;
-			});
-		}
+    if (inputYearRef?.current && value === '0') {
+      inputYearRef.current.value = '';
+      setDate(prev => {
+        const newValues: TDate = {
+          ...prev,
+          year: null,
+          date: null,
+          iso: null,
+        };
+        if (onChange) {
+          onChange(newValues);
+        }
+        return newValues;
+      });
+    }
 
-		adjustDay({
-			date: date.current,
-			dayRef: inputDayRef,
-			setDate,
-			onChange,
-		});
-	};
+    if (isDisabledDate()) {
+      if (inputDayRef?.current?.value) {
+        inputDayRef?.current.focus();
+        inputDayRef.current.value = '';
+      }
+      if (inputMonthRef?.current?.value) {
+        inputMonthRef.current.value = '';
+      }
+      if (inputYearRef?.current?.value) {
+        inputYearRef.current.value = '';
+      }
+      setDate(prev => {
+        const newValues: TDate = {
+          ...prev,
+          day: null,
+          month: null,
+          year: null,
+          date: null,
+          iso: null,
+        };
+        if (onChange) {
+          onChange(newValues);
+        }
+        return newValues;
+      });
 
-	const onChangeInternal = (event: ChangeEvent<HTMLInputElement>) => {
-		const temp = { ...event };
-		let valueTemp = temp.target.value;
-		valueTemp = valueTemp.replace(/[^0-9]/g, '');
-		if (valueTemp.length > 4) {
-			valueTemp = valueTemp.substring(0, 4);
-		}
-		temp.target.value = valueTemp;
+      return;
+    }
 
-		const dateComplete =
-			date.current.day && date.current.month && valueTemp
-				? parse(
-						`${Number(valueTemp)}-${date.current.month}-${date.current.day}`,
-						'yyyy-MM-dd',
-						new Date(),
-					)
-				: null;
-		if (dateComplete) {
-			dateComplete.setHours(0, 0, 0, 0);
-		}
+    adjustDay({
+      date: date.current,
+      dayRef: inputDayRef,
+      setDate,
+      onChange,
+    });
+  };
 
-		setDate(prev => {
-			const newValues: TDate = {
-				...prev,
-				year: Number(valueTemp) || null,
-				date: isValid(dateComplete) && dateComplete ? dateComplete : null,
-				iso:
-					isValid(dateComplete) && dateComplete
-						? dateComplete.toISOString()
-						: null,
-			};
-			if (onChange) {
-				onChange(newValues);
-			}
+  const onChangeInternal = (event: ChangeEvent<HTMLInputElement>) => {
+    const temp = { ...event };
+    let valueTemp = temp.target.value;
+    valueTemp = valueTemp.replace(/[^0-9]/g, '');
+    if (valueTemp.length > 4) {
+      valueTemp = valueTemp.substring(0, 4);
+    }
+    temp.target.value = valueTemp;
 
-			return { ...newValues };
-		});
+    const dateComplete =
+      date.current.day && date.current.month && valueTemp
+        ? parse(
+            `${Number(valueTemp)}-${date.current.month}-${date.current.day}`,
+            'yyyy-MM-dd',
+            new Date(),
+          )
+        : null;
+    if (dateComplete) {
+      dateComplete.setHours(0, 0, 0, 0);
+    }
 
-		if (valueTemp.length > 3 && inputYearRef?.current) {
-			adjustDay({ date: date.current, dayRef: inputDayRef, setDate, onChange });
-			focusNextInput(inputYearRef.current);
-		}
-	};
+    setDate(prev => {
+      const newValues: TDate = {
+        ...prev,
+        year: Number(valueTemp) || null,
+        date: isValid(dateComplete) && dateComplete ? dateComplete : null,
+        iso:
+          isValid(dateComplete) && dateComplete
+            ? dateComplete.toISOString()
+            : null,
+      };
+      if (onChange) {
+        onChange(newValues);
+      }
 
-	return {
-		onBlur,
-		onChange: onChangeInternal,
-		ref: inputYearRef,
-	};
+      return { ...newValues };
+    });
+
+    if (valueTemp.length > 3 && inputYearRef?.current) {
+      adjustDay({ date: date.current, dayRef: inputDayRef, setDate, onChange });
+      focusNextInput({
+        currentInput: inputYearRef.current,
+        date: date.current,
+      });
+    }
+  };
+
+  return {
+    onBlur,
+    onChange: onChangeInternal,
+    ref: inputYearRef,
+  };
 }

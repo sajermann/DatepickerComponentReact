@@ -45,7 +45,10 @@ export const onChangeMonth = ({
     }
 
     if (valueTemp.length > 1 && monthRef?.current) {
-      focusNextInput(monthRef.current);
+      focusNextInput({
+        currentInput: monthRef.current,
+        date: newValues,
+      });
       adjustDay({ date: newValues, dayRef, setDate, onChange });
     }
 

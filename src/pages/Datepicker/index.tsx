@@ -3,17 +3,17 @@ import { Divider } from '~/components/Divider';
 import { Section } from '~/components/Section';
 import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
-import { Composition } from './components/Composition';
-import { Controlled } from './components/Controlled';
-import { DefaultValue } from './components/DefaultValue';
 import { Disabled } from './components/Disabled';
-import { OnChange } from './components/OnChange';
-import { ReadOnly } from './components/ReadOnly';
-import { TimerControlled } from './components/TimerControlled';
-import { TimerDefaultValue } from './components/TimerDefaultValue';
-import { TimerDisabled } from './components/TimerDisabled';
-import { TimerOnchange } from './components/TimerOnchange';
-import { Trigger } from './components/Trigger';
+// import { Composition } from './components/Composition';
+// import { Controlled } from './components/Controlled';
+// import { DefaultValue } from './components/DefaultValue';
+// import { OnChange } from './components/OnChange';
+// import { ReadOnly } from './components/ReadOnly';
+// import { TimerControlled } from './components/TimerControlled';
+// import { TimerDefaultValue } from './components/TimerDefaultValue';
+// import { TimerDisabled } from './components/TimerDisabled';
+// import { TimerOnchange } from './components/TimerOnchange';
+// import { Trigger } from './components/Trigger';
 
 const COMPONENTS = [
   { e: <TodoList /> },
@@ -27,7 +27,7 @@ const COMPONENTS = [
   // { e: <TimerOnchange /> },
   // { e: <TimerDefaultValue /> },
   // { e: <TimerControlled /> },
-  { e: <TimerDisabled /> },
+  // { e: <TimerDisabled /> },
 ];
 
 export function DatepickerPage() {

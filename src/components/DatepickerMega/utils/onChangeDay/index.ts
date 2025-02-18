@@ -54,11 +54,17 @@ export const onChangeDay = ({
     if (onChange) {
       onChange(newValues);
     }
+
+    if (valueTemp.length > 1 && dayRef?.current) {
+      console.log(`1`);
+      focusNextInput({
+        currentInput: dayRef.current,
+        date: newValues,
+      });
+    }
+
     return {
       ...newValues,
     };
   });
-  if (valueTemp.length > 1 && dayRef?.current) {
-    focusNextInput(dayRef.current);
-  }
 };

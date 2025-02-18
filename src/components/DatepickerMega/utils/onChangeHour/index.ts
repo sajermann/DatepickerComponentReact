@@ -47,12 +47,16 @@ export const onChangeHour = ({
     if (onChange) {
       onChange(newValues);
     }
+
+    if (valueTemp.length > 1 && hourRef?.current) {
+      focusNextInput({
+        currentInput: hourRef.current,
+        date: newValues,
+      });
+    }
+
     return {
       ...newValues,
     };
   });
-
-  if (valueTemp.length > 1 && hourRef?.current) {
-    focusNextInput(hourRef.current);
-  }
 };

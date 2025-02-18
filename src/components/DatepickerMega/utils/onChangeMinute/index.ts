@@ -34,12 +34,16 @@ export const onChangeMinute = ({
     if (onChange) {
       onChange(newValues);
     }
+
+    if (valueTemp.length > 1 && minuteRef?.current) {
+      focusNextInput({
+        currentInput: minuteRef.current,
+        date: newValues,
+      });
+    }
+
     return {
       ...newValues,
     };
   });
-
-  if (valueTemp.length > 1 && minuteRef?.current) {
-    focusNextInput(minuteRef.current);
-  }
 };
