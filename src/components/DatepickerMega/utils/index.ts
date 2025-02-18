@@ -6,7 +6,6 @@ export * from './onBlurDay';
 export * from './onBlurMonth';
 export * from './onBlurYear';
 export * from './onChangeDatepicker';
-export * from './onChangeDay';
 export * from './onChangeHour';
 export * from './onChangeMinute';
 export * from './onChangeMonth';
