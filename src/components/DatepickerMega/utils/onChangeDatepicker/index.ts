@@ -22,11 +22,6 @@ export const onChangeDatepicker = ({
       dayRef.current.value = formatTwoNumbers(newValues.day?.toString() || '');
     }
     if (monthRef?.current) {
-      console.log(
-        `batata`,
-        newValues.month,
-        formatTwoNumbers(newValues.month?.toString() || ''),
-      );
       monthRef.current.value = formatTwoNumbers(
         newValues.month?.toString() || '',
       );

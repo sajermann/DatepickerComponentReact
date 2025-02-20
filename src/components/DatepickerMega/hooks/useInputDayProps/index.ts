@@ -3,6 +3,7 @@ import { ChangeEvent, FocusEvent } from 'react';
 import { useDatepickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 import { focusNextInput, formatTwoNumbers } from '../../utils';
+import { focusFirstInput } from '../../utils/focusFirstInput';
 
 export function useInputDayProps() {
   const { inputDayRef, inputMonthRef, inputYearRef, date, setDate, onChange } =
@@ -29,8 +30,11 @@ export function useInputDayProps() {
 
     if (isDisabledDate()) {
       if (inputDayRef?.current?.value) {
-        inputDayRef?.current.focus();
         inputDayRef.current.value = '';
+        focusFirstInput({
+          currentInput: inputDayRef.current,
+          date: date.current,
+        });
       }
       if (inputMonthRef?.current?.value) {
         inputMonthRef.current.value = '';
@@ -114,11 +118,11 @@ export function useInputDayProps() {
         ...newValues,
       };
     });
-    // verificar pq aqui ta dando errado quando sai... acho que é por conta do date.current estar com dados desatualizados
-    // na verdade, ele da o focus no proximo e depois no onblur ele verifica se a data tava desatualizada, tenho que verificar isso
-    // tentar entender pq tem dois onchange, um aqui, e um no onChangeDay
+
+    // TODO: Quando digita nos inputs, se a data estiver bloqueada, deveria zerar os inputs
+    // e ir para o primeiro input
+
     if (valueTemp.length > 1 && inputDayRef?.current) {
-      console.log(22, date.current);
       focusNextInput({
         currentInput: inputDayRef.current,
         date: date.current,

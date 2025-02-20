@@ -12,7 +12,7 @@ export function useIsValidDate() {
   };
 
   const isDisabledDate = () => {
-    console.log(`isDisabledDate`, date.current.date);
+    // console.log(`isDisabledDate`, date.current.date);
     if (!date.current.date) return false;
     const isDisabled = disabledDates?.find(
       d => startOfDay(d).valueOf() === date.current.date?.valueOf(),

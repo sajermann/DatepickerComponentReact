@@ -3,6 +3,7 @@ import { ChangeEvent, FocusEvent } from 'react';
 import { useDatepickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 import { adjustDay, focusNextInput } from '../../utils';
+import { focusFirstInput } from '../../utils/focusFirstInput';
 
 export function useInputYearProps() {
   const { inputDayRef, inputMonthRef, inputYearRef, date, setDate, onChange } =
@@ -30,7 +31,6 @@ export function useInputYearProps() {
 
     if (isDisabledDate()) {
       if (inputDayRef?.current?.value) {
-        inputDayRef?.current.focus();
         inputDayRef.current.value = '';
       }
       if (inputMonthRef?.current?.value) {
@@ -38,6 +38,10 @@ export function useInputYearProps() {
       }
       if (inputYearRef?.current?.value) {
         inputYearRef.current.value = '';
+        focusFirstInput({
+          currentInput: inputYearRef.current,
+          date: date.current,
+        });
       }
       setDate(prev => {
         const newValues: TDate = {
