@@ -8,7 +8,7 @@ import { useTranslation } from '~/hooks/useTranslation';
 export function TimerDisabled() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DISABLED_TIMES')} variant="h2">
+    <Section title={translate('DISABLED')} variant="h2">
       <p>
         Arrumar digitacao de data bloqueada (Se selecionar pelo datepicker
         depois mudar no input)

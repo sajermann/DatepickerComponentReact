@@ -188,14 +188,14 @@ export function SingleDayPicker() {
                 },
               )}
             >
-              <main className=" items-center h-8 grid grid-cols-7">
+              <main className="items-center h-8 grid grid-cols-7">
                 {weekDays.map(d => (
                   <div key={d} className="text-xs text-center">
                     {(d.charAt(0).toUpperCase() + d.slice(1)).replace('.', '')}
                   </div>
                 ))}
               </main>
-              <main className=" items-center grid grid-cols-7">
+              <main className="items-center grid grid-cols-7">
                 {calendars[0].days.map(d => (
                   <button
                     type="button"

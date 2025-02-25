@@ -1,33 +1,19 @@
 import { addDays } from 'date-fns';
 import { CalendarIcon } from 'lucide-react';
-import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { TDate } from '~/components/DatepickerMega/types';
-import { JsonViewer } from '~/components/JsonViewer';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function Disabled() {
-  const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
-    useState<TDate | null>(null);
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DISABLED_DATES')} variant="h2">
-      <p>
-        Arrumar digitacao de data bloqueada (Se selecionar pelo datepicker
-        depois mudar no input)
-      </p>
-      <p>
-        Arrumar se mudar o ano, o botao continua desabilitado para data de antes
-        e depois (acho que faltou render)
-      </p>
+    <Section title={translate('DISABLED')} variant="h2">
       <div className="flex gap-2 flex-wrap items-end">
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
             {translate('YESTERDAY_AND_TOMORROW')}
           </DatepickerMega.Label>
           <DatepickerMega.Root
-            onChange={setLastEventOnChangeRoot}
             disabledDates={[addDays(new Date(), -1), addDays(new Date(), +1)]}
           >
             <DatepickerMega.Day />
@@ -41,7 +27,7 @@ export function Disabled() {
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-        {/* <DatepickerMega.ContainerInput>
+        <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
             {translate('SATURDAYS_AND_SUNDAYS')}
           </DatepickerMega.Label>
@@ -84,9 +70,19 @@ export function Disabled() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput> */}
-        <JsonViewer value={lastEventOnChangeRoot || {}} />
+        </DatepickerMega.ContainerInput>
       </div>
+      <h3 className="text-sm italic font-bold">
+        * {translate('DISABLED_DATE_HAS_A_BUG')}{' '}
+        <a
+          href="https://github.com/rehookify/datepicker/issues/76"
+          target="_blank"
+          rel="noreferrer"
+          className="!text-blue-500 hover:opacity-40 transition-all duration-500 underline"
+        >
+          Github Issue
+        </a>
+      </h3>
     </Section>
   );
 }

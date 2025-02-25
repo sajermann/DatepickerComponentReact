@@ -1,5 +1,7 @@
 {
   "translations": {
+    "DISABLED_DATE_HAS_A_BUG": "Data desabilitada possui um bug:",
+    "TIME": "Tempo",
     "MIN_HOUR": "Hora Mínima",
     "MAX_HOUR": "Hora Máxima",
     "DISABLED_TIMES": "Horas Desabilitadas",

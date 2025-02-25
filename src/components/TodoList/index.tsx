@@ -3,7 +3,12 @@ import { useTranslation } from '~/hooks/useTranslation';
 import { managerClassNames } from '~/utils/managerClassNames';
 import { Section } from '../Section';
 
-export function TodoList() {
+type TTodoListProps = {
+  checked?: boolean;
+  text: string;
+};
+
+export function TodoList({ list }: { list: TTodoListProps[] }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const { translate } = useTranslation();
   return (
@@ -27,54 +32,12 @@ export function TodoList() {
           { 'mb-14 ': isExpanded },
         ])}
       >
-        <div>
-          <input type="checkbox" checked disabled /> - On Change
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Default Value
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Controlled
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Composition Pattern
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Month Picker
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Year Picker
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Disabled Dates
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Read Only
-        </div>
-        <div>
-          <input type="checkbox" checked disabled /> - Trigger
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Timer Picker
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Range Dates
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Hook Forms
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Formatt Date (1 to 01)
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Composition (Calendar)
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Disabled Month
-        </div>
-        <div>
-          <input type="checkbox" disabled /> - Disabled Year{' '}
-        </div>
+        {list.map(item => (
+          <div key={item.text}>
+            <input type="checkbox" checked={item.checked} disabled /> -{' '}
+            {item.text}
+          </div>
+        ))}
       </main>
 
       <footer className="flex justify-center h-12 absolute bottom-0 left-0 right-0 1backdrop-blur-md bg-dark-500/70">

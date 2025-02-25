@@ -1,5 +1,7 @@
 # Datepicker Component React
 
+[Codesandbox](https://codesandbox.io/p/github/sajermann/DatepickerComponentReact/develop)
+
 ## Português
 
 Esse projeto foi criado para demonstrar como eu implemento um Datepicker de diversas maneiras, então você encontrará meu próprio datepicker que batizei como (Mega) e também encontrará datepicker prontos de outras libs que eu personalizei por alguma necessidade. O intuito é deixar o mais fácil possível para servir de consulta posteriores, sendo possível copiar e colocar facilmente.
