@@ -44,13 +44,13 @@ export function SingleTimerPicker() {
 
   const isDisabledTime = (date: Date) => {
     const disabledIso = disabledDates?.map(item => item.toISOString());
-    if (date.getHours() === 11) {
-      console.log(
-        `isDisabledTime`,
-        { date: date.toISOString(), disabledIso },
-        disabledIso?.includes(date.toISOString()),
-      );
-    }
+    // if (date.getHours() === 11) {
+    //   console.log(
+    //     `isDisabledTime`,
+    //     { date: date.toISOString(), disabledIso },
+    //     disabledIso?.includes(date.toISOString()),
+    //   );
+    // }
     return disabledIso?.includes(date.toISOString());
   };
 

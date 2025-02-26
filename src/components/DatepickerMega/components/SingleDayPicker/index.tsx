@@ -100,7 +100,7 @@ export function SingleDayPicker() {
       })?.onClick?.({} as React.MouseEvent<HTMLElement, MouseEvent>);
     }
   };
-  console.log({ disabledDates }, calendars[0].days);
+
   return (
     <PopoverPortal>
       <PopoverContent onInteractOutside={() => setIsOpenCalendar(false)}>

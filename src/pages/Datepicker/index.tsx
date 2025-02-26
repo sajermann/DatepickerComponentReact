@@ -7,6 +7,7 @@ import { Composition } from './components/Composition';
 import { Controlled } from './components/Controlled';
 import { DefaultValue } from './components/DefaultValue';
 import { Disabled } from './components/Disabled';
+import { HookForm } from './components/HookForm';
 import { OnChange } from './components/OnChange';
 import { ReadOnly } from './components/ReadOnly';
 import { TimerControlled } from './components/TimerControlled';
@@ -43,6 +44,7 @@ const COMPONENTS = [
   { e: <OnChange /> },
   { e: <DefaultValue /> },
   { e: <Controlled /> },
+  { e: <HookForm /> },
   { e: <Composition /> },
   { e: <Disabled /> },
   { e: <ReadOnly /> },
