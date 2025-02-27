@@ -1,6 +1,6 @@
 {
   "translations": {
-    "INVALID_DATE": "Data inválida",
+    "INVALID_FIELD": "Campo inválido",
     "DISABLED_DATE_HAS_A_BUG": "Data desabilitada possui um bug:",
     "TIME": "Tempo",
     "MIN_HOUR": "Hora Mínima",
