@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon } from 'lucide-react';
+import { TimerIcon } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import * as DatepickerMega from '~/components/DatepickerMega';
@@ -7,11 +7,11 @@ import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 const formSchema = z.object({
-  date: z.date(),
+  time: z.date(),
 });
 type FormData = z.infer<typeof formSchema>;
 
-export function HookForm() {
+export function TimeHookForm() {
   const { translate } = useTranslation();
   const {
     handleSubmit,
@@ -32,29 +32,27 @@ export function HookForm() {
         >
           <Controller
             control={control}
-            name="date"
+            name="time"
             render={({ field: { onChange } }) => (
               <DatepickerMega.ContainerInput>
                 <DatepickerMega.Label
-                  isError={errors.date?.message ? true : false}
+                  isError={errors.time?.message ? true : false}
                 >
-                  {translate('DATE')}
+                  {translate('TIME')}
                 </DatepickerMega.Label>
                 <DatepickerMega.Root onChange={e => onChange(e.date)}>
-                  <DatepickerMega.Day />
-                  <DatepickerMega.Divider />
-                  <DatepickerMega.Month />
-                  <DatepickerMega.Divider />
-                  <DatepickerMega.Year />
+                  <DatepickerMega.Hour />
+                  <DatepickerMega.Divider>:</DatepickerMega.Divider>
+                  <DatepickerMega.Minute />
                   <DatepickerMega.PickerTrigger>
-                    <CalendarIcon />
+                    <TimerIcon />
                   </DatepickerMega.PickerTrigger>
-                  <DatepickerMega.SingleDayPicker />
+                  <DatepickerMega.SingleTimerPicker />
                 </DatepickerMega.Root>
               </DatepickerMega.ContainerInput>
             )}
           />
-          {errors.date?.message && (
+          {errors.time?.message && (
             <p className="text-sm text-red-500 italic mt-1">
               {translate('INVALID_FIELD')}
             </p>

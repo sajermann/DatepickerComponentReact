@@ -2,7 +2,6 @@ import { TimerIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
-import { formatTwoNumbers } from '~/components/DatepickerMega/utils';
 import { JsonViewer } from '~/components/JsonViewer';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
@@ -29,15 +28,11 @@ export function TimerControlled() {
             defaultDate={date.date || undefined}
           >
             <DatepickerMega.Hour
-              value={formatTwoNumbers(
-                String(date.hour === null ? '' : date.hour),
-              )}
+              value={String(date.hour === null ? '' : date.hour)}
             />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
             <DatepickerMega.Minute
-              value={formatTwoNumbers(
-                String(date.minute === null ? '' : date.minute),
-              )}
+              value={String(date.minute === null ? '' : date.minute)}
             />
             <DatepickerMega.PickerTrigger>
               <TimerIcon />
@@ -84,7 +79,7 @@ export function TimerControlled() {
               type="time"
               className="border bg-transparent ring-0 outline-none rounded h-11 p-2 dark:[color-scheme:dark]"
               id="native-timer"
-              value={`${formatTwoNumbers(String(date.date?.getHours()))}:${formatTwoNumbers(String(date.date?.getMinutes()))}`}
+              value={`${String(date.date?.getHours())}:${String(date.date?.getMinutes())}`}
             />
           </label>
         </div>

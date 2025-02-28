@@ -10,6 +10,7 @@ import { Disabled } from './components/Disabled';
 import { HookForm } from './components/HookForm';
 import { OnChange } from './components/OnChange';
 import { ReadOnly } from './components/ReadOnly';
+import { TimeHookForm } from './components/TimeHookForm';
 import { TimerControlled } from './components/TimerControlled';
 import { TimerDefaultValue } from './components/TimerDefaultValue';
 import { TimerDisabled } from './components/TimerDisabled';
@@ -22,6 +23,7 @@ const TODO_LIST = [
   { checked: true, text: `Date - Event Onchange (Root)` },
   { checked: true, text: `Date - Default Value` },
   { checked: true, text: `Date - Controlled` },
+  { checked: true, text: `Date - Hook Form` },
   { checked: true, text: `Date - Composition Pattern` },
   { checked: true, text: `Date - Disabled` },
   { checked: true, text: `Date - Read Only` },
@@ -40,21 +42,22 @@ const TODO_LIST = [
 ];
 
 const COMPONENTS = [
-  { e: <TodoList list={TODO_LIST} /> },
-  { e: <OnChange /> },
-  { e: <DefaultValue /> },
+  // { e: <TodoList list={TODO_LIST} /> },
+  // { e: <OnChange /> },
+  // { e: <DefaultValue /> },
   { e: <Controlled /> },
-  { e: <HookForm /> },
-  { e: <Composition /> },
-  { e: <Disabled /> },
-  { e: <ReadOnly /> },
-  { e: <Trigger /> },
-  { e: <TimerOnchange /> },
-  { e: <TimerDefaultValue /> },
+  // { e: <HookForm /> },
+  // { e: <Composition /> },
+  // { e: <Disabled /> },
+  // { e: <ReadOnly /> },
+  // { e: <Trigger /> },
+  // { e: <TimerOnchange /> },
+  // { e: <TimerDefaultValue /> },
   { e: <TimerControlled /> },
-  { e: <TimerDisabled /> },
-  { e: <TimerReadOnly /> },
-  { e: <TimerTrigger /> },
+  // { e: <TimeHookForm /> },
+  // { e: <TimerDisabled /> },
+  // { e: <TimerReadOnly /> },
+  // { e: <TimerTrigger /> },
 ];
 
 export function DatepickerPage() {

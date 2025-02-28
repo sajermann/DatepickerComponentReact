@@ -2,7 +2,6 @@ import { CalendarIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
-import { formatTwoNumbers } from '~/components/DatepickerMega/utils';
 import { JsonViewer } from '~/components/JsonViewer';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
@@ -28,13 +27,9 @@ export function Controlled() {
             onChange={setDate}
             defaultDate={date.date || undefined}
           >
-            <DatepickerMega.Day
-              value={formatTwoNumbers(String(date.day || ''))}
-            />
+            <DatepickerMega.Day value={String(date.day || '')} />
             <DatepickerMega.Divider />
-            <DatepickerMega.Month
-              value={formatTwoNumbers(String(date.month || ''))}
-            />
+            <DatepickerMega.Month value={String(date.month || '')} />
             <DatepickerMega.Divider />
             <DatepickerMega.Year value={String(date.year || '')} />
             <DatepickerMega.PickerTrigger>
