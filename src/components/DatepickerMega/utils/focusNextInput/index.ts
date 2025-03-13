@@ -6,9 +6,10 @@ type TFocusNextInput = {
 };
 
 export const focusNextInput = ({ currentInput, date }: TFocusNextInput) => {
-  if (!date.day && !date.month && !date.year) {
-    return;
-  }
+  //Comentando para imputs de horas
+  // if (!date.day && !date.month && !date.year) {
+  //   return;
+  // }
   if (!currentInput.parentElement) {
     return;
   }

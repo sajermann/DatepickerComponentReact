@@ -61,7 +61,9 @@ export function useInputMonthProps() {
     }
 
     if (inputMonthRef?.current) {
-      inputMonthRef.current.value = formatTwoNumbers(value);
+      inputMonthRef.current.value = formatTwoNumbers(
+        inputMonthRef.current.value,
+      );
     }
 
     adjustDay({

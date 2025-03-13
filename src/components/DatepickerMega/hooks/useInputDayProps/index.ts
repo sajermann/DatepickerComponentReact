@@ -61,7 +61,7 @@ export function useInputDayProps() {
 
     // Parte do codigo beta, precisa de mais testes
     if (inputDayRef?.current) {
-      inputDayRef.current.value = formatTwoNumbers(value);
+      inputDayRef.current.value = formatTwoNumbers(inputDayRef.current.value);
     }
   };
 

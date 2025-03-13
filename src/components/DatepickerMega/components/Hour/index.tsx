@@ -1,7 +1,6 @@
 import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
-import { useDatepickerMega } from '../../hooks';
-import { onChangeHour } from '../../utils';
+import { useInputHourProps } from '../../hooks/useInputHourProps';
 
 const input = tv({
   base: 'group ring-0 outline-none bg-transparent w-8 h-8 p-1 flex  text-center',
@@ -12,26 +11,16 @@ export function Hour({
   ...props
 }: Omit<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-  'ref'
+  'ref' | 'onChange' | 'onBlur'
 >) {
-  const { inputHourRef, setDate, onChange, isAmPmMode } = useDatepickerMega();
+  const inputProps = useInputHourProps();
 
   return (
     <input
       {...props}
-      ref={inputHourRef}
       placeholder={placeholder}
       className={input({ class: props?.className })}
-      onChange={event => {
-        props?.onChange?.(event);
-        onChangeHour({
-          event,
-          setDate,
-          onChange,
-          hourRef: inputHourRef,
-          isAmPm: isAmPmMode,
-        });
-      }}
+      {...inputProps}
     />
   );
 }

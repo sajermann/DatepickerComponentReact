@@ -2,6 +2,7 @@ import { TimerIcon } from 'lucide-react';
 import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
 import { TDate } from '~/components/DatepickerMega/types';
+import { formatTwoNumbers } from '~/components/DatepickerMega/utils';
 import { JsonViewer } from '~/components/JsonViewer';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
@@ -79,7 +80,7 @@ export function TimerControlled() {
               type="time"
               className="border bg-transparent ring-0 outline-none rounded h-11 p-2 dark:[color-scheme:dark]"
               id="native-timer"
-              value={`${String(date.date?.getHours())}:${String(date.date?.getMinutes())}`}
+              value={`${formatTwoNumbers(String(date.date?.getHours()))}:${formatTwoNumbers(String(date.date?.getMinutes()))}`}
             />
           </label>
         </div>

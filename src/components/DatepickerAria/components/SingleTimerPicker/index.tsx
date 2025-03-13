@@ -89,7 +89,6 @@ export function SingleTimerPicker() {
                     disabled={isDisabledTime(t.$date) || timeButton(t).disabled}
                     onClick={e => {
                       timeButton(t).onClick?.(e);
-                      console.log(t.time);
                       onChangeTimepicker({
                         date: t.$date,
                         hourRef: inputHourRef,
