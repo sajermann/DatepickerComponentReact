@@ -13,8 +13,16 @@ import { TRoutesMenu } from '~/types/TRoutesMenu';
 import { TTriRoutes } from './types';
 
 const DatepickerPage = lazy(() =>
-  import('~/pages/Datepicker').then(({ DatepickerPage: Datepicker }) => ({
-    default: Datepicker,
+  import('~/pages/DatepickerMega').then(
+    ({ DatepickerMegaPage: DatepickerMega }) => ({
+      default: DatepickerMega,
+    }),
+  ),
+);
+
+const DatepickerRDPage = lazy(() =>
+  import('~/pages/DatepickerRD').then(({ DatepickerRDPage: DatepickerRD }) => ({
+    default: DatepickerRD,
   })),
 );
 
@@ -55,6 +63,13 @@ export function useRoutesMenu() {
           description: 'Datepicker Mega',
           element: <DatepickerPage />,
           label: 'Datepicker Mega',
+        },
+        {
+          name: 'Datepicker RD',
+          path: '/datepicker-rd',
+          description: 'Datepicker RD',
+          element: <DatepickerRDPage />,
+          label: 'Datepicker RD',
         },
         // {
         //   name: 'Datepicker Aria',

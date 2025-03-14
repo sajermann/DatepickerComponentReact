@@ -5,13 +5,13 @@ import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { InjectorProviders } from '~/components/InjectorProviders';
 
-import { DatepickerPage } from '.';
+import { DatepickerRDPage } from '.';
 
-describe('Pages/DatepickerPage', () => {
-  it(`must render DatepickerPage`, async () => {
+describe('Pages/DatepickerRDPage', () => {
+  it(`must render DatepickerRDPage`, async () => {
     render(
       <InjectorProviders>
-        <DatepickerPage />
+        <DatepickerRDPage />
       </InjectorProviders>,
     );
   });

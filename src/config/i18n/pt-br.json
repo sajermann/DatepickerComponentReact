@@ -1,5 +1,8 @@
 {
   "translations": {
+    "DD/MM/YYYY": "dd/mm/aaaa",
+    "MM/YYYY": "mm/aaaa",
+    "DATEPICKER_RD_PAGE": "Implementação do componente de datepicker utilizando a lib externa ({{lib}}).",
     "INVALID_FIELD": "Campo inválido",
     "DISABLED_DATE_HAS_A_BUG": "Data desabilitada possui um bug:",
     "TIME": "Tempo",

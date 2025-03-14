@@ -5,7 +5,7 @@ import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
 import { OnChange } from './components/OnChange';
 
-const COMPONENTS = [{ e: <TodoList /> }, { e: <OnChange /> }];
+const COMPONENTS = [{ e: <TodoList list={[]} /> }, { e: <OnChange /> }];
 
 export function DatepickerAriaPage() {
   const { translate } = useTranslation();

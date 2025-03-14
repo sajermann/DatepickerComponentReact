@@ -42,8 +42,10 @@ export function useInputMinuteProps() {
     }
 
     // Parte do codigo beta, precisa de mais testes
-    if (inputHourRef?.current) {
-      inputHourRef.current.value = formatTwoNumbers(inputHourRef.current.value);
+    if (inputMinuteRef?.current) {
+      inputMinuteRef.current.value = formatTwoNumbers(
+        inputMinuteRef.current.value,
+      );
     }
   };
 

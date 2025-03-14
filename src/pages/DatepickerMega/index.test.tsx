@@ -5,13 +5,13 @@ import { render } from '@testing-library/react';
 import { describe, it } from 'vitest';
 import { InjectorProviders } from '~/components/InjectorProviders';
 
-import { DatepickerAriaPage } from '.';
+import { DatepickerMegaPage } from '.';
 
-describe('Pages/DatepickerPage', () => {
-  it(`must render DatepickerPage`, async () => {
+describe('Pages/DatepickerMegaPage', () => {
+  it(`must render DatepickerMegaPage`, async () => {
     render(
       <InjectorProviders>
-        <DatepickerAriaPage />
+        <DatepickerMegaPage />
       </InjectorProviders>,
     );
   });

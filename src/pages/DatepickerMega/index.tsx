@@ -42,25 +42,25 @@ const TODO_LIST = [
 ];
 
 const COMPONENTS = [
-  // { e: <TodoList list={TODO_LIST} /> },
-  // { e: <OnChange /> },
-  // { e: <DefaultValue /> },
-  // { e: <Controlled /> },
-  // { e: <HookForm /> },
-  // { e: <Composition /> },
+  { e: <TodoList list={TODO_LIST} /> },
+  { e: <OnChange /> },
+  { e: <DefaultValue /> },
+  { e: <Controlled /> },
+  { e: <HookForm /> },
+  { e: <Composition /> },
   { e: <Disabled /> },
-  // { e: <ReadOnly /> },
-  // { e: <Trigger /> },
-  // { e: <TimerOnchange /> },
-  // { e: <TimerDefaultValue /> },
-  // { e: <TimerControlled /> },
-  // { e: <TimeHookForm /> },
+  { e: <ReadOnly /> },
+  { e: <Trigger /> },
+  { e: <TimerOnchange /> },
+  { e: <TimerDefaultValue /> },
+  { e: <TimerControlled /> },
+  { e: <TimeHookForm /> },
   { e: <TimerDisabled /> },
-  // { e: <TimerReadOnly /> },
-  // { e: <TimerTrigger /> },
+  { e: <TimerReadOnly /> },
+  { e: <TimerTrigger /> },
 ];
 
-export function DatepickerPage() {
+export function DatepickerMegaPage() {
   const { translate } = useTranslation();
 
   return (

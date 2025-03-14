@@ -1,23 +1,13 @@
 import { addHours, startOfHour } from 'date-fns';
 import { TimerIcon } from 'lucide-react';
-import { useState } from 'react';
 import * as DatepickerMega from '~/components/DatepickerMega';
-import { TDate } from '~/components/DatepickerMega/types';
-import { JsonViewer } from '~/components/JsonViewer';
-// import { convertHour24ToAmPm } from '~/components/DatepickerMega/utils';
 import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 
 export function TimerDisabled() {
   const { translate } = useTranslation();
-  const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
-    useState<TDate | null>(null);
   return (
     <Section title={translate('DISABLED')} variant="h2">
-      <p>
-        Arrumar digitacao de data bloqueada (Se selecionar pelo datepicker
-        depois mudar no input)
-      </p>
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
@@ -29,7 +19,6 @@ export function TimerDisabled() {
               startOfHour(addHours(new Date(), -1)),
               startOfHour(addHours(new Date(), 1)),
             ]}
-            onChange={setLastEventOnChangeRoot}
           >
             <DatepickerMega.Hour />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
@@ -51,7 +40,6 @@ export function TimerDisabled() {
               startOfHour(addHours(new Date(), -1)),
               startOfHour(addHours(new Date(), 1)),
             ]}
-            onChange={setLastEventOnChangeRoot}
           >
             <DatepickerMega.Hour />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
@@ -72,7 +60,6 @@ export function TimerDisabled() {
               h: 8,
               m: 0,
             }}
-            onChange={setLastEventOnChangeRoot}
           >
             <DatepickerMega.Hour />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
@@ -92,7 +79,6 @@ export function TimerDisabled() {
               h: 17,
               m: 0,
             }}
-            onChange={setLastEventOnChangeRoot}
           >
             <DatepickerMega.Hour />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
@@ -103,10 +89,6 @@ export function TimerDisabled() {
             <DatepickerMega.SingleTimerPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-      </div>
-      <div className="w-full">
-        <h1>{translate('LAST_EVENT_ONCHANGE_IS_NOT_STATE')}</h1>
-        <JsonViewer value={lastEventOnChangeRoot || {}} />
       </div>
       <p className="italic font-bold text-sm">
         {translate('NOTE_DEFAULT_VALUES_INPUT_HOUR')}

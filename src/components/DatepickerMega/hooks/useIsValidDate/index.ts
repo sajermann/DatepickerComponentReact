@@ -48,10 +48,9 @@ export function useIsValidDate() {
 
   const isDisabledTime = () => {
     if (!date.current.date) return false;
-    const isDisabled = disabledDates?.find(d => {
-      console.log(d.valueOf(), date.current.date?.valueOf());
-      return d.valueOf() === date.current.date?.valueOf();
-    });
+    const isDisabled = disabledDates?.find(
+      d => d.valueOf() === date.current.date?.valueOf(),
+    );
 
     const dateMin = new Date(date.current.date.toISOString());
     if (typeof minTime?.h === 'number') {
@@ -70,8 +69,6 @@ export function useIsValidDate() {
     if (typeof maxTime?.m === 'number') {
       dateMax.setMinutes(maxTime?.m);
     }
-
-    console.log(`minTime`, { dateTemp: dateMin });
 
     const isMinTime =
       minTime && date.current.date?.valueOf() < dateMin.valueOf();
