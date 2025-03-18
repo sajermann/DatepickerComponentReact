@@ -1,5 +1,8 @@
 {
   "translations": {
+    "MONTH_PICKER": "Month Picker",
+    "UNDER_CONSTRUCTION": "Under Construction",
+    "DATE_FORMAT": "Date Format",
     "DD/MM/YYYY": "dd/mm/yyyy",
     "MM/YYYY": "mm/yyyy",
     "DATEPICKER_RD_PAGE": "Implements component datepicker using a external library ({{lib}}).",
@@ -9,7 +12,7 @@
     "MIN_HOUR": "Min Hour",
     "MAX_HOUR": "Max Hour",
     "DISABLED_TIMES": "Disabled Times",
-    "DISABLED_1_HOUR": "-1/+1 from now",
+    "DISABLED_1_FROM_NOW": "-1/+1 from now",
     "DISABLED": "Disabled",
     "NOTE_DEFAULT_VALUES_INPUT_HOUR": "Note: For the am/pm pattern, the default time value must be converted before being passed as a prop to the time input.",
     "NO_RESULTS": "No Results",

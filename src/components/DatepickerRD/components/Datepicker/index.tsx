@@ -1,102 +1,24 @@
 import { enUS, ptBR } from 'date-fns/locale';
-import {
-  ChangeEvent,
-  DetailedHTMLProps,
-  InputHTMLAttributes,
-  Ref,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
+import { useTranslation } from '~/hooks/useTranslation';
+import { IDatepickerProps } from '../../types';
+import { formatDataTemp } from '../../utils';
 import { Input } from '../Input';
 
 import './index.css';
-import { useTranslation } from '~/hooks/useTranslation';
 
 const LANGUAGE_OPTION = {
   'pt-BR': ptBR,
   en: enUS,
 };
 
-type TInput = DetailedHTMLProps<
-  InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
-
-type TInputDatepicker = TInput & {
-  withoutDay?: boolean;
-  dateFormat?: TDateFormat;
-  isError?: boolean;
-};
-
-type TDateFormat = 'dd/MM/yyyy' | 'yyyy-MM-dd' | 'MM/yyyy';
-
-function formatDataTemp(
-  value: string,
-  withoutDay?: boolean,
-  dateFormat?: TDateFormat,
-) {
-  if (!dateFormat) return value;
-  const ob = {
-    'dd/MM/yyyy': (valueTemp: string) =>
-      valueTemp
-        .replace(/\D/g, '')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\/\d{4})\d+$/, '$1'),
-    'yyyy-MM-dd': (valueTemp: string) =>
-      valueTemp
-        .replace(/\D/g, '')
-        .substring(0, 8)
-        .replace(/(\d{6})(\d)/, '$1-$2')
-        .replace(/(\d{4})(\d)/, '$1-$2'),
-    'MM/yyyy': (valueTemp: string) =>
-      valueTemp
-        .replace(/\D/g, '')
-        .replace(/(\d{2})(\d)/, '$1/$2')
-        .replace(/(\/\d{4})\d+$/, '$1'),
-  };
-
-  return ob[dateFormat](value);
-}
-function CustomInput(props: TInputDatepicker) {
-  const newProps = { ...props };
-  delete newProps.withoutDay;
-
-  const result = formatDataTemp(
-    newProps.value as string,
-    props.withoutDay,
-    props.dateFormat,
-  );
-  delete newProps.dateFormat;
-  return (
-    <Input
-      {...(newProps as TInput)}
-      value={result}
-      tabIndex={-1}
-      isError={props.isError}
-    />
-  );
-}
-
-interface IDatepickerProps
-  extends DetailedHTMLProps<
-    InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
-  withoutDay?: boolean;
-  customDefaultValue?: Date;
-  dateFormat?: TDateFormat;
-  excludeDateIntervals?: Array<{ start: Date; end: Date }>;
-  isError?: boolean;
-  ref?: Ref<HTMLInputElement> | undefined;
-}
-
 export function Datepicker({
   customDefaultValue,
   dateFormat = 'dd/MM/yyyy',
   withoutDay,
   excludeDateIntervals,
+  excludeDates,
   isError,
   ref,
   ...rest
@@ -105,8 +27,6 @@ export function Datepicker({
     customDefaultValue || null,
   );
   const { currentLanguage } = useTranslation();
-
-  console.log('datepicker', { ref });
 
   function onChangeInternal(date: Date | null) {
     setStartDate(date);
@@ -138,31 +58,50 @@ export function Datepicker({
     }
   }, []);
 
+  const result = formatDataTemp(rest.value as string, withoutDay, dateFormat);
+
   return (
-    <div>
-      <DatePicker
-        autoComplete="off"
-        id={rest.id}
-        disabled={rest.disabled}
-        placeholderText={rest.placeholder}
-        fixedHeight
-        selected={startDate}
-        onChange={onChangeInternal}
-        locale={LANGUAGE_OPTION[currentLanguage as 'pt-BR' | 'en']}
-        dateFormat={dateFormat}
-        closeOnScroll
-        shouldCloseOnSelect
-        showMonthYearPicker={withoutDay}
-        excludeDateIntervals={excludeDateIntervals}
-        customInput={
-          <CustomInput
-            ref={ref}
-            withoutDay={withoutDay}
-            dateFormat={dateFormat}
-            isError={isError}
-          />
-        }
-      />
-    </div>
+    <DatePicker
+      autoComplete="off"
+      id={rest.id}
+      disabled={rest.disabled}
+      placeholderText={rest.placeholder}
+      fixedHeight
+      selected={startDate}
+      onChange={onChangeInternal}
+      locale={LANGUAGE_OPTION[currentLanguage as 'pt-BR' | 'en']}
+      dateFormat={dateFormat}
+      closeOnScroll
+      shouldCloseOnSelect
+      showMonthYearPicker={withoutDay}
+      excludeDateIntervals={excludeDateIntervals}
+      excludeDates={excludeDates}
+      customInput={
+        <Input
+          {...rest}
+          ref={ref}
+          id="root-portal"
+          value={result}
+          tabIndex={-1}
+          isError={isError}
+        />
+      }
+      portalId="root-portal"
+      // portalId="root-portal"
+      // withPortal
+      // popperModifiers={[
+      //   {
+      //     name: 'myModifier',
+      //     fn(state) {
+      //       console.log(`sajermann`, { state });
+      //       // Do something with the state
+      //       if (state.x < 0) {
+      //         return { ...state, x: 10 };
+      //       }
+      //       return state;
+      //     },
+      //   },
+      // ]}
+    />
   );
 }

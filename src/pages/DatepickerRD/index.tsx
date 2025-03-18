@@ -4,46 +4,34 @@ import { Section } from '~/components/Section';
 import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
 import { ComponentPattern } from './components/ComponentPattern';
+import { Controlled } from './components/Controlled';
+import { DateFormat } from './components/DateFormat';
+import { Disabled } from './components/Disabled';
+import { Focus } from './components/Focus';
+import { HookForm } from './components/HookForm';
+import { MonthPicker } from './components/MonthPicker';
 
 const TODO_LIST = [
-  { checked: true, text: `Date - Event Onchange (Root)` },
-  { checked: true, text: `Date - Default Value` },
-  { checked: true, text: `Date - Controlled` },
-  { checked: true, text: `Date - Hook Form` },
-  { checked: true, text: `Date - Composition Pattern` },
-  { checked: true, text: `Date - Disabled` },
-  { checked: true, text: `Date - Read Only` },
-  { checked: true, text: `Date - Trigger` },
-  { checked: false, text: `Date - Range Dates` },
-  { checked: false, text: `Date - Hook Forms` },
-  { checked: false, text: `Date - Composition (Calendar)` },
-  { checked: false, text: `Date - Disabled Month (Month Picker)` },
-  { checked: false, text: `Date - Disabled Year (Year Picker)` },
-  { checked: true, text: `Time - Event Onchange (Root)` },
-  { checked: true, text: `Time - Default Value` },
-  { checked: true, text: `Time - Controlled` },
-  { checked: true, text: `Time - Disabled` },
-  { checked: true, text: `Time - Read Only` },
-  { checked: true, text: `Time - Trigger` },
+  { checked: true, text: `Component Pattern` },
+  { checked: true, text: `Controlled` },
+  { checked: true, text: `Date Format` },
+  { checked: true, text: `Disabled` },
+  { checked: true, text: `Hook Form` },
+  { checked: false, text: `Focus` },
+  { checked: false, text: `Range Dates` },
+  { checked: false, text: `Disabled Month (Month Picker)` },
+  { checked: false, text: `Disabled Year (Year Picker)` },
 ];
 
 const COMPONENTS = [
   { e: <TodoList list={TODO_LIST} /> },
   { e: <ComponentPattern /> },
-  // { e: <DefaultValue /> },
-  // { e: <Controlled /> },
-  // { e: <HookForm /> },
-  // { e: <Composition /> },
-  // { e: <Disabled /> },
-  // { e: <ReadOnly /> },
-  // { e: <Trigger /> },
-  // { e: <TimerOnchange /> },
-  // { e: <TimerDefaultValue /> },
-  // { e: <TimerControlled /> },
-  // { e: <TimeHookForm /> },
-  // { e: <TimerDisabled /> },
-  // { e: <TimerReadOnly /> },
-  // { e: <TimerTrigger /> },
+  { e: <Controlled /> },
+  { e: <DateFormat /> },
+  { e: <MonthPicker /> },
+  { e: <Disabled /> },
+  { e: <HookForm /> },
+  { e: <Focus /> },
 ];
 
 export function DatepickerRDPage() {

@@ -3,7 +3,7 @@ import { tv } from 'tailwind-variants';
 
 const container = tv({
   slots: {
-    containerPropsInternal: ['group flex flex-col gap-1 w-fit border'],
+    containerPropsInternal: ['group flex flex-col gap-1 w-fit'],
   },
 });
 

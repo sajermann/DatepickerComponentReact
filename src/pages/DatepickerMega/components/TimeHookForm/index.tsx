@@ -57,7 +57,12 @@ export function TimeHookForm() {
               {translate('INVALID_FIELD')}
             </p>
           )}
-          <button type="submit">Submit</button>
+          <button
+            type="submit"
+            className="border rounded p-1.5 hover:opacity-70 transition-all duration-500 h-fit mt-2"
+          >
+            Submit
+          </button>
         </form>
       </div>
     </Section>

@@ -16,7 +16,7 @@ export function TimerDisabled() {
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
-            {translate(`DISABLED_1_HOUR`)}
+            {translate(`DISABLED_1_FROM_NOW`)}
           </DatepickerMega.Label>
           <DatepickerMega.Root
             intervalTime={60}
@@ -37,7 +37,7 @@ export function TimerDisabled() {
 
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label htmlFor="year-composition">
-            {translate('DISABLED_1_HOUR')} - {translate('AM_PM')}
+            {translate('DISABLED_1_FROM_NOW')} - {translate('AM_PM')}
           </DatepickerMega.Label>
           <DatepickerMega.Root
             intervalTime={60}

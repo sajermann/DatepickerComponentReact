@@ -1,5 +1,8 @@
 {
   "translations": {
+    "MONTH_PICKER": "Seletor Mês",
+    "UNDER_CONSTRUCTION": "Em Construção",
+    "DATE_FORMAT": "Formato de Data",
     "DD/MM/YYYY": "dd/mm/aaaa",
     "MM/YYYY": "mm/aaaa",
     "DATEPICKER_RD_PAGE": "Implementação do componente de datepicker utilizando a lib externa ({{lib}}).",
@@ -9,7 +12,7 @@
     "MIN_HOUR": "Hora Mínima",
     "MAX_HOUR": "Hora Máxima",
     "DISABLED_TIMES": "Horas Desabilitadas",
-    "DISABLED_1_HOUR": "-1/+1 hora de agora",
+    "DISABLED_1_FROM_NOW": "-1/+1 hora de agora",
     "DISABLED": "Desabilitado",
     "NOTE_DEFAULT_VALUES_INPUT_HOUR": "Obs: Para o padrão am/pm, o valor padrão da hora deve estar convertida antes se ser passada como prop para o input de hora.",
     "NO_RESULTS": "Sem Resultados",

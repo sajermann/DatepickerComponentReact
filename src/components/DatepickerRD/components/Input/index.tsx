@@ -31,6 +31,7 @@ const input = tv({
 
 export function Input({
   isError,
+  ref,
   ...props
 }: DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
@@ -39,6 +40,7 @@ export function Input({
   return (
     <input
       {...props}
+      ref={ref}
       className={input({
         class: props?.className,
         color: isError ? 'error' : 'primary',
