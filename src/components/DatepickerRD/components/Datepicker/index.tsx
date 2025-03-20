@@ -1,5 +1,5 @@
 import { enUS, ptBR } from 'date-fns/locale';
-import { ChangeEvent, forwardRef, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { useTranslation } from '~/hooks/useTranslation';
 import { IDatepickerProps } from '../../types';
@@ -7,6 +7,7 @@ import { formatDataTemp } from '../../utils';
 import { Input } from '../Input';
 
 import './index.css';
+// import 'react-datepicker/dist/react-datepicker.css';
 
 const LANGUAGE_OPTION = {
   'pt-BR': ptBR,
@@ -16,7 +17,8 @@ const LANGUAGE_OPTION = {
 export function Datepicker({
   customDefaultValue,
   dateFormat = 'dd/MM/yyyy',
-  withoutDay,
+  showMonthYearPicker,
+  showYearPicker,
   excludeDateIntervals,
   excludeDates,
   isError,
@@ -58,8 +60,6 @@ export function Datepicker({
     }
   }, []);
 
-  const result = formatDataTemp(rest.value as string, withoutDay, dateFormat);
-
   return (
     <DatePicker
       autoComplete="off"
@@ -73,35 +73,36 @@ export function Datepicker({
       dateFormat={dateFormat}
       closeOnScroll
       shouldCloseOnSelect
-      showMonthYearPicker={withoutDay}
+      showMonthYearPicker={showMonthYearPicker}
+      showYearPicker={showYearPicker}
       excludeDateIntervals={excludeDateIntervals}
       excludeDates={excludeDates}
+      showPopperArrow={false}
       customInput={
         <Input
           {...rest}
           ref={ref}
           id="root-portal"
-          value={result}
+          value={formatDataTemp(rest.value as string, dateFormat)}
           tabIndex={-1}
           isError={isError}
         />
       }
       portalId="root-portal"
-      // portalId="root-portal"
       // withPortal
-      // popperModifiers={[
-      //   {
-      //     name: 'myModifier',
-      //     fn(state) {
-      //       console.log(`sajermann`, { state });
-      //       // Do something with the state
-      //       if (state.x < 0) {
-      //         return { ...state, x: 10 };
-      //       }
-      //       return state;
-      //     },
-      //   },
-      // ]}
+      popperModifiers={[
+        {
+          name: 'myModifier',
+          fn(state) {
+            console.log(`sajermann`, { state });
+            // Do something with the state
+            if (state.x < 0) {
+              return { ...state, x: 10 };
+            }
+            return state;
+          },
+        },
+      ]}
     />
   );
 }

@@ -9,18 +9,17 @@ import { DateFormat } from './components/DateFormat';
 import { Disabled } from './components/Disabled';
 import { Focus } from './components/Focus';
 import { HookForm } from './components/HookForm';
-import { MonthPicker } from './components/MonthPicker';
+
+// TODO: Tentar descobrir o que aconteceu com o limitador da tela
 
 const TODO_LIST = [
-  { checked: true, text: `Component Pattern` },
+  { checked: true, text: `Component Pattern - Picker` },
   { checked: true, text: `Controlled` },
   { checked: true, text: `Date Format` },
   { checked: true, text: `Disabled` },
   { checked: true, text: `Hook Form` },
   { checked: false, text: `Focus` },
   { checked: false, text: `Range Dates` },
-  { checked: false, text: `Disabled Month (Month Picker)` },
-  { checked: false, text: `Disabled Year (Year Picker)` },
 ];
 
 const COMPONENTS = [
@@ -28,7 +27,6 @@ const COMPONENTS = [
   { e: <ComponentPattern /> },
   { e: <Controlled /> },
   { e: <DateFormat /> },
-  { e: <MonthPicker /> },
   { e: <Disabled /> },
   { e: <HookForm /> },
   { e: <Focus /> },

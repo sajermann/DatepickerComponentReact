@@ -14,10 +14,26 @@ export function Disabled() {
             {translate('DISABLED_1_FROM_NOW')}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
+            dateFormat="yyyy"
+            placeholder="yyyy"
+            id="DateFormat1"
+            showYearPicker
+            excludeDates={[
+              subDays(startOfDay(new Date()), 365),
+              addDays(startOfDay(new Date()), 365),
+            ]}
+          />
+        </DatepickerRD.ContainerInput>
+
+        <DatepickerRD.ContainerInput>
+          <DatepickerRD.Label htmlFor="DateFormat1">
+            {translate('DISABLED_1_FROM_NOW')}
+          </DatepickerRD.Label>
+          <DatepickerRD.Datepicker
             dateFormat="MM/yyyy"
             placeholder="mm-yyyy"
             id="DateFormat1"
-            withoutDay
+            showMonthYearPicker
             excludeDates={[
               subDays(startOfDay(new Date()), 30),
               addDays(startOfDay(new Date()), 30),

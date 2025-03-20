@@ -201,9 +201,9 @@ export function SingleDayPicker() {
                     type="button"
                     key={d.$date.toString()}
                     className={managerClassNames([
-                      'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
+                      'h-6 flex justify-center items-center hover:bg-slate-500 rounded text-xs',
                       {
-                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                        'bg-slate-700 hover:bg-slate-600 opacity-100':
                           d.selected,
                         'opacity-25 !cursor-not-allowed': d.disabled,
                         'opacity-50': !d.inCurrentMonth,

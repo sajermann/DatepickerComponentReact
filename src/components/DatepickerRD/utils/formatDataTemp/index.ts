@@ -1,10 +1,6 @@
 import { TDateFormat } from '../../types';
 
-export function formatDataTemp(
-  value: string,
-  withoutDay?: boolean,
-  dateFormat?: TDateFormat,
-) {
+export function formatDataTemp(value: string, dateFormat?: TDateFormat) {
   if (!dateFormat || !value) return value;
   const ob = {
     'dd/MM/yyyy': (valueTemp: string) =>
@@ -24,6 +20,11 @@ export function formatDataTemp(
         .replace(/\D/g, '')
         .replace(/(\d{2})(\d)/, '$1/$2')
         .replace(/(\/\d{4})\d+$/, '$1'),
+    yyyy: (valueTemp: string) =>
+      valueTemp
+        .replace(/\D/g, '')
+        .substring(0, 4)
+        .replace(/(\d{4})\d+$/, '$1'),
   };
 
   return ob[dateFormat](value);

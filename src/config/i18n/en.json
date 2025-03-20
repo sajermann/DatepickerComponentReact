@@ -1,6 +1,7 @@
 {
   "translations": {
-    "MONTH_PICKER": "Month Picker",
+    "PICKER": "Picker",
+    "MONTH": "Month",
     "UNDER_CONSTRUCTION": "Under Construction",
     "DATE_FORMAT": "Date Format",
     "DD/MM/YYYY": "dd/mm/yyyy",
