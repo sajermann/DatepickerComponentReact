@@ -63,6 +63,7 @@ export function useRoutesMenu() {
           description: 'Datepicker Mega',
           element: <DatepickerPage />,
           label: 'Datepicker Mega',
+          order: 1,
         },
         {
           name: 'Datepicker RD',
@@ -71,13 +72,13 @@ export function useRoutesMenu() {
           element: <DatepickerRDPage />,
           label: 'Datepicker RD',
         },
-        // {
-        //   name: 'Datepicker Aria',
-        //   path: '/datepicker-aria',
-        //   description: 'Datepicker Aria',
-        //   element: <DatepickerAriaPage />,
-        //   label: 'Datepicker Aria',
-        // },
+        {
+          name: 'Datepicker Aria',
+          path: '/datepicker-aria',
+          description: 'Datepicker Aria',
+          element: <DatepickerAriaPage />,
+          label: 'Datepicker Aria',
+        },
         {
           name: 'NotFound',
           path: '*',

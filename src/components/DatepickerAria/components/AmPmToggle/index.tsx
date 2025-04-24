@@ -1,25 +1,18 @@
-import { useEffect } from 'react';
+import { useDateSegment } from 'react-aria';
 import { useDatepickerMega } from '../../hooks';
-import { onClickToggleAmPm } from '../../utils';
 
 export function AmPmToggle() {
-  const { setDate, onChange, setIsAmPmMode, inputAmPmRef } =
+  const { segmentDayPeriod, stateTime, inputDayPeriodRef } =
     useDatepickerMega();
-  useEffect(() => {
-    setIsAmPmMode(true);
-  }, []);
+  const { segmentProps } = useDateSegment(
+    segmentDayPeriod,
+    stateTime,
+    inputDayPeriodRef,
+  );
+
   return (
-    <input
-      ref={inputAmPmRef}
-      readOnly
-      className="group ring-0 outline-none bg-transparent w-9 h-8 p-1 flex text-center cursor-pointer hover:text-blue-500 transition-colors duration-500 caret-transparent"
-      onClick={() => {
-        onClickToggleAmPm({
-          setDate,
-          onChange,
-          amPmRef: inputAmPmRef,
-        });
-      }}
-    />
+    <div {...segmentProps} ref={inputDayPeriodRef}>
+      {segmentDayPeriod.text}
+    </div>
   );
 }

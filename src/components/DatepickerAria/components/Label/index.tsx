@@ -1,12 +1,13 @@
-import { LabelHTMLAttributes } from 'react';
+import { LabelHTMLAttributes, useRef } from 'react';
+import { useDateField } from 'react-aria';
 import { tv } from 'tailwind-variants';
 import { removeProp } from '~/utils/removeProp';
+import { useDatepickerMega } from '../../hooks';
 
-type TLabel = React.DetailedHTMLProps<
-  LabelHTMLAttributes<HTMLLabelElement>,
-  HTMLLabelElement
-> & {
+type TLabel = {
   isError?: boolean;
+  children?: React.ReactNode;
+  className?: string;
 };
 
 const label = tv({
@@ -36,16 +37,20 @@ const label = tv({
   },
 });
 
-export function Label(props: TLabel) {
+export function Label({ className, children, isError }: TLabel) {
+  const { labelProps } = useDatepickerMega();
+
   const { labelPropsInternal } = label({
-    color: props?.isError ? 'error' : 'primary',
+    color: isError ? 'error' : 'primary',
   });
   return (
     <label
-      {...removeProp(props, ['isError'])}
+      {...labelProps}
       className={labelPropsInternal({
-        class: props?.className,
+        class: className,
       })}
+      // biome-ignore lint/correctness/noChildrenProp: <explanation>
+      children={children}
     />
   );
 }

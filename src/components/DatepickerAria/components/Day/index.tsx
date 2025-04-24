@@ -1,27 +1,22 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
 
-import { useInputDayProps } from '../../hooks';
+import { useDateSegment } from 'react-aria';
+import { useDatepickerMega } from '../../hooks';
 
 const input = tv({
-	base: 'group ring-0 outline-none bg-transparent w-8 h-8 p-1 flex text-center',
+  base: [
+    'group ring-0 outline-none bg-transparent w-10 h-6 flex items-center justify-center',
+    'focus:bg-blue-400 focus:text-white',
+  ],
 });
 
-export function Day({
-	placeholder = 'dd',
-	...props
-}: Omit<
-	DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-	'ref' | 'onChange' | 'onBlur'
->) {
-	const inputProps = useInputDayProps();
+export function Day() {
+  const { segmentDay, stateDate, inputDayRef } = useDatepickerMega();
+  const { segmentProps } = useDateSegment(segmentDay, stateDate, inputDayRef);
 
-	return (
-		<input
-			{...props}
-			placeholder={placeholder}
-			className={input({ class: props?.className })}
-			{...inputProps}
-		/>
-	);
+  return (
+    <div {...segmentProps} ref={inputDayRef} className={input()}>
+      {segmentDay.text}
+    </div>
+  );
 }

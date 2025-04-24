@@ -1,4 +1,14 @@
 import {
+  CalendarDate,
+  createCalendar,
+  getLocalTimeZone,
+  getWeeksInMonth,
+  parseDate,
+  today,
+} from '@internationalized/date';
+
+import {
+  DOMAttributes,
   ReactNode,
   RefObject,
   createContext,
@@ -7,42 +17,43 @@ import {
   useRef,
   useState,
 } from 'react';
-import { TDate } from '../../types';
+import { useDateField, useDateSegment, useLocale } from 'react-aria';
+import {
+  DateFieldState,
+  DateSegment,
+  TimeFieldState,
+  useDateFieldState,
+  useTimeFieldState,
+} from 'react-stately';
 
 type DatepickerMegaContextType = {
-  date: RefObject<TDate>;
-  setDate: (value: TDate | ((prevState: TDate) => TDate)) => void;
-  inputDayRef: RefObject<HTMLInputElement | null>;
-  inputMonthRef: RefObject<HTMLInputElement | null>;
-  inputYearRef: RefObject<HTMLInputElement | null>;
-  inputHourRef: RefObject<HTMLInputElement | null>;
-  inputMinuteRef: RefObject<HTMLInputElement | null>;
-  inputAmPmRef: RefObject<HTMLInputElement | null>;
+  stateDate: DateFieldState;
+  stateTime: DateFieldState;
+  labelProps: DOMAttributes<any>;
+  fieldProps: any;
+  segmentDay: DateSegment;
+  segmentMonth: DateSegment;
+  segmentYear: DateSegment;
+  segmentHour: DateSegment;
+  segmentMinute: DateSegment;
+  segmentDayPeriod: DateSegment;
+  inputDayRef: RefObject<HTMLDivElement | null>;
+  inputMonthRef: RefObject<HTMLDivElement | null>;
+  inputYearRef: RefObject<HTMLDivElement | null>;
+  inputHourRef: RefObject<HTMLDivElement | null>;
+  inputMinuteRef: RefObject<HTMLDivElement | null>;
+  inputDayPeriodRef: RefObject<HTMLDivElement | null>;
   rootRef: RefObject<HTMLDivElement | null>;
-  onChange?: (data: TDate) => void;
-  defaultDate?: Date;
-  isOpenCalendar: boolean;
-  setIsOpenCalendar: (
-    value: boolean | ((prevState: boolean) => boolean),
-  ) => void;
-  isAmPmMode?: boolean;
-  setIsAmPmMode: (value: boolean | ((prevState: boolean) => boolean)) => void;
-  disabledDates?: Date[];
-  disabledWeeks?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
-  minDate?: Date;
-  maxDate?: Date;
-  hasTrigger?: boolean;
-  setHasTrigger: (value: boolean | ((prevState: boolean) => boolean)) => void;
-  intervalTime?: number;
-  minTime?: {
-    h: number;
-    m: number;
-  };
-  maxTime?: {
-    h: number;
-    m: number;
-  };
 };
+
+function dateToCalendarDate(date?: Date | null) {
+  if (!date) return date;
+  return new CalendarDate(
+    date.getFullYear(),
+    date.getMonth() + 1, // CalendarDate espera mês de 1 a 12
+    date.getDate(),
+  );
+}
 
 export const DatepickerMegaContext = createContext(
   {} as DatepickerMegaContextType,
@@ -50,149 +61,92 @@ export const DatepickerMegaContext = createContext(
 
 type TDatepickerMegaProviderProps = {
   children: ReactNode;
-  defaultDate?: Date;
-  onChange?: (data: TDate) => void;
-  disabledDates?: Date[];
-  disabledWeeks?: (0 | 1 | 2 | 3 | 4 | 5 | 6)[];
-  minDate?: Date;
-  maxDate?: Date;
-  intervalTime?: number;
-  minTime?: {
-    h: number;
-    m: number;
-  };
-  maxTime?: {
-    h: number;
-    m: number;
-  };
+  defaultValue?: Date | null;
+  value?: Date | null;
+  onChange?: (data?: Date | null) => void;
 };
 
 export function DatepickerMegaProvider({
   children,
-  defaultDate,
+  defaultValue,
+  value,
   onChange,
-  disabledDates,
-  disabledWeeks,
-  minDate,
-  maxDate,
-  intervalTime,
-  minTime,
-  maxTime,
 }: TDatepickerMegaProviderProps) {
-  const [isAmPmMode, setIsAmPmMode] = useState(false);
-  const [isOpenCalendar, setIsOpenCalendar] = useState(false);
-  const [hasTrigger, setHasTrigger] = useState(false);
-  const date = useRef<TDate>({
-    date: null,
-    day: null,
-    month: null,
-    hour: null,
-    minute: null,
-    year: null,
-    iso: null,
-    clockType: 'am',
+  const { locale } = useLocale();
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inputDayRef = useRef<HTMLDivElement>(null);
+  const inputMonthRef = useRef<HTMLDivElement>(null);
+  const inputYearRef = useRef<HTMLDivElement>(null);
+  const inputHourRef = useRef<HTMLDivElement>(null);
+  const inputMinuteRef = useRef<HTMLDivElement>(null);
+  const inputDayPeriodRef = useRef<HTMLDivElement>(null);
+
+  const stateDate = useDateFieldState({
+    defaultValue: dateToCalendarDate(defaultValue),
+    // value: today(getLocalTimeZone()),
+    value: dateToCalendarDate(value),
+    locale,
+    createCalendar,
+    onChange: e => onChange?.(e?.toDate(getLocalTimeZone())),
+  });
+  const stateTime = useTimeFieldState({
+    locale,
   });
 
-  const inputDayRef = useRef<HTMLInputElement>(null);
-  const inputMonthRef = useRef<HTMLInputElement>(null);
-  const inputYearRef = useRef<HTMLInputElement>(null);
-  const inputHourRef = useRef<HTMLInputElement>(null);
-  const inputMinuteRef = useRef<HTMLInputElement>(null);
-  const inputAmPmRef = useRef<HTMLInputElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const { labelProps, fieldProps } = useDateField({}, stateDate, rootRef);
 
-  const setDate = (value: TDate | ((prevState: TDate) => TDate)) => {
-    if (typeof value === 'function') {
-      const newState = value(date.current);
-      date.current = newState;
-    } else {
-      date.current = value;
-    }
-  };
+  const segmentDay = stateDate.segments.find(
+    item => item.type === 'day',
+  ) as DateSegment;
+  const segmentMonth = stateDate.segments.find(
+    item => item.type === 'month',
+  ) as DateSegment;
+  const segmentYear = stateDate.segments.find(
+    item => item.type === 'year',
+  ) as DateSegment;
 
-  useEffect(() => {
-    setDate(prev => {
-      const hourNew =
-        isAmPmMode && prev.hour && prev.hour > 12 ? prev.hour - 12 : prev.hour;
-      const clockType = prev.hour && prev.hour > 12 ? 'pm' : 'am';
-      const values: TDate = {
-        ...prev,
-        hour: hourNew,
-        clockType,
-      };
-
-      if (inputAmPmRef.current) {
-        inputAmPmRef.current.value = clockType;
-      }
-
-      if (inputHourRef.current && hourNew && hourNew > -1) {
-        inputHourRef.current.value = hourNew.toString();
-      }
-      return values;
-    });
-  }, [isAmPmMode]);
-
-  useEffect(() => {
-    if (defaultDate) {
-      setDate(prev => ({
-        ...prev,
-        year: defaultDate.getFullYear() || null,
-        month: defaultDate.getMonth() + 1 || null,
-        day: defaultDate.getDate() || null,
-        date: defaultDate || null,
-        iso: defaultDate.toISOString() || null,
-      }));
-    } else {
-      setDate(prev => ({
-        ...prev,
-        year: null,
-        month: null,
-        day: null,
-        date: null,
-        iso: null,
-      }));
-    }
-  }, [defaultDate]);
+  const segmentHour = stateTime.segments.find(
+    item => item.type === 'hour',
+  ) as DateSegment;
+  const segmentMinute = stateTime.segments.find(
+    item => item.type === 'minute',
+  ) as DateSegment;
+  const segmentDayPeriod = stateTime.segments.find(
+    item => item.type === 'dayPeriod',
+  ) as DateSegment;
 
   const memoizedValue = useMemo<DatepickerMegaContextType>(
     () => ({
-      date,
-      setDate,
+      stateDate,
+      stateTime,
+      labelProps,
+      fieldProps,
+      segmentDay,
+      segmentMonth,
+      segmentYear,
+      segmentHour,
+      segmentMinute,
+      segmentDayPeriod,
+      rootRef,
       inputDayRef,
       inputMonthRef,
       inputYearRef,
       inputHourRef,
       inputMinuteRef,
-      inputAmPmRef,
-      rootRef,
-      onChange,
-      defaultDate,
-      isOpenCalendar,
-      setIsOpenCalendar,
-      isAmPmMode,
-      setIsAmPmMode,
-      disabledDates,
-      disabledWeeks,
-      minDate,
-      maxDate,
-      hasTrigger,
-      setHasTrigger,
-      intervalTime,
-      minTime,
-      maxTime,
+      inputDayPeriodRef,
     }),
     [
-      date,
-      isOpenCalendar,
-      isAmPmMode,
-      disabledDates,
-      disabledWeeks,
-      minDate,
-      maxDate,
-      hasTrigger,
-      intervalTime,
-      minTime,
-      maxTime,
+      stateDate,
+      stateTime,
+      labelProps,
+      fieldProps,
+      segmentDay,
+      segmentMonth,
+      segmentYear,
+      segmentHour,
+      segmentMinute,
+      segmentDayPeriod,
     ],
   );
 

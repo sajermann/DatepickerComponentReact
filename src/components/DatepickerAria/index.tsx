@@ -12,4 +12,5 @@ export * from './components/SingleMonthPicker';
 export * from './components/SingleYearPicker';
 export * from './components/SingleTimerPicker';
 export * from './components/ContainerInput';
+export * from './components/SubContainerInput';
 export * from './components/Label';

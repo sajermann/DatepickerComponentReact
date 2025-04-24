@@ -3,9 +3,20 @@ import { Divider } from '~/components/Divider';
 import { Section } from '~/components/Section';
 import { TodoList } from '~/components/TodoList';
 import { useTranslation } from '~/hooks/useTranslation';
+import { Composition } from './components/Composition';
+import { Controlled } from './components/Controlled';
+import { DefaultValue } from './components/DefaultValue';
+import { HookForm } from './components/HookForm';
 import { OnChange } from './components/OnChange';
 
-const COMPONENTS = [{ e: <TodoList list={[]} /> }, { e: <OnChange /> }];
+const COMPONENTS = [
+  { e: <TodoList list={[]} /> },
+  { e: <OnChange /> },
+  { e: <DefaultValue /> },
+  { e: <Controlled /> },
+  { e: <HookForm /> },
+  { e: <Composition /> },
+];
 
 export function DatepickerAriaPage() {
   const { translate } = useTranslation();

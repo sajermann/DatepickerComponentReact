@@ -1,25 +1,22 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
-import { useInputYearProps } from '../../hooks';
+
+import { useDateSegment } from 'react-aria';
+import { useDatepickerMega } from '../../hooks';
 
 const input = tv({
-	base: 'group ring-0 outline-none bg-transparent w-12 h-8 p-1 flex text-center',
+  base: [
+    'group ring-0 outline-none bg-transparent w-10 h-6 flex items-center justify-center',
+    'focus:bg-blue-400 focus:text-white',
+  ],
 });
 
-export function Year({
-	placeholder = 'yyyy',
-	...props
-}: Omit<
-	DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
-	'ref' | 'onChange' | 'onBlur'
->) {
-	const inputProps = useInputYearProps();
-	return (
-		<input
-			{...props}
-			placeholder={placeholder}
-			className={input({ class: props?.className })}
-			{...inputProps}
-		/>
-	);
+export function Year() {
+  const { segmentYear, stateDate, inputYearRef } = useDatepickerMega();
+  const { segmentProps } = useDateSegment(segmentYear, stateDate, inputYearRef);
+
+  return (
+    <div {...segmentProps} ref={inputYearRef} className={input()}>
+      {segmentYear.text}
+    </div>
+  );
 }
