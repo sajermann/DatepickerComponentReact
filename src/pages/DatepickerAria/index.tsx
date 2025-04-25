@@ -10,11 +10,11 @@ import { HookForm } from './components/HookForm';
 import { OnChange } from './components/OnChange';
 
 const COMPONENTS = [
-  { e: <TodoList list={[]} /> },
-  { e: <OnChange /> },
-  { e: <DefaultValue /> },
-  { e: <Controlled /> },
-  { e: <HookForm /> },
+  // { e: <TodoList list={[]} /> },
+  // { e: <OnChange /> },
+  // { e: <DefaultValue /> },
+  // { e: <Controlled /> },
+  // { e: <HookForm /> },
   { e: <Composition /> },
 ];
 

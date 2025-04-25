@@ -33,15 +33,10 @@ const rootContainer = tv({
 });
 
 function WithoutPopover({ children }: { children: ReactNode }) {
-  const { fieldProps, rootRef } = useDatepickerMega();
   const { inputPropsInternal } = rootContainer({
     color: 'primary',
   });
-  return (
-    <div {...fieldProps} ref={rootRef} className={inputPropsInternal()}>
-      {children}
-    </div>
-  );
+  return <div className={inputPropsInternal()}>{children}</div>;
 }
 
 export function Container({ children }: { children: ReactNode }) {

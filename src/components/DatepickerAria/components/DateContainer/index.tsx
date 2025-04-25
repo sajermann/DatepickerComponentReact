@@ -1,5 +1,6 @@
 import { DetailedHTMLProps, HTMLAttributes } from 'react';
 import { tv } from 'tailwind-variants';
+import { useDatepickerMega } from '../../hooks';
 
 const container = tv({
   slots: {
@@ -7,16 +8,19 @@ const container = tv({
   },
 });
 
-type TSubContainerInput = DetailedHTMLProps<
+type TDateContainerInput = DetailedHTMLProps<
   HTMLAttributes<HTMLDivElement>,
   HTMLDivElement
 >;
-export function SubContainerInput(props: TSubContainerInput) {
+export function DateContainer(props: TDateContainerInput) {
+  const { dateFieldProps, containerDateRef } = useDatepickerMega();
   const { containerPropsInternal } = container({});
 
   return (
     <div
       {...props}
+      {...dateFieldProps}
+      ref={containerDateRef}
       className={containerPropsInternal({
         class: props.className,
       })}

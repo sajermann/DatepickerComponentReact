@@ -9,13 +9,13 @@ export function DefaultValue() {
       <DatepickerMega.ContainerInput>
         <DatepickerMega.Root defaultValue={new Date()}>
           <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
-          <DatepickerMega.SubContainerInput>
+          <DatepickerMega.DateContainer>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />
             <DatepickerMega.Month />
             <DatepickerMega.Divider />
             <DatepickerMega.Year />
-          </DatepickerMega.SubContainerInput>
+          </DatepickerMega.DateContainer>
         </DatepickerMega.Root>
       </DatepickerMega.ContainerInput>
     </Section>

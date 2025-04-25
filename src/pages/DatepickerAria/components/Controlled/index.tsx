@@ -16,13 +16,13 @@ export function Controlled() {
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Root onChange={setDate} value={date}>
             <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
-            <DatepickerMega.SubContainerInput>
+            <DatepickerMega.DateContainer>
               <DatepickerMega.Day />
               <DatepickerMega.Divider />
               <DatepickerMega.Month />
               <DatepickerMega.Divider />
               <DatepickerMega.Year />
-            </DatepickerMega.SubContainerInput>
+            </DatepickerMega.DateContainer>
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
 

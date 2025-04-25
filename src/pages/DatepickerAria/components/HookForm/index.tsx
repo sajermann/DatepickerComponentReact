@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon } from 'lucide-react';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import * as DatepickerMega from '~/components/DatepickerAria';
@@ -34,24 +33,6 @@ export function HookForm() {
             control={control}
             name="date"
             render={({ field: { onChange } }) => (
-              // <DatepickerMega.ContainerInput>
-              //   <DatepickerMega.Label
-              //     isError={errors.date?.message ? true : false}
-              //   >
-              //     {translate('DATE')}
-              //   </DatepickerMega.Label>
-              //   <DatepickerMega.Root onChange={e => onChange(e.date)}>
-              //     <DatepickerMega.Day />
-              //     <DatepickerMega.Divider />
-              //     <DatepickerMega.Month />
-              //     <DatepickerMega.Divider />
-              //     <DatepickerMega.Year />
-              //     <DatepickerMega.PickerTrigger>
-              //       <CalendarIcon />
-              //     </DatepickerMega.PickerTrigger>
-              //     <DatepickerMega.SingleDayPicker />
-              //   </DatepickerMega.Root>
-              // </DatepickerMega.ContainerInput>
               <DatepickerMega.ContainerInput>
                 <DatepickerMega.Root onChange={onChange}>
                   <DatepickerMega.Label
@@ -59,13 +40,13 @@ export function HookForm() {
                   >
                     {translate('DATE')}
                   </DatepickerMega.Label>
-                  <DatepickerMega.SubContainerInput>
+                  <DatepickerMega.DateContainer>
                     <DatepickerMega.Day />
                     <DatepickerMega.Divider />
                     <DatepickerMega.Month />
                     <DatepickerMega.Divider />
                     <DatepickerMega.Year />
-                  </DatepickerMega.SubContainerInput>
+                  </DatepickerMega.DateContainer>
                 </DatepickerMega.Root>
               </DatepickerMega.ContainerInput>
             )}

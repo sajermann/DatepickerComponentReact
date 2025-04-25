@@ -1,5 +1,6 @@
 import {
   CalendarDate,
+  Time,
   createCalendar,
   getLocalTimeZone,
   getWeeksInMonth,
@@ -17,7 +18,12 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useDateField, useDateSegment, useLocale } from 'react-aria';
+import {
+  useDateField,
+  useDateSegment,
+  useLocale,
+  useTimeField,
+} from 'react-aria';
 import {
   DateFieldState,
   DateSegment,
@@ -29,8 +35,10 @@ import {
 type DatepickerMegaContextType = {
   stateDate: DateFieldState;
   stateTime: DateFieldState;
-  labelProps: DOMAttributes<any>;
-  fieldProps: any;
+  dateLabelProps: React.HTMLAttributes<HTMLElement>;
+  timeLabelProps: React.HTMLAttributes<HTMLElement>;
+  dateFieldProps: any;
+  timeFieldProps: any;
   segmentDay: DateSegment;
   segmentMonth: DateSegment;
   segmentYear: DateSegment;
@@ -43,7 +51,8 @@ type DatepickerMegaContextType = {
   inputHourRef: RefObject<HTMLDivElement | null>;
   inputMinuteRef: RefObject<HTMLDivElement | null>;
   inputDayPeriodRef: RefObject<HTMLDivElement | null>;
-  rootRef: RefObject<HTMLDivElement | null>;
+  containerDateRef: RefObject<HTMLDivElement | null>;
+  containerTimeRef: RefObject<HTMLDivElement | null>;
 };
 
 function dateToCalendarDate(date?: Date | null) {
@@ -74,7 +83,8 @@ export function DatepickerMegaProvider({
 }: TDatepickerMegaProviderProps) {
   const { locale } = useLocale();
 
-  const rootRef = useRef<HTMLDivElement>(null);
+  const containerDateRef = useRef<HTMLDivElement>(null);
+  const containerTimeRef = useRef<HTMLDivElement>(null);
   const inputDayRef = useRef<HTMLDivElement>(null);
   const inputMonthRef = useRef<HTMLDivElement>(null);
   const inputYearRef = useRef<HTMLDivElement>(null);
@@ -90,11 +100,19 @@ export function DatepickerMegaProvider({
     createCalendar,
     onChange: e => onChange?.(e?.toDate(getLocalTimeZone())),
   });
+
   const stateTime = useTimeFieldState({
     locale,
+    defaultValue: new Time(11, 45),
+    label: 'Appointment time',
+    hourCycle: 24,
   });
 
-  const { labelProps, fieldProps } = useDateField({}, stateDate, rootRef);
+  // const { labelProps, fieldProps } = useDateField({}, stateDate, rootRef);
+  const { labelProps: dateLabelProps, fieldProps: dateFieldProps } =
+    useDateField({}, stateDate, containerDateRef);
+  const { labelProps: timeLabelProps, fieldProps: timeFieldProps } =
+    useTimeField({}, stateTime, containerTimeRef);
 
   const segmentDay = stateDate.segments.find(
     item => item.type === 'day',
@@ -120,15 +138,18 @@ export function DatepickerMegaProvider({
     () => ({
       stateDate,
       stateTime,
-      labelProps,
-      fieldProps,
+      dateLabelProps,
+      dateFieldProps,
+      timeLabelProps,
+      timeFieldProps,
       segmentDay,
       segmentMonth,
       segmentYear,
       segmentHour,
       segmentMinute,
       segmentDayPeriod,
-      rootRef,
+      containerDateRef,
+      containerTimeRef,
       inputDayRef,
       inputMonthRef,
       inputYearRef,
@@ -139,8 +160,10 @@ export function DatepickerMegaProvider({
     [
       stateDate,
       stateTime,
-      labelProps,
-      fieldProps,
+      dateLabelProps,
+      dateFieldProps,
+      timeLabelProps,
+      timeFieldProps,
       segmentDay,
       segmentMonth,
       segmentYear,

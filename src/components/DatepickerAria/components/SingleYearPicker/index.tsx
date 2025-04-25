@@ -18,7 +18,7 @@ export function SingleYearPicker() {
     inputMonthRef,
     inputYearRef,
     setIsOpenCalendar,
-    rootRef,
+    containerDateRef: rootRef,
     disabledDates,
     disabledWeeks,
     minDate,

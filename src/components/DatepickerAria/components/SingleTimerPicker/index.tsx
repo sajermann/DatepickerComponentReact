@@ -16,7 +16,7 @@ export function SingleTimerPicker() {
     inputMinuteRef,
     inputAmPmRef,
     setIsOpenCalendar,
-    rootRef,
+    containerDateRef: rootRef,
     intervalTime = 30,
     inputHourRef,
     isAmPmMode,

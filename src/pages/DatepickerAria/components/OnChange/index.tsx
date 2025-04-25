@@ -14,13 +14,13 @@ export function OnChange() {
       <DatepickerMega.ContainerInput>
         <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
           <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
-          <DatepickerMega.SubContainerInput>
+          <DatepickerMega.DateContainer>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />
             <DatepickerMega.Month />
             <DatepickerMega.Divider />
             <DatepickerMega.Year />
-          </DatepickerMega.SubContainerInput>
+          </DatepickerMega.DateContainer>
         </DatepickerMega.Root>
       </DatepickerMega.ContainerInput>
       <div className="w-full">

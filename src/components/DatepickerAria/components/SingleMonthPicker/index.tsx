@@ -19,7 +19,7 @@ export function SingleMonthPicker() {
     inputMonthRef,
     inputYearRef,
     setIsOpenCalendar,
-    rootRef,
+    containerDateRef: rootRef,
     disabledDates,
     disabledWeeks,
     minDate,
