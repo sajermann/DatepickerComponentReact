@@ -26,14 +26,6 @@ const DatepickerRDPage = lazy(() =>
   })),
 );
 
-const DatepickerAriaPage = lazy(() =>
-  import('~/pages/DatepickerAria').then(
-    ({ DatepickerAriaPage: DatepickerAria }) => ({
-      default: DatepickerAria,
-    }),
-  ),
-);
-
 const NotFoundPage = lazy(() =>
   import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
     default: NotFound,
@@ -71,13 +63,6 @@ export function useRoutesMenu() {
           description: 'Datepicker RD',
           element: <DatepickerRDPage />,
           label: 'Datepicker RD',
-        },
-        {
-          name: 'Datepicker Aria',
-          path: '/datepicker-aria',
-          description: 'Datepicker Aria',
-          element: <DatepickerAriaPage />,
-          label: 'Datepicker Aria',
         },
         {
           name: 'NotFound',
