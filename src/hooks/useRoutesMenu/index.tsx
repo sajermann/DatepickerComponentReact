@@ -26,6 +26,14 @@ const DatepickerRDPage = lazy(() =>
   })),
 );
 
+const DatepickerCalendarPage = lazy(() =>
+  import('~/pages/DatepickerCalendar').then(
+    ({ DatepickerCalendarPage: DatepickerCalendar }) => ({
+      default: DatepickerCalendar,
+    }),
+  ),
+);
+
 const NotFoundPage = lazy(() =>
   import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
     default: NotFound,
@@ -63,6 +71,13 @@ export function useRoutesMenu() {
           description: 'Datepicker RD',
           element: <DatepickerRDPage />,
           label: 'Datepicker RD',
+        },
+        {
+          name: 'Datepicker Calendar',
+          path: '/datepicker-calendar',
+          description: 'Datepicker Calendar',
+          element: <DatepickerCalendarPage />,
+          label: 'Datepicker Calendar',
         },
         {
           name: 'NotFound',
