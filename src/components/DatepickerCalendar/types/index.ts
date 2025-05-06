@@ -1,5 +1,5 @@
 export type TDate = {
-  date: Date | null;
+  date: Date;
   day: number;
   isPrevMonth: boolean;
   isCurrentMonth: boolean;

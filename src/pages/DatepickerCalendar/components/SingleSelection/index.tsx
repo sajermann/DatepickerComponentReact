@@ -29,6 +29,12 @@ export function SingleSelection() {
                   setSelectedDate(e);
                 },
               },
+              // multi: {
+              //   selectedDates: [],
+              //   onSelectedDates: e => {
+              //     console.log({ e });
+              //   },
+              // },
             }}
             // onPrevClick={() =>
             //   setDateToStartCalendar(prev => addMonths(prev || new Date(), -1))
@@ -37,7 +43,10 @@ export function SingleSelection() {
             //   setDateToStartCalendar(prev => addMonths(prev || new Date(), 1))
             // }
           >
-            <DatepickerCalendar.Calendar />
+            <DatepickerCalendar.Calendar>
+              <DatepickerCalendar.Header />
+              <DatepickerCalendar.Body />
+            </DatepickerCalendar.Calendar>
           </DatepickerCalendar.Root>
         </Section>
         {/* <Section title="Toggle" variant="h3">

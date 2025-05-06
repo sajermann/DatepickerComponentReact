@@ -1,5 +1,6 @@
 import { isAfter, isBefore, isSameDay, isSameMonth, isToday } from 'date-fns';
-import { TDisabled, TSelectOptions } from '~/Types/TCalendarPick';
+
+import { TDisabled, TSelectOptions } from '../../types';
 import { dateIsInArray } from '../dateIsInArray';
 
 type PropsGetClassNames = {
@@ -19,7 +20,7 @@ export function getClassNames({
   semiSelecteds,
 }: PropsGetClassNames) {
   const { single, multi } = selectOptions;
-  const classToReturn: string[] = ['border'];
+  const classToReturn: string[] = [];
   if (isToday(date)) {
     classToReturn.push('bg-primary-700');
   }
