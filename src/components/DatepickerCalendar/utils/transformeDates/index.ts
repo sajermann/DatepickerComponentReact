@@ -1,32 +1,74 @@
 import { isAfter, isBefore, isSameMonth, isToday, startOfDay } from 'date-fns';
 import { TDate, TDisabled } from '../../types';
 
+type TProps = {
+  dateToVerify: Date;
+  startDate: Date;
+  disabledDate?: TDisabled;
+  selectedDate?: Date | null;
+  selectedDates?: Date[];
+  selectOnlyVisibleMonth?: boolean;
+};
+
 export function transformDate({
-  date,
+  startDate,
+  dateToVerify,
   disabledDate,
-}: { date: Date; disabledDate?: TDisabled }): TDate {
-  const dayOfWeek = date.getDay();
-  const today = date || new Date();
-  const prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-  const nextMonth = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  selectedDate,
+  selectedDates,
+  selectOnlyVisibleMonth,
+}: TProps): TDate {
+  const dayOfWeek = dateToVerify.getDay();
+  const prevMonth = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth() - 1,
+    1,
+  );
+  const nextMonth = new Date(
+    startDate.getFullYear(),
+    startDate.getMonth() + 1,
+    1,
+  );
 
   const t =
     disabledDate?.dates?.some(
-      d => startOfDay(d).getTime() === startOfDay(date).getTime(),
+      d => startOfDay(d).getTime() === startOfDay(dateToVerify).getTime(),
     ) ||
-    (disabledDate?.datesBefore
-      ? isBefore(startOfDay(date), startOfDay(disabledDate.datesBefore))
+    (disabledDate?.before
+      ? isBefore(startOfDay(dateToVerify), startOfDay(disabledDate.before))
       : false) ||
-    (disabledDate?.datesAfter
-      ? isAfter(startOfDay(date), startOfDay(disabledDate.datesAfter))
-      : false);
+    (disabledDate?.after
+      ? isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after))
+      : false) ||
+    (selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
+
+  // if (dateToVerify.getDate() === 2 && dateToVerify.getMonth() === 4) {
+  //   console.log({
+  //     dateToVerify,
+  //     isDisabled: t,
+  //     a: startOfDay(dateToVerify),
+  //     b: startOfDay(disabledDate?.before),
+  //     c: isAfter(startOfDay(dateToVerify), startOfDay(disabledDate?.before)),
+  //   });
+  // }
+
+  // if (dateToVerify.getDate() === 12 && dateToVerify.getMonth() === 4) {
+  //   console.log({
+  //     dateToVerify,
+  //     isDisabled: t,
+  //     a: startOfDay(dateToVerify),
+  //     b: startOfDay(disabledDate?.after),
+  //     c: isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after)),
+  //   });
+  // }
+
   return {
-    date: date,
-    day: date.getDay(),
-    isToday: isToday(date),
-    isPrevMonth: isSameMonth(date, prevMonth),
-    isCurrentMonth: isSameMonth(date, today),
-    isNextMonth: isSameMonth(date, nextMonth),
+    date: dateToVerify,
+    day: dateToVerify.getDay(),
+    isToday: isToday(dateToVerify),
+    isPrevMonth: isSameMonth(dateToVerify, prevMonth),
+    isCurrentMonth: isSameMonth(dateToVerify, startDate),
+    isNextMonth: isSameMonth(dateToVerify, nextMonth),
     isSunday: dayOfWeek === 0,
     isMonday: dayOfWeek === 1,
     isTuesday: dayOfWeek === 2,
@@ -34,7 +76,9 @@ export function transformDate({
     isThursday: dayOfWeek === 4,
     isFriday: dayOfWeek === 5,
     isSaturday: dayOfWeek === 6,
-    isSelected: false,
+    isSelected:
+      dateToVerify.getTime() === selectedDate?.getTime() ||
+      !!selectedDates?.some(item => item.getTime() === dateToVerify.getTime()),
     isDisabled: t,
   };
 }

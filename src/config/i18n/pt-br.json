@@ -1,5 +1,13 @@
 {
   "translations": {
+    "MULTI_SELECTION_DISABLED": "Seleção multipla desabilitada",
+    "SINGLE_SELECTION_DISABLED": "Seleção simples desabilitada",
+    "HEADER_SELECTION": "Seleção pelo cabeçalho",
+    "MULTIPLE_SELECTION": "Seleção multiplas",
+    "WEEK_STARTS_ON": "Início da semana",
+    "SELECT_ONLY_VISIBLE_MONTH": "Selecionar apenas no mês visível",
+    "DATES_BEFORE": "Datas antes de",
+    "DATES_AFTER": "Datas depois de",
     "WITHOUT_USING_LIB": "Sem usar biblioteca",
     "PICKER": "Seletor",
     "MONTH": "Mês",

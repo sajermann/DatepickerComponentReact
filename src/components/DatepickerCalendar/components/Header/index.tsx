@@ -11,60 +11,64 @@ export const Header = memo(() => {
     useDatepickerCalendar();
 
   const commonClassNames = managerClassNames([
-    { 'font-bold transition-all duration-500': true },
-    { 'p-1 md:p-4 ': true },
-    { 'hover:text-primary-500': selectDate.multi },
+    'w-full p-2 font-bold text-center',
   ]);
 
   return (
-    <thead>
-      <tr>
-        <th className="flex items-center justify-center p-1">
-          <Button
-            iconButton="rounded"
-            variant="option"
-            colorStyle="mono"
-            // className={managerClassNames({
-            //   '!opacity-0 !cursor-default': isOpenSelectorMonthYear,
-            // })} TODO: Deixar essa parte comentada pra quando for meter um seletor mes
-            onClick={handlePrevMonth}
-          >
-            <ChevronLeft />
-          </Button>
-        </th>
-        <th colSpan={5} className="items-center justify-center p-1">
+    <header className="flex items-center flex-col gap-2">
+      <div className="grid grid-cols-7 w-full items-center justify-items-center gap-2">
+        <Button
+          iconButton="rounded"
+          variant="option"
+          colorStyle="mono"
+          className="col-span-1"
+          // className={managerClassNames({
+          //   '!opacity-0 !cursor-default': isOpenSelectorMonthYear,
+          // })} TODO: Deixar essa parte comentada pra quando for meter um seletor mes
+          onClick={handlePrevMonth}
+        >
+          <ChevronLeft />
+        </Button>
+        <span className="col-span-5">
           {format(startDate.date, 'MMMM yyyy').toUpperCase()}
-        </th>
-        <th className="flex items-center justify-center p-1">
-          <Button
-            iconButton="rounded"
-            variant="option"
-            colorStyle="mono"
-            // className={managerClassNames({
-            //   '!opacity-0 !cursor-default': isOpenSelectorMonthYear,
-            // })}
-            onClick={handleNextMonth}
-          >
-            <ChevronRight />
-          </Button>
-        </th>
-      </tr>
-      <tr>
+        </span>
+
+        <Button
+          iconButton="rounded"
+          variant="option"
+          colorStyle="mono"
+          className="col-span-1 text-center"
+          // className={managerClassNames({
+          //   '!opacity-0 !cursor-default': isOpenSelectorMonthYear,
+          // })}
+          onClick={handleNextMonth}
+        >
+          <ChevronRight />
+        </Button>
+      </div>
+      <div className="grid grid-cols-7 w-full gap-2">
         {headers.map(weekDay => (
-          <th
+          <div
             key={weekDay.text}
             className={managerClassNames([
-              { 'cursor-pointer': selectDate.multi },
+              {
+                'hover:bg-slate-500 rounded':
+                  selectDate.multi?.enableHeaderSelection,
+              },
+              { 'cursor-pointer': selectDate.multi?.enableHeaderSelection },
               { 'cursor-auto': selectDate.single },
               {
-                'bg-primary-500': weekDay.isSelectedAllDays,
+                'bg-slate-700 hover:bg-slate-600 opacity-100':
+                  selectDate.multi?.enableHeaderSelection &&
+                  weekDay.isSelectedAllDays,
               },
             ])}
           >
-            {selectDate.single && (
+            {(selectDate.single ||
+              !selectDate.multi?.enableHeaderSelection) && (
               <div className={commonClassNames}>{weekDay.text}</div>
             )}
-            {selectDate.multi && (
+            {selectDate.multi?.enableHeaderSelection && (
               <button
                 type="button"
                 className={commonClassNames}
@@ -73,9 +77,9 @@ export const Header = memo(() => {
                 {weekDay.text}
               </button>
             )}
-          </th>
+          </div>
         ))}
-      </tr>
-    </thead>
+      </div>
+    </header>
   );
 });

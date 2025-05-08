@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 export type TDate = {
   date: Date;
   day: number;
@@ -17,6 +19,7 @@ export type TDate = {
 };
 
 export type TSelectOptions = {
+  selectOnlyVisibleMonth?: boolean;
   single?: {
     selectedDate: Date | null;
     onSelectedDate: (data: Date | null) => void;
@@ -32,11 +35,20 @@ export type TSelectOptions = {
 
 export type TDisabled = {
   dates?: Date[];
-  datesBefore?: Date;
-  datesAfter?: Date;
+  before?: Date;
+  after?: Date;
 };
 
 export type TSelectionByRange = {
   start: Date | null;
   end: Date | null;
+};
+
+export type TDatepickerCalendarProviderProps = {
+  children: ReactNode;
+  selectDate: TSelectOptions;
+  disabledDate?: TDisabled;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  date?: Date | null;
+  fixedWeeks?: boolean;
 };

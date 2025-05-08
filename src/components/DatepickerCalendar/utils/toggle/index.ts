@@ -1,5 +1,5 @@
 import { isAfter, isBefore, isSameDay, isSameMonth } from 'date-fns';
-import { TDisabled, TSelectOptions } from '~/Types/TCalendarPick';
+import { TDisabled, TSelectOptions } from '../../types';
 import { dateIsInArray } from '../dateIsInArray';
 
 type PropsHandleToggleSelection = {

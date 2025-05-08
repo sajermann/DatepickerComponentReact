@@ -1,5 +1,13 @@
 {
   "translations": {
+    "MULTI_SELECTION_DISABLED": "Multi selection disabled",
+    "SINGLE_SELECTION_DISABLED": "Single selection disabled",
+    "HEADER_SELECTION": "Selection by header",
+    "MULTIPLE_SELECTION": "Multiple selection",
+    "WEEK_STARTS_ON": "Week starts on",
+    "SELECT_ONLY_VISIBLE_MONTH": "Select only visible month",
+    "DATES_BEFORE": "Dates before",
+    "DATES_AFTER": "Dates of",
     "WITHOUT_USING_LIB": "Without using lib",
     "PICKER": "Picker",
     "MONTH": "Month",
