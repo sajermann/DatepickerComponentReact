@@ -43,19 +43,19 @@ export const Body = memo(() => {
                   // })
                 }
                 onClick={() => {
-                  if (selectDate.multi?.enableRangeSelection) {
-                    // setSelectionByRange(prev =>
-                    //   fixSelectionByRange({
-                    //     date,
-                    //     onSemiSelectedsChange: setSemiSelecteds,
-                    //     selectionByRange: prev,
-                    //     selectOptions,
-                    //     startDate,
-                    //     disabled,
-                    //   }),
-                    // );
-                    return;
-                  }
+                  // if (selectDate.range) {
+                  // setSelectionByRange(prev =>
+                  //   fixSelectionByRange({
+                  //     date,
+                  //     onSemiSelectedsChange: setSemiSelecteds,
+                  //     selectionByRange: prev,
+                  //     selectOptions,
+                  //     startDate,
+                  //     disabled,
+                  //   }),
+                  // );
+                  //   return;
+                  // }
                   onDayClick(day);
                 }}
               >

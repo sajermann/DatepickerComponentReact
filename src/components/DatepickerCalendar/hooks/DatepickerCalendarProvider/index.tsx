@@ -82,6 +82,7 @@ export function DatepickerCalendarProvider({
       selectedDate: selectDate.single?.selectedDate,
       selectedDates: selectDate.multi?.selectedDates,
       selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
+      selectedDateByRange: selectDate.range?.selectedDate,
     }),
   );
 
@@ -97,6 +98,7 @@ export function DatepickerCalendarProvider({
     selectedDate: selectDate.single?.selectedDate,
     selectedDates: selectDate.multi?.selectedDates,
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
+    selectedDateByRange: selectDate.range?.selectedDate,
   });
 
   const endDate = transformDate({
@@ -106,6 +108,7 @@ export function DatepickerCalendarProvider({
     selectedDate: selectDate.single?.selectedDate,
     selectedDates: selectDate.multi?.selectedDates,
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
+    selectedDateByRange: selectDate.range?.selectedDate,
   });
 
   const handlePrevMonth = () => {
@@ -124,80 +127,58 @@ export function DatepickerCalendarProvider({
       text: dayName.slice(0, 3).toUpperCase(),
       isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
         dayOfWeek,
-        startDate: startDate.date,
         weeks,
-        disabled: disabledDate,
         selectOptions: selectDate,
       }),
       onClick: () =>
         onHeaderClick({
           dayOfWeek,
-          startDate: startDate.date,
           weeks,
         }),
     };
   });
 
-  type PropsHandleToggleHeader = {
-    dayOfWeek: number;
-    weeks: Array<TDate[]>;
-    startDate: Date;
-  };
-
   const onHeaderClick = ({
     dayOfWeek,
     weeks,
-    startDate,
-  }: PropsHandleToggleHeader) => {
+  }: {
+    dayOfWeek: number;
+    weeks: Array<TDate[]>;
+  }) => {
     const { multi } = selectDate;
     if (!multi) return;
     const daysToAddOrRemove: Date[] = [];
 
     for (const item of weeks) {
       // Verify if is same month and if date is not disabled
-      if (
-        isSameMonth(item[dayOfWeek].date, startDate) &&
-        !item[dayOfWeek].isDisabled
-      ) {
+      if (!item[dayOfWeek].isDisabled) {
         daysToAddOrRemove.push(item[dayOfWeek].date);
       }
     }
 
-    console.log({ multi, daysToAddOrRemove });
-
-    const updatedDates = [...multi.selectedDates];
+    const selectedDates = [...multi.selectedDates];
     // Verify if all dates of week is selecteds
     const allSelected = daysToAddOrRemove.every(day =>
-      updatedDates.some(date => isSameDay(date, day)),
+      selectedDates.some(date => isSameDay(date, day)),
     );
+
     if (allSelected) {
-      // Is all dates of week is selecteds then remove all
-      multi.onSelectedDates(
-        updatedDates.filter(item => {
-          if (
-            item.getDay() === dayOfWeek &&
-            item.getMonth() === startDate.getMonth() &&
-            item.getFullYear() === startDate.getFullYear()
-          ) {
-            return false;
-          }
-          return item;
-        }),
-      );
+      const result = selectedDates.filter(item => item.getDay() !== dayOfWeek);
+      multi.onSelectedDates(result);
       return;
     }
     // Else, add dates not is selecteds
     daysToAddOrRemove.forEach(day => {
-      if (!updatedDates.some(date => isSameDay(date, day))) {
-        updatedDates.push(day);
+      if (!selectedDates.some(date => isSameDay(date, day))) {
+        selectedDates.push(day);
       }
     });
 
-    multi.onSelectedDates(updatedDates);
+    multi.onSelectedDates(selectedDates);
   };
 
   const onDayClick = ({ date, isDisabled }: TDate) => {
-    const { single, multi } = selectDate;
+    const { single, multi, range } = selectDate;
     if (isDisabled) {
       return;
     }
@@ -228,6 +209,35 @@ export function DatepickerCalendarProvider({
           ),
         );
       }
+    }
+
+    if (range) {
+      let t: { from: Date | null; to: Date | null } = { from: null, to: null };
+
+      if (range.selectedDate.from && range.selectedDate.to) {
+        t = { from: date, to: null };
+      } else if (
+        range.selectedDate.from &&
+        date.getTime() < range.selectedDate.from.getTime()
+      ) {
+        t = { from: date, to: range.selectedDate.from };
+      } else if (!range.selectedDate.from) {
+        t = { ...range.selectedDate, from: date };
+      } else if (range.selectedDate.from && !range.selectedDate.to) {
+        t = { ...range.selectedDate, to: date };
+      } else {
+        t = { from: null, to: null };
+      }
+      // handleSelectByRange({
+      //   onSemiSelectedsChange,
+      //   selectOptions,
+      //   targetDateStart: t.start,
+      //   targetDateEnd: t.end,
+      //   startDate,
+      //   disabled,
+      // });
+      console.log({ t });
+      range.onSelectedDate(t);
     }
   };
 

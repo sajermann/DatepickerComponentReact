@@ -4,6 +4,7 @@ import { Section } from '~/components/Section';
 import { useTranslation } from '~/hooks/useTranslation';
 import { MultipleSelection } from './components/MultipleSelection';
 import { MultipleSelectionDisabled } from './components/MultipleSelectionDisabled';
+import { RangeSelection } from './components/RangeSelection';
 import { SingleSelection } from './components/SingleSelection';
 import { SingleSelectionDisabled } from './components/SingleSelectionDisabled';
 
@@ -31,16 +32,16 @@ const COMPONENTS = [
   // { e: <SingleSelection /> },
   // { e: <SingleSelectionDisabled /> },
   // { e: <MultipleSelection /> },
-  { e: <MultipleSelectionDisabled /> },
-  // { e: <RangeSelection /> },
+  // { e: <MultipleSelectionDisabled /> },
+  { e: <RangeSelection /> },
 ];
 
 export function DatepickerCalendarPage() {
   const { translate } = useTranslation();
   return (
     <main className="h-full gap-2 flex flex-col" data-content="content-main">
-      <Section title={translate('CALENDAR_PICKER')} variant="h1">
-        {`${translate('IMPLEMENTS_COMPONENT')} Calendar Picker ${translate(
+      <Section title="Datepicker Calendar" variant="h1">
+        {`${translate('IMPLEMENTS_COMPONENT')} Datepicker Calendar ${translate(
           'WITHOUT_USING_LIB',
         )}`}
       </Section>

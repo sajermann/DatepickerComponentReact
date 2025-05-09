@@ -28,8 +28,12 @@ export type TSelectOptions = {
   multi?: {
     selectedDates: Date[];
     onSelectedDates: (data: Date[]) => void;
-    enableRangeSelection?: boolean;
     enableHeaderSelection?: boolean;
+  };
+  range?: {
+    selectedDate: { from: Date | null; to: Date | null };
+    onSelectedDate: (data: { from: Date | null; to: Date | null }) => void;
+    cancelOnDisabledDate?: boolean;
   };
 };
 
@@ -38,6 +42,8 @@ export type TDisabled = {
   before?: Date;
   after?: Date;
 };
+
+export type TRange = { from: Date | null; to: Date | null };
 
 export type TSelectionByRange = {
   start: Date | null;

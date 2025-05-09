@@ -1,5 +1,12 @@
-import { isAfter, isBefore, isSameMonth, isToday, startOfDay } from 'date-fns';
-import { TDate, TDisabled } from '../../types';
+import {
+  isAfter,
+  isBefore,
+  isSameMonth,
+  isToday,
+  isWithinInterval,
+  startOfDay,
+} from 'date-fns';
+import { TDate, TDisabled, TRange } from '../../types';
 
 type TProps = {
   dateToVerify: Date;
@@ -7,6 +14,7 @@ type TProps = {
   disabledDate?: TDisabled;
   selectedDate?: Date | null;
   selectedDates?: Date[];
+  selectedDateByRange?: TRange;
   selectOnlyVisibleMonth?: boolean;
 };
 
@@ -16,6 +24,7 @@ export function transformDate({
   disabledDate,
   selectedDate,
   selectedDates,
+  selectedDateByRange,
   selectOnlyVisibleMonth,
 }: TProps): TDate {
   const dayOfWeek = dateToVerify.getDay();
@@ -30,7 +39,7 @@ export function transformDate({
     1,
   );
 
-  const t =
+  const t = !!(
     disabledDate?.dates?.some(
       d => startOfDay(d).getTime() === startOfDay(dateToVerify).getTime(),
     ) ||
@@ -40,28 +49,8 @@ export function transformDate({
     (disabledDate?.after
       ? isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after))
       : false) ||
-    (selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
-
-  // if (dateToVerify.getDate() === 2 && dateToVerify.getMonth() === 4) {
-  //   console.log({
-  //     dateToVerify,
-  //     isDisabled: t,
-  //     a: startOfDay(dateToVerify),
-  //     b: startOfDay(disabledDate?.before),
-  //     c: isAfter(startOfDay(dateToVerify), startOfDay(disabledDate?.before)),
-  //   });
-  // }
-
-  // if (dateToVerify.getDate() === 12 && dateToVerify.getMonth() === 4) {
-  //   console.log({
-  //     dateToVerify,
-  //     isDisabled: t,
-  //     a: startOfDay(dateToVerify),
-  //     b: startOfDay(disabledDate?.after),
-  //     c: isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after)),
-  //   });
-  // }
-
+    (selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate))
+  ); // se os disableds estiverem estranho é pq coloquei !!() nessa funcao
   return {
     date: dateToVerify,
     day: dateToVerify.getDay(),
@@ -77,8 +66,41 @@ export function transformDate({
     isFriday: dayOfWeek === 5,
     isSaturday: dayOfWeek === 6,
     isSelected:
-      dateToVerify.getTime() === selectedDate?.getTime() ||
-      !!selectedDates?.some(item => item.getTime() === dateToVerify.getTime()),
+      isDisableSingle({ dateToVerify, selectedDate }) ||
+      isDisableMulti({ dateToVerify, selectedDates }) ||
+      isDisableRange({ dateToVerify, selectedDateByRange }),
     isDisabled: t,
   };
+}
+
+function isDisableSingle({
+  dateToVerify,
+  selectedDate,
+}: { dateToVerify: Date; selectedDate?: Date | null }) {
+  return dateToVerify.getTime() === selectedDate?.getTime();
+}
+
+function isDisableMulti({
+  dateToVerify,
+  selectedDates,
+}: { dateToVerify: Date; selectedDates?: Date[] }) {
+  return !!selectedDates?.some(
+    item => item.getTime() === dateToVerify.getTime(),
+  );
+}
+
+function isDisableRange({
+  dateToVerify,
+  selectedDateByRange,
+}: { dateToVerify: Date; selectedDateByRange?: TRange }) {
+  return (
+    dateToVerify.getTime() === selectedDateByRange?.from?.getTime() ||
+    dateToVerify.getTime() === selectedDateByRange?.to?.getTime() ||
+    (selectedDateByRange?.from &&
+      selectedDateByRange?.to &&
+      isWithinInterval(dateToVerify, {
+        start: selectedDateByRange.from,
+        end: selectedDateByRange.to,
+      }))
+  );
 }
