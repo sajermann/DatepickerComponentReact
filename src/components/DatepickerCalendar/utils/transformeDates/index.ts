@@ -6,6 +6,7 @@ import {
   isWithinInterval,
   startOfDay,
 } from 'date-fns';
+import { RefObject } from 'react';
 import { TDate, TDisabled, TRange } from '../../types';
 
 type TProps = {
@@ -16,6 +17,7 @@ type TProps = {
   selectedDates?: Date[];
   selectedDateByRange?: TRange;
   selectOnlyVisibleMonth?: boolean;
+  daysInHover?: Date[];
 };
 
 export function transformDate({
@@ -26,6 +28,7 @@ export function transformDate({
   selectedDates,
   selectedDateByRange,
   selectOnlyVisibleMonth,
+  daysInHover,
 }: TProps): TDate {
   const dayOfWeek = dateToVerify.getDay();
   const prevMonth = new Date(
@@ -51,6 +54,11 @@ export function transformDate({
       : false) ||
     (selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate))
   ); // se os disableds estiverem estranho é pq coloquei !!() nessa funcao
+
+  const isSelected =
+    isSelectedSingle({ dateToVerify, selectedDate }) ||
+    isSelectedMulti({ dateToVerify, selectedDates }) ||
+    isSelectedRange({ dateToVerify, selectedDateByRange });
   return {
     date: dateToVerify,
     day: dateToVerify.getDay(),
@@ -65,22 +73,26 @@ export function transformDate({
     isThursday: dayOfWeek === 4,
     isFriday: dayOfWeek === 5,
     isSaturday: dayOfWeek === 6,
-    isSelected:
-      isDisableSingle({ dateToVerify, selectedDate }) ||
-      isDisableMulti({ dateToVerify, selectedDates }) ||
-      isDisableRange({ dateToVerify, selectedDateByRange }),
+    isSelected,
     isDisabled: t,
+    isHoveredRange:
+      !isSelected &&
+      isHoveredRange({
+        dateToVerify,
+        daysInHover,
+        selectedDateByRange,
+      }),
   };
 }
 
-function isDisableSingle({
+function isSelectedSingle({
   dateToVerify,
   selectedDate,
 }: { dateToVerify: Date; selectedDate?: Date | null }) {
   return dateToVerify.getTime() === selectedDate?.getTime();
 }
 
-function isDisableMulti({
+function isSelectedMulti({
   dateToVerify,
   selectedDates,
 }: { dateToVerify: Date; selectedDates?: Date[] }) {
@@ -89,18 +101,31 @@ function isDisableMulti({
   );
 }
 
-function isDisableRange({
+function isSelectedRange({
   dateToVerify,
   selectedDateByRange,
 }: { dateToVerify: Date; selectedDateByRange?: TRange }) {
   return (
     dateToVerify.getTime() === selectedDateByRange?.from?.getTime() ||
     dateToVerify.getTime() === selectedDateByRange?.to?.getTime() ||
-    (selectedDateByRange?.from &&
+    !!(
+      selectedDateByRange?.from &&
       selectedDateByRange?.to &&
       isWithinInterval(dateToVerify, {
         start: selectedDateByRange.from,
         end: selectedDateByRange.to,
-      }))
+      })
+    )
   );
+}
+
+function isHoveredRange({
+  daysInHover,
+  dateToVerify,
+  selectedDateByRange,
+}: { dateToVerify: Date; daysInHover?: Date[]; selectedDateByRange?: TRange }) {
+  if (selectedDateByRange?.from && selectedDateByRange?.to) {
+    return false;
+  }
+  return !!daysInHover?.find(item => item.getTime() === dateToVerify.getTime());
 }

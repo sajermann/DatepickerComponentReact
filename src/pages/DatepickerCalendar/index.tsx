@@ -1,3 +1,4 @@
+import { addDays, format } from 'date-fns';
 import { Fragment } from 'react';
 import { Divider } from '~/components/Divider';
 import { Section } from '~/components/Section';
@@ -5,6 +6,7 @@ import { useTranslation } from '~/hooks/useTranslation';
 import { MultipleSelection } from './components/MultipleSelection';
 import { MultipleSelectionDisabled } from './components/MultipleSelectionDisabled';
 import { RangeSelection } from './components/RangeSelection';
+import { RangeSelectionDisabled } from './components/RangeSelectionDisabled';
 import { SingleSelection } from './components/SingleSelection';
 import { SingleSelectionDisabled } from './components/SingleSelectionDisabled';
 
@@ -33,11 +35,13 @@ const COMPONENTS = [
   // { e: <SingleSelectionDisabled /> },
   // { e: <MultipleSelection /> },
   // { e: <MultipleSelectionDisabled /> },
-  { e: <RangeSelection /> },
+  // { e: <RangeSelection /> },
+  { e: <RangeSelectionDisabled /> },
 ];
 
 export function DatepickerCalendarPage() {
   const { translate } = useTranslation();
+
   return (
     <main className="h-full gap-2 flex flex-col" data-content="content-main">
       <Section title="Datepicker Calendar" variant="h1">

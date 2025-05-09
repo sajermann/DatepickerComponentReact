@@ -16,6 +16,7 @@ export type TDate = {
   isSaturday: boolean;
   isSelected: boolean;
   isDisabled: boolean;
+  isHoveredRange: boolean;
 };
 
 export type TSelectOptions = {

@@ -50,6 +50,7 @@ type DatepickerCalendarContextType = {
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   onDayClick: (data: TDate) => void;
+  onDayHover: (data: TDate) => void;
 };
 
 export const DatepickerCalendarContext = createContext(
@@ -67,6 +68,8 @@ export function DatepickerCalendarProvider({
   const [startDateInternal, setStartDateInternal] = useState(
     startOfMonth(date || new Date()),
   );
+  const [daysInHover, setDaysInHover] = useState<Date[]>([]);
+  // const daysInHover = useRef<Date[]>([]);
   const endDateInternal = endOfMonth(startDateInternal);
   const startWeek = startOfWeek(startDateInternal, { weekStartsOn });
   const endWeek = endOfWeek(endDateInternal, { weekStartsOn });
@@ -83,6 +86,7 @@ export function DatepickerCalendarProvider({
       selectedDates: selectDate.multi?.selectedDates,
       selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
       selectedDateByRange: selectDate.range?.selectedDate,
+      daysInHover,
     }),
   );
 
@@ -99,6 +103,7 @@ export function DatepickerCalendarProvider({
     selectedDates: selectDate.multi?.selectedDates,
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
     selectedDateByRange: selectDate.range?.selectedDate,
+    daysInHover,
   });
 
   const endDate = transformDate({
@@ -109,6 +114,7 @@ export function DatepickerCalendarProvider({
     selectedDates: selectDate.multi?.selectedDates,
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
     selectedDateByRange: selectDate.range?.selectedDate,
+    daysInHover,
   });
 
   const handlePrevMonth = () => {
@@ -212,33 +218,51 @@ export function DatepickerCalendarProvider({
     }
 
     if (range) {
-      let t: { from: Date | null; to: Date | null } = { from: null, to: null };
+      let finalRangeDate: { from: Date | null; to: Date | null } = {
+        from: null,
+        to: null,
+      };
 
       if (range.selectedDate.from && range.selectedDate.to) {
-        t = { from: date, to: null };
+        setDaysInHover([]);
+        finalRangeDate = { from: date, to: null };
       } else if (
         range.selectedDate.from &&
         date.getTime() < range.selectedDate.from.getTime()
       ) {
-        t = { from: date, to: range.selectedDate.from };
+        finalRangeDate = { from: date, to: range.selectedDate.from };
       } else if (!range.selectedDate.from) {
-        t = { ...range.selectedDate, from: date };
+        finalRangeDate = { ...range.selectedDate, from: date };
       } else if (range.selectedDate.from && !range.selectedDate.to) {
-        t = { ...range.selectedDate, to: date };
+        finalRangeDate = { ...range.selectedDate, to: date };
       } else {
-        t = { from: null, to: null };
+        finalRangeDate = { from: null, to: null };
       }
-      // handleSelectByRange({
-      //   onSemiSelectedsChange,
-      //   selectOptions,
-      //   targetDateStart: t.start,
-      //   targetDateEnd: t.end,
-      //   startDate,
-      //   disabled,
-      // });
-      console.log({ t });
-      range.onSelectedDate(t);
+      range.onSelectedDate(finalRangeDate);
     }
+  };
+
+  const onDayHover = ({ date }: TDate) => {
+    if (
+      !selectDate.range?.selectedDate.from ||
+      selectDate.range?.selectedDate.to
+    ) {
+      return;
+    }
+
+    const daysInHoverInternal = eachDayOfInterval({
+      start:
+        date < selectDate.range.selectedDate.from
+          ? date
+          : selectDate.range.selectedDate.from,
+      end:
+        date < selectDate.range.selectedDate.from
+          ? selectDate.range.selectedDate.from
+          : date,
+    });
+
+    // daysInHover.current = daysInHoverInternal;
+    setDaysInHover(daysInHoverInternal);
   };
 
   const memoizedValue = useMemo<DatepickerCalendarContextType>(
@@ -253,6 +277,7 @@ export function DatepickerCalendarProvider({
       handleNextMonth,
       headers,
       onDayClick,
+      onDayHover,
     }),
     [
       selectDate,

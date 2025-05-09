@@ -1,5 +1,8 @@
 {
   "translations": {
+    "CANCEL_ON_DISABLED_DATE": "Cancela ao selecionar data desabilitada",
+    "RANGE_SELECTION_DISABLED": "Seleção de intervalo desabilitada",
+    "RANGE_SELECTION": "Seleção de intervalo",
     "MULTI_SELECTION_DISABLED": "Seleção multipla desabilitada",
     "SINGLE_SELECTION_DISABLED": "Seleção simples desabilitada",
     "HEADER_SELECTION": "Seleção pelo cabeçalho",

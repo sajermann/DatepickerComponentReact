@@ -1,5 +1,8 @@
 {
   "translations": {
+    "CANCEL_ON_DISABLED_DATE": "Cancel on disabled date",
+    "RANGE_SELECTION_DISABLED": "Range selection disabled",
+    "RANGE_SELECTION": "Range selection",
     "MULTI_SELECTION_DISABLED": "Multi selection disabled",
     "SINGLE_SELECTION_DISABLED": "Single selection disabled",
     "HEADER_SELECTION": "Selection by header",

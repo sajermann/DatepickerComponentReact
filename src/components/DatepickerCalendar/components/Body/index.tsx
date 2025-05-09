@@ -4,7 +4,7 @@ import { managerClassNames } from '~/utils/managerClassNames';
 import { useDatepickerCalendar } from '../../hooks/useDatepickerCalendar';
 
 export const Body = memo(() => {
-  const { weeks, selectDate, onDayClick } = useDatepickerCalendar();
+  const { weeks, onDayHover, onDayClick } = useDatepickerCalendar();
   return (
     <main className="w-full flex flex-col gap-2">
       {weeks.map(days => (
@@ -21,43 +21,23 @@ export const Body = memo(() => {
               data-isToday={day.isToday}
               data-isPrevMonth={day.isPrevMonth}
               data-isNextMonth={day.isNextMonth}
+              data-isHoveredRange={day.isHoveredRange}
               className={managerClassNames([
                 'hover:bg-slate-500 rounded',
-                {
-                  'bg-slate-700 hover:bg-slate-600 opacity-100': day.isSelected,
-                },
+                { 'bg-slate-700': day.isSelected },
+                { 'hover:bg-slate-600': day.isSelected },
                 { 'opacity-25 !cursor-not-allowed': day.isDisabled },
                 { 'opacity-50': !day.isCurrentMonth },
                 { 'border rounded border-slate-500': day.isToday },
+                { 'bg-slate-500': day.isHoveredRange },
+                { 'opacity-50': day.isSelected && day.isDisabled },
               ])}
             >
               <button
                 type="button"
                 className="w-full p-2"
-                onMouseEnter={
-                  () => console.log(`onMouseEnter`)
-                  // handleHoverRangeSelection({
-                  //   date,
-                  //   selectionByRange,
-                  //   setSemiSelecteds,
-                  // })
-                }
-                onClick={() => {
-                  // if (selectDate.range) {
-                  // setSelectionByRange(prev =>
-                  //   fixSelectionByRange({
-                  //     date,
-                  //     onSemiSelectedsChange: setSemiSelecteds,
-                  //     selectionByRange: prev,
-                  //     selectOptions,
-                  //     startDate,
-                  //     disabled,
-                  //   }),
-                  // );
-                  //   return;
-                  // }
-                  onDayClick(day);
-                }}
+                onMouseEnter={() => onDayHover(day)}
+                onClick={() => onDayClick(day)}
               >
                 {day.date ? format(day.date, 'd') : ''}
               </button>
