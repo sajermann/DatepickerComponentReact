@@ -1,14 +1,14 @@
-import { addDays, format } from 'date-fns';
-import { Fragment } from 'react';
-import { Divider } from '~/components/Divider';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
-import { MultipleSelection } from './components/MultipleSelection';
-import { MultipleSelectionDisabled } from './components/MultipleSelectionDisabled';
-import { RangeSelection } from './components/RangeSelection';
-import { RangeSelectionDisabled } from './components/RangeSelectionDisabled';
-import { SingleSelection } from './components/SingleSelection';
-import { SingleSelectionDisabled } from './components/SingleSelectionDisabled';
+import { addDays, format } from "date-fns";
+import { Fragment } from "react";
+import { Divider } from "~/components/Divider";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import { MultipleSelection } from "./components/MultipleSelection";
+import { MultipleSelectionDisabled } from "./components/MultipleSelectionDisabled";
+import { RangeSelection } from "./components/RangeSelection";
+import { RangeSelectionDisabled } from "./components/RangeSelectionDisabled";
+import { SingleSelection } from "./components/SingleSelection";
+import { SingleSelectionDisabled } from "./components/SingleSelectionDisabled";
 
 const TODO_LIST = [
   { checked: true, text: `Date - Normal` },
@@ -45,8 +45,8 @@ export function DatepickerCalendarPage() {
   return (
     <main className="h-full gap-2 flex flex-col" data-content="content-main">
       <Section title="Datepicker Calendar" variant="h1">
-        {`${translate('IMPLEMENTS_COMPONENT')} Datepicker Calendar ${translate(
-          'WITHOUT_USING_LIB',
+        {`${translate("IMPLEMENTS_COMPONENT")} Datepicker Calendar ${translate(
+          "WITHOUT_USING_LIB"
         )}`}
       </Section>
 

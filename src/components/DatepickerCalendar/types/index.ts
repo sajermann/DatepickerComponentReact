@@ -34,7 +34,7 @@ export type TSelectOptions = {
   range?: {
     selectedDate: { from: Date | null; to: Date | null };
     onSelectedDate: (data: { from: Date | null; to: Date | null }) => void;
-    cancelOnDisabledDate?: boolean;
+    disabledAfterFirstDisabledDates?: boolean;
   };
 };
 

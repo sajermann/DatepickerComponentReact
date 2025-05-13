@@ -1,9 +1,9 @@
-import { addDays, format } from 'date-fns';
-import { useState } from 'react';
-import * as DatepickerCalendar from '~/components/DatepickerCalendar';
-import { JsonViewer } from '~/components/JsonViewer';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { addDays, format } from "date-fns";
+import { useState } from "react";
+import * as DatepickerCalendar from "~/components/DatepickerCalendar";
+import { JsonViewer } from "~/components/JsonViewer";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
 
 export function RangeSelectionDisabled() {
   const { translate } = useTranslation();
@@ -14,19 +14,24 @@ export function RangeSelectionDisabled() {
   const before = addDays(new Date(), -5);
   const after = addDays(new Date(), 5);
   const dates = [addDays(new Date(), -1), new Date(), addDays(new Date(), 1)];
+  // const dates = [
+  //   addDays(new Date(), -5),
+  //   addDays(new Date(), -3),
+  //   addDays(new Date(), -1),
+  // ];
 
   return (
-    <Section title={translate('RANGE_SELECTION_DISALBED')} variant="h2">
+    <Section title={translate("RANGE_SELECTION_DISABLED")} variant="h2">
       <span className="text-sm">
         <p>
-          {translate('DISABLED_DATES')}:{' '}
-          {dates.map(item => format(item, 'dd/MM/yyyy')).join(' - ')}
+          {translate("DISABLED_DATES")}:{" "}
+          {dates.map((item) => format(item, "dd/MM/yyyy")).join(" - ")}
         </p>
         <p>
-          {translate('DATES_BEFORE')}: {format(before, 'dd/MM/yyyy')}
+          {translate("DATES_BEFORE")}: {format(before, "dd/MM/yyyy")}
         </p>
         <p>
-          {translate('DATES_AFTER')}: {format(after, 'dd/MM/yyyy')}
+          {translate("DATES_AFTER")}: {format(after, "dd/MM/yyyy")}
         </p>
       </span>
       <div className="flex gap-2 items-center justify-center flex-wrap">
@@ -51,7 +56,7 @@ export function RangeSelectionDisabled() {
           </DatepickerCalendar.Root>
         </Section>
         <Section
-          title={translate('CANCEL_ON_DISABLED_DATE')}
+          title={translate("CANCEL_ON_DISABLED_DATE")}
           variant="h3"
           className="max-w-96"
         >
@@ -65,7 +70,7 @@ export function RangeSelectionDisabled() {
               range: {
                 selectedDate,
                 onSelectedDate: setSelectedDate,
-                cancelOnDisabledDate: true,
+                disabledAfterFirstDisabledDates: true,
               },
             }}
           >

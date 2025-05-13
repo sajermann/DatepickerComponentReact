@@ -9,9 +9,10 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
+  startOfDay,
   startOfMonth,
   startOfWeek,
-} from 'date-fns';
+} from "date-fns";
 import {
   ReactNode,
   RefObject,
@@ -20,20 +21,20 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { date } from 'zod';
+} from "react";
+import { date } from "zod";
 import {
   TDate,
   TDatepickerCalendarProviderProps,
   TDisabled,
   TSelectOptions,
-} from '../../types';
+} from "../../types";
 import {
   allDatesIsSelectedsByDayOfWeek,
   dateIsInArray,
   handleToggleHeader,
   transformDate,
-} from '../../utils';
+} from "../../utils";
 
 type DatepickerCalendarContextType = {
   selectDate: TSelectOptions;
@@ -54,7 +55,7 @@ type DatepickerCalendarContextType = {
 };
 
 export const DatepickerCalendarContext = createContext(
-  {} as DatepickerCalendarContextType,
+  {} as DatepickerCalendarContextType
 );
 
 export function DatepickerCalendarProvider({
@@ -66,7 +67,7 @@ export function DatepickerCalendarProvider({
   fixedWeeks = true,
 }: TDatepickerCalendarProviderProps) {
   const [startDateInternal, setStartDateInternal] = useState(
-    startOfMonth(date || new Date()),
+    startOfMonth(date || new Date())
   );
   const [daysInHover, setDaysInHover] = useState<Date[]>([]);
   // const daysInHover = useRef<Date[]>([]);
@@ -77,7 +78,7 @@ export function DatepickerCalendarProvider({
     ? Array.from({ length: 42 }, (_, i) => addDays(startWeek, i))
     : eachDayOfInterval({ start: startWeek, end: endWeek });
 
-  const daysTransformeds = days.map(i =>
+  const daysTransformeds = days.map((i) =>
     transformDate({
       dateToVerify: i,
       startDate: startDateInternal,
@@ -87,7 +88,9 @@ export function DatepickerCalendarProvider({
       selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
       selectedDateByRange: selectDate.range?.selectedDate,
       daysInHover,
-    }),
+      disabledAfterFirstDisabledDates:
+        selectDate.range?.disabledAfterFirstDisabledDates,
+    })
   );
 
   const weeks: Array<TDate[]> = [];
@@ -104,6 +107,8 @@ export function DatepickerCalendarProvider({
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
     selectedDateByRange: selectDate.range?.selectedDate,
     daysInHover,
+    disabledAfterFirstDisabledDates:
+      selectDate.range?.disabledAfterFirstDisabledDates,
   });
 
   const endDate = transformDate({
@@ -115,6 +120,8 @@ export function DatepickerCalendarProvider({
     selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
     selectedDateByRange: selectDate.range?.selectedDate,
     daysInHover,
+    disabledAfterFirstDisabledDates:
+      selectDate.range?.disabledAfterFirstDisabledDates,
   });
 
   const handlePrevMonth = () => {
@@ -127,7 +134,7 @@ export function DatepickerCalendarProvider({
 
   const headers = Array.from({ length: 7 }, (_, index) => {
     const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
-    const dayName = format(day, 'EEEE');
+    const dayName = format(day, "EEEE");
     const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
     return {
       text: dayName.slice(0, 3).toUpperCase(),
@@ -164,18 +171,20 @@ export function DatepickerCalendarProvider({
 
     const selectedDates = [...multi.selectedDates];
     // Verify if all dates of week is selecteds
-    const allSelected = daysToAddOrRemove.every(day =>
-      selectedDates.some(date => isSameDay(date, day)),
+    const allSelected = daysToAddOrRemove.every((day) =>
+      selectedDates.some((date) => isSameDay(date, day))
     );
 
     if (allSelected) {
-      const result = selectedDates.filter(item => item.getDay() !== dayOfWeek);
+      const result = selectedDates.filter(
+        (item) => item.getDay() !== dayOfWeek
+      );
       multi.onSelectedDates(result);
       return;
     }
     // Else, add dates not is selecteds
-    daysToAddOrRemove.forEach(day => {
-      if (!selectedDates.some(date => isSameDay(date, day))) {
+    daysToAddOrRemove.forEach((day) => {
+      if (!selectedDates.some((date) => isSameDay(date, day))) {
         selectedDates.push(day);
       }
     });
@@ -203,16 +212,16 @@ export function DatepickerCalendarProvider({
     }
 
     if (multi) {
-      const dateSelectedLocated = multi?.selectedDates.find(item =>
-        isSameDay(item, date),
+      const dateSelectedLocated = multi?.selectedDates.find((item) =>
+        isSameDay(item, date)
       );
       if (!dateSelectedLocated) {
         multi?.onSelectedDates([...multi.selectedDates, date]);
       } else {
         multi?.onSelectedDates(
           multi.selectedDates.filter(
-            item => !isSameDay(item, dateSelectedLocated),
-          ),
+            (item) => !isSameDay(item, dateSelectedLocated)
+          )
         );
       }
     }
@@ -238,6 +247,18 @@ export function DatepickerCalendarProvider({
       } else {
         finalRangeDate = { from: null, to: null };
       }
+
+      // if (finalRangeDate.from && finalRangeDate.to) {
+      //   const t = eachDayOfInterval({
+      //     start: finalRangeDate.from,
+      //     end: finalRangeDate.to,
+      //   });
+      //   const result = disabledDate?.dates?.some((item) =>
+      //     t.find((tt) => tt.getTime() === startOfDay(item).getTime())
+      //   );
+      //   console.log({ result, t, b: disabledDate?.dates });
+      // }
+
       range.onSelectedDate(finalRangeDate);
     }
   };
@@ -279,15 +300,7 @@ export function DatepickerCalendarProvider({
       onDayClick,
       onDayHover,
     }),
-    [
-      selectDate,
-      disabledDate,
-      weekStartsOn,
-      startDate,
-      endDate,
-      weeks,
-      headers,
-    ],
+    [selectDate, disabledDate, weekStartsOn, startDate, endDate, weeks, headers]
   );
 
   return (

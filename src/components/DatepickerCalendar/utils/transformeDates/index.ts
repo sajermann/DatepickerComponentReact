@@ -17,6 +17,7 @@ type TProps = {
   selectedDates?: Date[];
   selectedDateByRange?: TRange;
   selectOnlyVisibleMonth?: boolean;
+  disabledAfterFirstDisabledDates?: boolean;
   daysInHover?: Date[];
 };
 
@@ -28,6 +29,7 @@ export function transformDate({
   selectedDates,
   selectedDateByRange,
   selectOnlyVisibleMonth,
+  disabledAfterFirstDisabledDates,
   daysInHover,
 }: TProps): TDate {
   const dayOfWeek = dateToVerify.getDay();
@@ -42,18 +44,21 @@ export function transformDate({
     1,
   );
 
-  const t = !!(
-    disabledDate?.dates?.some(
-      d => startOfDay(d).getTime() === startOfDay(dateToVerify).getTime(),
-    ) ||
-    (disabledDate?.before
-      ? isBefore(startOfDay(dateToVerify), startOfDay(disabledDate.before))
-      : false) ||
-    (disabledDate?.after
-      ? isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after))
-      : false) ||
-    (selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate))
-  ); // se os disableds estiverem estranho é pq coloquei !!() nessa funcao
+  const isDisabled =
+    isDisabledDates({ dateToVerify, disabledDate }) ||
+    isDisabledBefore({ dateToVerify, disabledDate }) ||
+    isDisabledAfter({ dateToVerify, disabledDate }) ||
+    isDisabledVisibleMonth({
+      dateToVerify,
+      selectOnlyVisibleMonth,
+      startDate,
+    }) ||
+    isDisabledCancelOnDisabledDate({
+      dateToVerify,
+      disabledDate,
+      selectedDateByRange,
+      disabledAfterFirstDisabledDates,
+    });
 
   const isSelected =
     isSelectedSingle({ dateToVerify, selectedDate }) ||
@@ -74,7 +79,7 @@ export function transformDate({
     isFriday: dayOfWeek === 5,
     isSaturday: dayOfWeek === 6,
     isSelected,
-    isDisabled: t,
+    isDisabled,
     isHoveredRange:
       !isSelected &&
       isHoveredRange({
@@ -129,3 +134,94 @@ function isHoveredRange({
   }
   return !!daysInHover?.find(item => item.getTime() === dateToVerify.getTime());
 }
+
+function isDisabledDates({
+  dateToVerify,
+  disabledDate,
+}: { dateToVerify: Date; disabledDate?: TDisabled }) {
+  return !!disabledDate?.dates?.some(
+    d => startOfDay(d).getTime() === startOfDay(dateToVerify).getTime(),
+  );
+}
+
+function isDisabledBefore({
+  dateToVerify,
+  disabledDate,
+}: { dateToVerify: Date; disabledDate?: TDisabled }) {
+  return disabledDate?.before
+    ? isBefore(startOfDay(dateToVerify), startOfDay(disabledDate.before))
+    : false;
+}
+
+function isDisabledAfter({
+  dateToVerify,
+  disabledDate,
+}: { dateToVerify: Date; disabledDate?: TDisabled }) {
+  return disabledDate?.after
+    ? isAfter(startOfDay(dateToVerify), startOfDay(disabledDate.after))
+    : false;
+}
+
+function isDisabledVisibleMonth({
+  dateToVerify,
+  selectOnlyVisibleMonth,
+  startDate,
+}: { dateToVerify: Date; selectOnlyVisibleMonth?: boolean; startDate: Date }) {
+  return !!(selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
+}
+
+function isDisabledCancelOnDisabledDate({
+  dateToVerify,
+  disabledDate,
+  selectedDateByRange,
+  disabledAfterFirstDisabledDates,
+}: {
+  dateToVerify: Date;
+  disabledDate?: TDisabled;
+  selectedDateByRange?: TRange;
+  disabledAfterFirstDisabledDates?: boolean;
+}) {
+  if (!selectedDateByRange || !selectedDateByRange.from) {
+    return false;
+  }
+
+  if (
+    selectedDateByRange.from &&
+    !selectedDateByRange.to &&
+    isBefore(dateToVerify, selectedDateByRange.from)
+  ) {
+    return true;
+  }
+
+  const sortabledDates = disabledDate?.dates?.sort((a, b) => {
+    if (a.getTime() < b.getTime()) {
+      return -1;
+    }
+    if (a.getTime() > b.getTime()) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  const disabledDatesAfterDateToVerify =
+    sortabledDates?.filter(
+      item => item.getTime() > (selectedDateByRange.from as Date).getTime(),
+    ) || [];
+
+  if (
+    selectedDateByRange.from &&
+    !selectedDateByRange.to &&
+    disabledAfterFirstDisabledDates &&
+    sortabledDates &&
+    sortabledDates.length &&
+    isAfter(disabledDatesAfterDateToVerify[0], selectedDateByRange.from) &&
+    isAfter(dateToVerify, disabledDatesAfterDateToVerify[0])
+  ) {
+    return true;
+  }
+
+  return false;
+}
+// preciso colocar o disabledDate.dates em sort pq se vou pegar a ultima precisa estar sortable
+// preciso garantir que todas as datas entrando ou sendo verificadas esejam no horario 0
