@@ -17,17 +17,22 @@ import {
   ReactNode,
   RefObject,
   createContext,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
 import { date } from "zod";
+import { delay } from "~/utils/delay";
 import {
   TDate,
   TDatepickerCalendarProviderProps,
   TDisabled,
+  TMulti,
   TSelectOptions,
+  TSelectedRange,
+  TSingle,
 } from "../../types";
 import {
   allDatesIsSelectedsByDayOfWeek,
@@ -37,17 +42,22 @@ import {
 } from "../../utils";
 
 type DatepickerCalendarContextType = {
-  selectDate: TSelectOptions;
-  disabledDate?: TDisabled;
+  single?: TSingle;
+  multi?: TMulti;
+  range?: TSelectedRange;
+  disabled?: TDisabled;
   weekStartsOn?: number;
   startDate: TDate;
   endDate: TDate;
   weeks: TDate[][];
+  selectOnlyVisibleMonth?: boolean;
   headers: {
     text: string;
     isSelectedAllDays: boolean;
     onClick: () => void;
   }[];
+  disabledPrevMonth: boolean;
+  disabledNextMonth: boolean;
   handlePrevMonth: () => void;
   handleNextMonth: () => void;
   onDayClick: (data: TDate) => void;
@@ -58,19 +68,25 @@ export const DatepickerCalendarContext = createContext(
   {} as DatepickerCalendarContextType
 );
 
-export function DatepickerCalendarProvider({
-  children,
-  selectDate,
-  disabledDate,
-  weekStartsOn,
-  date,
-  fixedWeeks = true,
-}: TDatepickerCalendarProviderProps) {
+export function DatepickerCalendarProvider(
+  props: TDatepickerCalendarProviderProps
+) {
+  const {
+    children,
+    disabled,
+    weekStartsOn,
+    date,
+    selectOnlyVisibleMonth,
+    fixedWeeks = true,
+  } = props;
+  const single = "single" in props ? props.single : undefined;
+  const multi = "multi" in props ? props.multi : undefined;
+  const range = "range" in props ? props.range : undefined;
   const [startDateInternal, setStartDateInternal] = useState(
     startOfMonth(date || new Date())
   );
   const [daysInHover, setDaysInHover] = useState<Date[]>([]);
-  // const daysInHover = useRef<Date[]>([]);
+
   const endDateInternal = endOfMonth(startDateInternal);
   const startWeek = startOfWeek(startDateInternal, { weekStartsOn });
   const endWeek = endOfWeek(endDateInternal, { weekStartsOn });
@@ -82,14 +98,12 @@ export function DatepickerCalendarProvider({
     transformDate({
       dateToVerify: i,
       startDate: startDateInternal,
-      disabledDate,
-      selectedDate: selectDate.single?.selectedDate,
-      selectedDates: selectDate.multi?.selectedDates,
-      selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
-      selectedDateByRange: selectDate.range?.selectedDate,
+      disabled,
       daysInHover,
-      disabledAfterFirstDisabledDates:
-        selectDate.range?.disabledAfterFirstDisabledDates,
+      single,
+      multi,
+      range,
+      selectOnlyVisibleMonth,
     })
   );
 
@@ -101,27 +115,23 @@ export function DatepickerCalendarProvider({
   const startDate = transformDate({
     dateToVerify: startDateInternal,
     startDate: startDateInternal,
-    disabledDate,
-    selectedDate: selectDate.single?.selectedDate,
-    selectedDates: selectDate.multi?.selectedDates,
-    selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
-    selectedDateByRange: selectDate.range?.selectedDate,
+    disabled,
     daysInHover,
-    disabledAfterFirstDisabledDates:
-      selectDate.range?.disabledAfterFirstDisabledDates,
+    single,
+    multi,
+    range,
+    selectOnlyVisibleMonth,
   });
 
   const endDate = transformDate({
     dateToVerify: endDateInternal,
     startDate: startDateInternal,
-    disabledDate,
-    selectedDate: selectDate.single?.selectedDate,
-    selectedDates: selectDate.multi?.selectedDates,
-    selectOnlyVisibleMonth: selectDate.selectOnlyVisibleMonth,
-    selectedDateByRange: selectDate.range?.selectedDate,
+    disabled,
     daysInHover,
-    disabledAfterFirstDisabledDates:
-      selectDate.range?.disabledAfterFirstDisabledDates,
+    single,
+    multi,
+    range,
+    selectOnlyVisibleMonth,
   });
 
   const handlePrevMonth = () => {
@@ -141,7 +151,7 @@ export function DatepickerCalendarProvider({
       isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
         dayOfWeek,
         weeks,
-        selectOptions: selectDate,
+        multi,
       }),
       onClick: () =>
         onHeaderClick({
@@ -158,7 +168,6 @@ export function DatepickerCalendarProvider({
     dayOfWeek: number;
     weeks: Array<TDate[]>;
   }) => {
-    const { multi } = selectDate;
     if (!multi) return;
     const daysToAddOrRemove: Date[] = [];
 
@@ -193,7 +202,6 @@ export function DatepickerCalendarProvider({
   };
 
   const onDayClick = ({ date, isDisabled }: TDate) => {
-    const { single, multi, range } = selectDate;
     if (isDisabled) {
       return;
     }
@@ -264,32 +272,53 @@ export function DatepickerCalendarProvider({
   };
 
   const onDayHover = ({ date }: TDate) => {
-    if (
-      !selectDate.range?.selectedDate.from ||
-      selectDate.range?.selectedDate.to
-    ) {
+    if (!range?.selectedDate.from || range?.selectedDate.to) {
       return;
     }
 
     const daysInHoverInternal = eachDayOfInterval({
-      start:
-        date < selectDate.range.selectedDate.from
-          ? date
-          : selectDate.range.selectedDate.from,
-      end:
-        date < selectDate.range.selectedDate.from
-          ? selectDate.range.selectedDate.from
-          : date,
+      start: date < range.selectedDate.from ? date : range.selectedDate.from,
+      end: date < range.selectedDate.from ? range.selectedDate.from : date,
     });
 
-    // daysInHover.current = daysInHoverInternal;
     setDaysInHover(daysInHoverInternal);
   };
 
+  const disabledPrevMonth = useMemo(
+    () => !!(disabled?.before && isBefore(startDateInternal, disabled.before)),
+    [disabled?.before, startDateInternal]
+  );
+
+  const disabledNextMonth = useMemo(
+    () => !!(disabled?.after && isAfter(endDateInternal, disabled.after)),
+    [disabled?.after, endDateInternal]
+  );
+
+  const handleKeyDown = useCallback(
+    async (event: KeyboardEvent) => {
+      if (event.key === "Escape" && range?.selectedDate.from) {
+        setDaysInHover([]);
+        await delay(1);
+        range.onSelectedDate({ from: null, to: null });
+      }
+    },
+    [range, daysInHover]
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [range, daysInHover]);
+
   const memoizedValue = useMemo<DatepickerCalendarContextType>(
     () => ({
-      selectDate,
-      disabledDate,
+      single,
+      multi,
+      range,
+      disabled,
       weekStartsOn,
       startDate,
       endDate,
@@ -299,8 +328,24 @@ export function DatepickerCalendarProvider({
       headers,
       onDayClick,
       onDayHover,
+      disabledNextMonth,
+      disabledPrevMonth,
+      selectOnlyVisibleMonth,
     }),
-    [selectDate, disabledDate, weekStartsOn, startDate, endDate, weeks, headers]
+    [
+      single,
+      multi,
+      range,
+      disabled,
+      weekStartsOn,
+      startDate,
+      endDate,
+      weeks,
+      headers,
+      disabledNextMonth,
+      disabledPrevMonth,
+      selectOnlyVisibleMonth,
+    ]
   );
 
   return (

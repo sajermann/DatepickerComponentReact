@@ -71,6 +71,8 @@ export function RangeSelectionDisabled() {
                 selectedDate,
                 onSelectedDate: setSelectedDate,
                 disabledAfterFirstDisabledDates: true,
+                disabledSameDate: true,
+                minInterval: 5,
               },
             }}
           >

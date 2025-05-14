@@ -5,6 +5,7 @@ import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import { MultipleSelection } from "./components/MultipleSelection";
 import { MultipleSelectionDisabled } from "./components/MultipleSelectionDisabled";
+import { PlayGround } from "./components/Playground";
 import { RangeSelection } from "./components/RangeSelection";
 import { RangeSelectionDisabled } from "./components/RangeSelectionDisabled";
 import { SingleSelection } from "./components/SingleSelection";
@@ -36,7 +37,7 @@ const COMPONENTS = [
   // { e: <MultipleSelection /> },
   // { e: <MultipleSelectionDisabled /> },
   // { e: <RangeSelection /> },
-  { e: <RangeSelectionDisabled /> },
+  { e: <PlayGround /> },
 ];
 
 export function DatepickerCalendarPage() {

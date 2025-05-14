@@ -1,19 +1,18 @@
 import { isSameDay, isSameMonth } from 'date-fns';
 
-import { TDate, TDisabled, TSelectOptions } from '../../types';
+import { TDate, TDisabled, TMulti, TSelectOptions } from '../../types';
 import { dateIsInArray } from '../dateIsInArray';
 
 type PropsAllDatesIsSelecteds = {
   dayOfWeek: number;
   weeks: Array<TDate[]>;
-  selectOptions: TSelectOptions;
+  multi?: TMulti;
 };
 export function allDatesIsSelectedsByDayOfWeek({
   dayOfWeek,
   weeks,
-  selectOptions,
+  multi,
 }: PropsAllDatesIsSelecteds) {
-  const { multi } = selectOptions;
   if (!multi || !multi.selectedDates.length) return false;
   const daysToAddOrRemove: Date[] = [];
 
