@@ -1,5 +1,8 @@
 {
   "translations": {
+    "DISABLED_DATES_TOOLTIP": "Adicione datas para ficarem desabilitadas",
+    "CALENDAR": "Calendário",
+    "FIXED_WEEKS_TOOLTIP": "Força o calendário sempre ter o mesmo número de dias",
     "CANCEL_ON_DISABLED_DATE": "Cancela ao selecionar data desabilitada",
     "RANGE_SELECTION_DISABLED": "Seleção de intervalo desabilitada",
     "RANGE_SELECTION": "Seleção de intervalo",

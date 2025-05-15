@@ -14,6 +14,7 @@
     "@hookform/resolvers": "^4.1.2",
     "@internationalized/date": "^3.7.0",
     "@radix-ui/react-popover": "^1.1.5",
+    "@radix-ui/react-tooltip": "^1.2.6",
     "@rehookify/datepicker": "^6.6.8",
     "@tailwindcss/vite": "^4.0.0",
     "@uiw/react-json-view": "^2.0.0-alpha.30",

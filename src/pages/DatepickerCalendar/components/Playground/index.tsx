@@ -1,11 +1,13 @@
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { startOfDay } from "date-fns";
+import { ChangeEvent, useState } from "react";
 import * as DatepickerCalendar from "~/components/DatepickerCalendar";
-import { TDatepickerCalendarProviderProps } from "~/components/DatepickerCalendar/types";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-
-const params = [{ name: "mode", options: ["single", "multi", "range"] }];
+import { delay } from "~/utils/delay";
+import { managerClassNames } from "~/utils/managerClassNames";
+import { Params } from "../Params";
+import { Input } from "../Params/types";
 
 const OPTIONS_BOOLEAN = [
   { value: "null", label: "Null" },
@@ -15,11 +17,14 @@ const OPTIONS_BOOLEAN = [
 
 export function PlayGround() {
   const { translate } = useTranslation();
-
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const [count, setCount] = useState(1);
+  const [showCalendar, setShowCalendar] = useState(true);
+  const [neccessaryReload, setIsNecessaryReload] = useState(false);
+  const [dateDisabledToInclude, setDateDisabledToInclude] =
+    useState<Date | null>(null);
 
   const [playgroundParams, setPlaygroundParams] = useState<any>({
+    date: null,
     fixedWeeks: true,
     single: {
       selectedDate: null,
@@ -69,7 +74,7 @@ export function PlayGround() {
     setPlaygroundParams((prev) => ({ ...prev, [prop]: value }));
   };
 
-  const inputs = [
+  const inputs: Input[] = [
     {
       type: "select",
       label: "Mode",
@@ -103,6 +108,7 @@ export function PlayGround() {
           prop: "fixedWeeks",
         }),
       options: OPTIONS_BOOLEAN,
+      tooltip: translate("FIXED_WEEKS_TOOLTIP"),
     },
     {
       type: "select",
@@ -198,104 +204,153 @@ export function PlayGround() {
           prop: "weekStartsOn",
         }),
     },
+    {
+      type: "input-date",
+      label: "Date",
+      onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        onChangeInputProp({
+          value: target.value ? startOfDay(new Date(target.value)) : null,
+          prop: "date",
+        });
+        setIsNecessaryReload(true);
+      },
+    },
+    {
+      type: "input-date",
+      label: "Date Disabled After",
+      onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        onChangeInputProp({
+          value: target.value ? startOfDay(new Date(target.value)) : null,
+          prop: "disabledAfter",
+        });
+      },
+    },
+    {
+      type: "input-date",
+      label: "Date Disabled Before",
+      onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        onChangeInputProp({
+          value: target.value ? startOfDay(new Date(target.value)) : null,
+          prop: "disabledBefore",
+        });
+      },
+    },
+    {
+      type: "input-date",
+      label: "Dates Disabled",
+      onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        setDateDisabledToInclude(
+          target.value ? startOfDay(new Date(target.value)) : null
+        );
+      },
+      onInclude: () => {
+        if (!dateDisabledToInclude) {
+          return;
+        }
+        setPlaygroundParams((prev) => {
+          return {
+            ...prev,
+            disabledDates: !prev.disabledDates
+              ? [dateDisabledToInclude]
+              : [...prev.disabledDates, dateDisabledToInclude],
+          };
+        });
+
+        setDateDisabledToInclude(null);
+      },
+      tooltip: translate("DISABLED_DATES_TOOLTIP"),
+    },
   ];
 
   return (
-    <Section title={translate("SINGLE_SELECTION")} variant="h2">
-      <div className="flex gap-2">
-        {inputs.map((input) => {
-          if (input.type === "select" && !input.hide) {
-            return (
-              <label key={input.label} className="flex flex-col">
-                {input.label}
-                <select
-                  className="bg-transparent"
-                  onChange={input.onChange as any}
-                >
-                  {input.options?.map((opt) => (
-                    <option
-                      key={opt.value}
-                      value={opt.value}
-                      className="bg-black"
-                    >
-                      {opt.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            );
-          }
-          if (input.type === "input-number" && !input.hide) {
-            return (
-              <label key={input.label} className="flex flex-col">
-                {input.label}
-                <input
-                  type="number"
-                  className="bg-transparent"
-                  onChange={input.onChange as any}
-                />
-              </label>
-            );
-          }
-        })}
-      </div>
-      <JsonViewer value={playgroundParams} />
+    <Section title="Playground" variant="h2">
+      <button className="w-40" onClick={() => setCount((prev) => prev + 1)}>
+        Mais 1 - Count: {count}
+      </button>{" "}
+      <Params inputs={inputs} />
       <div className="flex gap-2 items-center justify-center flex-wrap">
-        <Section title="Normal" variant="h3" className="max-w-96">
-          <DatepickerCalendar.Root
-            weekStartsOn={playgroundParams.weekStartsOn}
-            fixedWeeks={playgroundParams.fixedWeeks}
-            selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
-            single={
-              playgroundParams.single && {
-                toggle: playgroundParams.single?.toggle,
-                selectedDate: playgroundParams.single?.selectedDate,
-                onSelectedDate: (e) =>
-                  onChangeInputByType({
-                    type: "single",
-                    value: e,
-                    prop: "selectedDate",
-                  }),
+        <Section title={translate("CALENDAR")} variant="h3">
+          {showCalendar && (
+            <DatepickerCalendar.Root
+              weekStartsOn={playgroundParams.weekStartsOn}
+              fixedWeeks={playgroundParams.fixedWeeks}
+              selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
+              date={playgroundParams.date}
+              disabled={{
+                after: playgroundParams.disabledAfter,
+                before: playgroundParams.disabledBefore,
+                dates: playgroundParams.disabledDates,
+              }}
+              single={
+                playgroundParams.single && {
+                  toggle: playgroundParams.single?.toggle,
+                  selectedDate: playgroundParams.single?.selectedDate,
+                  onSelectedDate: (e) =>
+                    onChangeInputByType({
+                      type: "single",
+                      value: e,
+                      prop: "selectedDate",
+                    }),
+                }
               }
-            }
-            multi={
-              playgroundParams.multi && {
-                selectedDates: playgroundParams.multi?.selectedDates,
-                onSelectedDates: (e) =>
-                  onChangeInputByType({
-                    type: "multi",
-                    value: e,
-                    prop: "selectedDates",
-                  }),
-                enableHeaderSelection:
-                  playgroundParams.multi.enableHeaderSelection,
+              multi={
+                playgroundParams.multi && {
+                  selectedDates: playgroundParams.multi?.selectedDates,
+                  onSelectedDates: (e) =>
+                    onChangeInputByType({
+                      type: "multi",
+                      value: e,
+                      prop: "selectedDates",
+                    }),
+                  enableHeaderSelection:
+                    playgroundParams.multi.enableHeaderSelection,
+                }
               }
-            }
-            range={
-              playgroundParams.range && {
-                selectedDate: playgroundParams.range?.selectedDate,
-                onSelectedDate: (e) =>
-                  onChangeInputByType({
-                    type: "range",
-                    value: e,
-                    prop: "selectedDate",
-                  }),
-                disabledAfterFirstDisabledDates:
-                  playgroundParams.range.disabledAfterFirstDisabledDates,
-                disabledSameDate: playgroundParams.range.disabledSameDate,
-                minInterval: playgroundParams.range.minInterval,
-                maxInterval: playgroundParams.range.maxInterval,
+              range={
+                playgroundParams.range && {
+                  selectedDate: playgroundParams.range?.selectedDate,
+                  onSelectedDate: (e) =>
+                    onChangeInputByType({
+                      type: "range",
+                      value: e,
+                      prop: "selectedDate",
+                    }),
+                  disabledAfterFirstDisabledDates:
+                    playgroundParams.range.disabledAfterFirstDisabledDates,
+                  disabledSameDate: playgroundParams.range.disabledSameDate,
+                  minInterval: playgroundParams.range.minInterval,
+                  maxInterval: playgroundParams.range.maxInterval,
+                }
               }
-            }
-          >
-            <DatepickerCalendar.Calendar>
-              <DatepickerCalendar.Header />
-              <DatepickerCalendar.Body />
-            </DatepickerCalendar.Calendar>
-          </DatepickerCalendar.Root>
+            >
+              <DatepickerCalendar.Calendar>
+                <DatepickerCalendar.Header />
+                <DatepickerCalendar.Body />
+              </DatepickerCalendar.Calendar>
+            </DatepickerCalendar.Root>
+          )}
         </Section>
       </div>
-      <JsonViewer value={{ selectedDate }} />
+      {neccessaryReload && (
+        <button
+          className={managerClassNames([
+            "dark:bg-neutral-900 border border-neutral-700 hover:opacity-60",
+            "font-semibold rounded-lg px-5 py-2.5 shadow-md",
+            "transition duration-200 focus:outline-none focus:ring-2 active:bg-neutral-800",
+            "focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-neutral-900",
+            "disabled:opacity-50 disabled:cursor-not-allowed",
+          ])}
+          onClick={async () => {
+            setShowCalendar(false);
+            await delay(1);
+            setShowCalendar(true);
+            setIsNecessaryReload(false);
+          }}
+        >
+          Reload
+        </button>
+      )}
+      <JsonViewer value={{ playgroundParams }} />
     </Section>
   );
 }

@@ -5,6 +5,7 @@ import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
 
 export const Body = memo(() => {
   const { weeks, onDayHover, onDayClick } = useDatepickerCalendar();
+
   return (
     <main className="w-full flex flex-col gap-2">
       {weeks.map((days) => (
@@ -15,13 +16,13 @@ export const Body = memo(() => {
           {days.map((day) => (
             <div
               key={day.date.toISOString()}
-              data-isSelected={day.isSelected}
-              data-isDisabled={day.isDisabled}
-              data-isCurrentMonth={day.isCurrentMonth}
-              data-isToday={day.isToday}
-              data-isPrevMonth={day.isPrevMonth}
-              data-isNextMonth={day.isNextMonth}
-              data-isHoveredRange={day.isHoveredRange}
+              data-is-selected={day.isSelected}
+              data-is-sisabled={day.isDisabled}
+              data-is-current-month={day.isCurrentMonth}
+              data-is-today={day.isToday}
+              data-is-prev-month={day.isPrevMonth}
+              data-is-next-month={day.isNextMonth}
+              data-is-hovered-range={day.isHoveredRange}
               className={managerClassNames([
                 "hover:bg-slate-500 rounded",
                 { "bg-slate-700": day.isSelected },

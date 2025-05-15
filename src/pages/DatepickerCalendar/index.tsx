@@ -1,15 +1,9 @@
-import { addDays, format } from "date-fns";
 import { Fragment } from "react";
 import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
+import { TodoList } from "~/components/TodoList";
 import { useTranslation } from "~/hooks/useTranslation";
-import { MultipleSelection } from "./components/MultipleSelection";
-import { MultipleSelectionDisabled } from "./components/MultipleSelectionDisabled";
 import { PlayGround } from "./components/Playground";
-import { RangeSelection } from "./components/RangeSelection";
-import { RangeSelectionDisabled } from "./components/RangeSelectionDisabled";
-import { SingleSelection } from "./components/SingleSelection";
-import { SingleSelectionDisabled } from "./components/SingleSelectionDisabled";
 
 const TODO_LIST = [
   { checked: true, text: `Date - Normal` },
@@ -31,12 +25,8 @@ const TODO_LIST = [
 ];
 
 const COMPONENTS = [
-  // { e: <TodoList list={TODO_LIST} /> },
-  // { e: <SingleSelection /> },
-  // { e: <SingleSelectionDisabled /> },
-  // { e: <MultipleSelection /> },
-  // { e: <MultipleSelectionDisabled /> },
-  // { e: <RangeSelection /> },
+  { e: <TodoList list={TODO_LIST} /> },
+
   { e: <PlayGround /> },
 ];
 
