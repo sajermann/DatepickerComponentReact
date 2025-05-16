@@ -3,6 +3,8 @@ import { ReactNode } from 'react';
 export type TDate = {
   date: Date;
   day: number;
+  month: number;
+  year: number;
   isPrevMonth: boolean;
   isCurrentMonth: boolean;
   isNextMonth: boolean;
@@ -14,6 +16,35 @@ export type TDate = {
   isThursday: boolean;
   isFriday: boolean;
   isSaturday: boolean;
+  isSelected: boolean;
+  isDisabled: boolean;
+  isHoveredRange: boolean;
+};
+
+export type TMonth = {
+  date: Date;
+  month: number;
+  year: number;
+  isJanuary: boolean;
+  isFebruary: boolean;
+  isMarch: boolean;
+  isApril: boolean;
+  isMay: boolean;
+  isJune: boolean;
+  isJuly: boolean;
+  isAugust: boolean;
+  isSeptember: boolean;
+  isOctober: boolean;
+  isNovember: boolean;
+  isDecember: boolean;
+  isSelected: boolean;
+  isDisabled: boolean;
+  isHoveredRange: boolean;
+};
+
+export type TYear = {
+  date: Date;
+  year: number;
   isSelected: boolean;
   isDisabled: boolean;
   isHoveredRange: boolean;
@@ -86,3 +117,5 @@ export type TSelectOptions = {
   multi?: TMulti;
   range?: TSelectedRange;
 };
+
+export type TViewMode = 'days' | 'months' | 'years';

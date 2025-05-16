@@ -11,6 +11,7 @@ import {
 import {
   TDate,
   TDisabled,
+  TMonth,
   TMulti,
   TRange,
   TSelectOptions,
@@ -29,7 +30,7 @@ type TProps = {
   selectOnlyVisibleMonth?: boolean;
 };
 
-export function transformDates({
+export function transformMonths({
   startDate,
   dateToVerify,
   disabled,
@@ -38,18 +39,8 @@ export function transformDates({
   multi,
   range,
   selectOnlyVisibleMonth,
-}: TProps): TDate {
-  const dayOfWeek = dateToVerify.getDay();
-  const prevMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() - 1,
-    1,
-  );
-  const nextMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + 1,
-    1,
-  );
+}: TProps): TMonth {
+  const monthOfYear = dateToVerify.getMonth();
 
   const isDisabled =
     isDisabledDates({ dateToVerify, disabled }) ||
@@ -94,20 +85,21 @@ export function transformDates({
     });
   return {
     date: dateToVerify,
-    day: dateToVerify.getDay(),
     month: dateToVerify.getMonth(),
     year: dateToVerify.getFullYear(),
-    isToday: isToday(dateToVerify),
-    isPrevMonth: isSameMonth(dateToVerify, prevMonth),
-    isCurrentMonth: isSameMonth(dateToVerify, startDate),
-    isNextMonth: isSameMonth(dateToVerify, nextMonth),
-    isSunday: dayOfWeek === 0,
-    isMonday: dayOfWeek === 1,
-    isTuesday: dayOfWeek === 2,
-    isWednesday: dayOfWeek === 3,
-    isThursday: dayOfWeek === 4,
-    isFriday: dayOfWeek === 5,
-    isSaturday: dayOfWeek === 6,
+    isJanuary: monthOfYear === 0,
+    isFebruary: monthOfYear === 1,
+    isMarch: monthOfYear === 2,
+    isApril: monthOfYear === 3,
+    isMay: monthOfYear === 4,
+    isJune: monthOfYear === 5,
+    isJuly: monthOfYear === 6,
+    isAugust: monthOfYear === 7,
+    isSeptember: monthOfYear === 8,
+    isOctober: monthOfYear === 9,
+    isNovember: monthOfYear === 10,
+    isDecember: monthOfYear === 11,
+
     isSelected,
     isDisabled,
     isHoveredRange:
@@ -124,7 +116,8 @@ function isSelectedSingle({
   dateToVerify,
   selectedDate,
 }: { dateToVerify: Date; selectedDate?: Date | null }) {
-  return dateToVerify.getTime() === selectedDate?.getTime();
+  if (!selectedDate) return false;
+  return isSameMonth(dateToVerify, selectedDate);
 }
 
 function isSelectedMulti({

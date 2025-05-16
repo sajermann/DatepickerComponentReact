@@ -4,6 +4,7 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
+  isSameYear,
   isToday,
   isWithinInterval,
   startOfDay,
@@ -11,11 +12,13 @@ import {
 import {
   TDate,
   TDisabled,
+  TMonth,
   TMulti,
   TRange,
   TSelectOptions,
   TSelectedRange,
   TSingle,
+  TYear,
 } from '../../types';
 
 type TProps = {
@@ -29,7 +32,7 @@ type TProps = {
   selectOnlyVisibleMonth?: boolean;
 };
 
-export function transformDates({
+export function transformeYears({
   startDate,
   dateToVerify,
   disabled,
@@ -38,19 +41,7 @@ export function transformDates({
   multi,
   range,
   selectOnlyVisibleMonth,
-}: TProps): TDate {
-  const dayOfWeek = dateToVerify.getDay();
-  const prevMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() - 1,
-    1,
-  );
-  const nextMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + 1,
-    1,
-  );
-
+}: TProps): TYear {
   const isDisabled =
     isDisabledDates({ dateToVerify, disabled }) ||
     isDisabledBefore({ dateToVerify, disabled }) ||
@@ -94,20 +85,7 @@ export function transformDates({
     });
   return {
     date: dateToVerify,
-    day: dateToVerify.getDay(),
-    month: dateToVerify.getMonth(),
     year: dateToVerify.getFullYear(),
-    isToday: isToday(dateToVerify),
-    isPrevMonth: isSameMonth(dateToVerify, prevMonth),
-    isCurrentMonth: isSameMonth(dateToVerify, startDate),
-    isNextMonth: isSameMonth(dateToVerify, nextMonth),
-    isSunday: dayOfWeek === 0,
-    isMonday: dayOfWeek === 1,
-    isTuesday: dayOfWeek === 2,
-    isWednesday: dayOfWeek === 3,
-    isThursday: dayOfWeek === 4,
-    isFriday: dayOfWeek === 5,
-    isSaturday: dayOfWeek === 6,
     isSelected,
     isDisabled,
     isHoveredRange:
@@ -124,7 +102,8 @@ function isSelectedSingle({
   dateToVerify,
   selectedDate,
 }: { dateToVerify: Date; selectedDate?: Date | null }) {
-  return dateToVerify.getTime() === selectedDate?.getTime();
+  if (!selectedDate) return false;
+  return isSameYear(dateToVerify, selectedDate);
 }
 
 function isSelectedMulti({

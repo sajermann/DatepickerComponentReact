@@ -1,5 +1,6 @@
 {
   "translations": {
+    "PARAMS_EXHIBITION_REAL_TIME": "Exibição dos parâmetros em tempo real",
     "DISABLED_DATES_TOOLTIP": "Adicione datas para ficarem desabilitadas",
     "CALENDAR": "Calendário",
     "FIXED_WEEKS_TOOLTIP": "Força o calendário sempre ter o mesmo número de dias",

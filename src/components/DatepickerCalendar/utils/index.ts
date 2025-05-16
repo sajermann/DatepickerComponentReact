@@ -9,3 +9,5 @@ export * from './handleSelectByRange';
 export * from './handleToggleHeader';
 export * from './toggle';
 export * from './transformeDates';
+export * from './transformeMonths';
+export * from './transformeYears';

@@ -1,6 +1,7 @@
 import {
   addDays,
   addMonths,
+  addYears,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
@@ -12,6 +13,7 @@ import {
   startOfDay,
   startOfMonth,
   startOfWeek,
+  startOfYear,
 } from "date-fns";
 import {
   ReactNode,
@@ -29,17 +31,22 @@ import {
   TDate,
   TDatepickerCalendarProviderProps,
   TDisabled,
+  TMonth,
   TMulti,
   TSelectOptions,
   TSelectedRange,
   TSingle,
+  TViewMode,
+  TYear,
 } from "../../types";
 import {
   allDatesIsSelectedsByDayOfWeek,
   dateIsInArray,
   handleToggleHeader,
-  transformDate,
+  transformDates,
+  transformeYears,
 } from "../../utils";
+import { transformMonths } from "../../utils/transformeMonths";
 
 type DatepickerCalendarContextType = {
   single?: TSingle;
@@ -62,6 +69,13 @@ type DatepickerCalendarContextType = {
   handleNextMonth: () => void;
   onDayClick: (data: TDate) => void;
   onDayHover: (data: TDate) => void;
+  viewMode: TViewMode;
+  onToggleViewMode: () => void;
+  months: TMonth[];
+  onMonthClick: (month: number) => void;
+  onClickArrow: (type: "next" | "prev") => void;
+  years: TYear[];
+  onYearClick: (year: number) => void;
 };
 
 export const DatepickerCalendarContext = createContext(
@@ -86,6 +100,7 @@ export function DatepickerCalendarProvider(
     startOfMonth(date || new Date())
   );
   const [daysInHover, setDaysInHover] = useState<Date[]>([]);
+  const [viewMode, setViewMode] = useState<TViewMode>("days");
 
   const endDateInternal = endOfMonth(startDateInternal);
   const startWeek = startOfWeek(startDateInternal, { weekStartsOn });
@@ -95,7 +110,7 @@ export function DatepickerCalendarProvider(
     : eachDayOfInterval({ start: startWeek, end: endWeek });
 
   const daysTransformeds = days.map((i) =>
-    transformDate({
+    transformDates({
       dateToVerify: i,
       startDate: startDateInternal,
       disabled,
@@ -112,7 +127,43 @@ export function DatepickerCalendarProvider(
     weeks.push(daysTransformeds.slice(i, i + 7));
   }
 
-  const startDate = transformDate({
+  const months = Array.from({ length: 12 }, (_, i) =>
+    addMonths(startOfYear(startDateInternal), i)
+  );
+
+  const monthsTransformeds = months.map((i) =>
+    transformMonths({
+      dateToVerify: i,
+      startDate: startDateInternal,
+      disabled,
+      daysInHover,
+      single,
+      multi,
+      range,
+      selectOnlyVisibleMonth,
+    })
+  );
+
+  const years = Array.from({ length: 12 }, (_, i) =>
+    addYears(startOfYear(startDateInternal), i)
+  );
+
+  const yearsTransformeds = years.map((i) =>
+    transformeYears({
+      dateToVerify: i,
+      startDate: startDateInternal,
+      disabled,
+      daysInHover,
+      single,
+      multi,
+      range,
+      selectOnlyVisibleMonth,
+    })
+  );
+
+  console.log({ years });
+
+  const startDate = transformDates({
     dateToVerify: startDateInternal,
     startDate: startDateInternal,
     disabled,
@@ -123,7 +174,7 @@ export function DatepickerCalendarProvider(
     selectOnlyVisibleMonth,
   });
 
-  const endDate = transformDate({
+  const endDate = transformDates({
     dateToVerify: endDateInternal,
     startDate: startDateInternal,
     disabled,
@@ -140,6 +191,56 @@ export function DatepickerCalendarProvider(
 
   const handleNextMonth = () => {
     setStartDateInternal(addMonths(startDate.date, 1));
+  };
+
+  const handlePrevYear = () => {
+    setStartDateInternal(addYears(startDate.date, -1));
+  };
+  const handleNextYear = () => {
+    setStartDateInternal(addYears(startDate.date, 1));
+  };
+
+  const handlePrevGroupYears = () => {
+    setStartDateInternal(addYears(startDate.date, -12));
+  };
+  const handleNextGroupYears = () => {
+    setStartDateInternal(addYears(startDate.date, 12));
+  };
+
+  const onClickArrow = (type: "next" | "prev") => {
+    const config = {
+      days: {
+        prev: handlePrevMonth,
+        next: handleNextMonth,
+      },
+      months: {
+        prev: handlePrevYear,
+        next: handleNextYear,
+      },
+      years: {
+        prev: handlePrevGroupYears,
+        next: handleNextGroupYears,
+      },
+    };
+    config[viewMode][type]();
+  };
+
+  const onMonthClick = (month: number) => {
+    setStartDateInternal((prev) => {
+      const newDate = new Date(prev.getTime());
+      newDate.setMonth(month);
+      return newDate;
+    });
+    setViewMode("days");
+  };
+
+  const onYearClick = (year: number) => {
+    setStartDateInternal((prev) => {
+      const newDate = new Date(prev.getTime());
+      newDate.setFullYear(year);
+      return newDate;
+    });
+    setViewMode("months");
   };
 
   const headers = Array.from({ length: 7 }, (_, index) => {
@@ -201,11 +302,7 @@ export function DatepickerCalendarProvider(
     multi.onSelectedDates(selectedDates);
   };
 
-  const onDayClick = ({ date, isDisabled }: TDate) => {
-    if (isDisabled) {
-      return;
-    }
-
+  const onDayClick = ({ date }: TDate) => {
     if (single) {
       if (
         single.selectedDate === null ||
@@ -305,6 +402,19 @@ export function DatepickerCalendarProvider(
     [range, daysInHover]
   );
 
+  const onToggleViewMode = () => {
+    setViewMode((prev) => {
+      if (prev === "days") {
+        return "months";
+      }
+      if (prev === "months") {
+        return "years";
+      }
+
+      return "days";
+    });
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
 
@@ -331,6 +441,13 @@ export function DatepickerCalendarProvider(
       disabledNextMonth,
       disabledPrevMonth,
       selectOnlyVisibleMonth,
+      viewMode,
+      onToggleViewMode,
+      months: monthsTransformeds,
+      onMonthClick,
+      onClickArrow,
+      years: yearsTransformeds,
+      onYearClick,
     }),
     [
       single,
@@ -345,6 +462,9 @@ export function DatepickerCalendarProvider(
       disabledNextMonth,
       disabledPrevMonth,
       selectOnlyVisibleMonth,
+      viewMode,
+      monthsTransformeds,
+      years,
     ]
   );
 

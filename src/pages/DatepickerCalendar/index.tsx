@@ -3,7 +3,7 @@ import { Divider } from "~/components/Divider";
 import { Section } from "~/components/Section";
 import { TodoList } from "~/components/TodoList";
 import { useTranslation } from "~/hooks/useTranslation";
-import { PlayGround } from "./components/Playground";
+import { Daypicker } from "./components/Daypicker";
 
 const TODO_LIST = [
   { checked: true, text: `Date - Normal` },
@@ -12,23 +12,19 @@ const TODO_LIST = [
   { checked: true, text: `Date - Week start on` },
   { checked: true, text: `Date - Multiple selection` },
   {
-    checked: false,
-    text: `Date - Desabilitar as setas de troca de meses dependendo do before e after`,
+    checked: true,
+    text: `Date - Disabled arrow month based Date Disabled Before/After params`,
   },
+  { checked: true, text: `Date - Range Dates` },
+  { checked: true, text: `Date - Composition (Calendar)` },
   { checked: false, text: `Date - Seletor Meses` },
   { checked: false, text: `Date - Seletor Anos` },
   { checked: false, text: `Date - Popup com eventos talvez` },
-  { checked: false, text: `Date - Range Dates` },
-  { checked: false, text: `Date - Composition (Calendar)` },
   { checked: false, text: `Date - Disabled Month (Month Picker)` },
   { checked: false, text: `Date - Disabled Year (Year Picker)` },
 ];
 
-const COMPONENTS = [
-  { e: <TodoList list={TODO_LIST} /> },
-
-  { e: <PlayGround /> },
-];
+const COMPONENTS = [{ e: <TodoList list={TODO_LIST} /> }, { e: <Daypicker /> }];
 
 export function DatepickerCalendarPage() {
   const { translate } = useTranslation();

@@ -1,5 +1,6 @@
 {
   "translations": {
+    "PARAMS_EXHIBITION_REAL_TIME": "Params exhibition in real time",
     "DISABLED_DATES_TOOLTIP": "Add dates to disableds",
     "CALENDAR": "Calendar",
     "FIXED_WEEKS_TOOLTIP": "Force the calendar to always have the same number of days",

@@ -15,9 +15,8 @@ const OPTIONS_BOOLEAN = [
   { value: "false", label: "False" },
 ];
 
-export function PlayGround() {
+export function Daypicker() {
   const { translate } = useTranslation();
-  const [count, setCount] = useState(1);
   const [showCalendar, setShowCalendar] = useState(true);
   const [neccessaryReload, setIsNecessaryReload] = useState(false);
   const [dateDisabledToInclude, setDateDisabledToInclude] =
@@ -263,13 +262,16 @@ export function PlayGround() {
   ];
 
   return (
-    <Section title="Playground" variant="h2">
-      <button className="w-40" onClick={() => setCount((prev) => prev + 1)}>
-        Mais 1 - Count: {count}
-      </button>{" "}
-      <Params inputs={inputs} />
+    <Section title="Daypicker" variant="h2">
+      <Section title="Playground" variant="h3">
+        <Params inputs={inputs} />
+      </Section>
       <div className="flex gap-2 items-center justify-center flex-wrap">
-        <Section title={translate("CALENDAR")} variant="h3">
+        <Section
+          title={translate("CALENDAR")}
+          variant="h3"
+          // className="w-[200px]"
+        >
           {showCalendar && (
             <DatepickerCalendar.Root
               weekStartsOn={playgroundParams.weekStartsOn}
@@ -350,7 +352,9 @@ export function PlayGround() {
           Reload
         </button>
       )}
-      <JsonViewer value={{ playgroundParams }} />
+      <Section title={translate("PARAMS_EXHIBITION_REAL_TIME")} variant="h3">
+        <JsonViewer value={{ playgroundParams }} />
+      </Section>
     </Section>
   );
 }
