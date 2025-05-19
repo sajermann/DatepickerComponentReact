@@ -10,11 +10,13 @@ import {
   isBefore,
   isSameDay,
   isSameMonth,
+  setDefaultOptions,
   startOfDay,
   startOfMonth,
   startOfWeek,
   startOfYear,
 } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import {
   ReactNode,
   RefObject,
@@ -25,8 +27,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { date } from "zod";
+import { useTranslation } from "~/hooks/useTranslation";
 import { delay } from "~/utils/delay";
+import en from "../../i18n/en.json";
+import ptBr from "../../i18n/pt-br.json";
 import {
   TDate,
   TDatepickerCalendarProviderProps,
@@ -41,12 +45,15 @@ import {
 } from "../../types";
 import {
   allDatesIsSelectedsByDayOfWeek,
+  capitalize,
   dateIsInArray,
   handleToggleHeader,
   transformDates,
   transformeYears,
 } from "../../utils";
 import { transformMonths } from "../../utils/transformeMonths";
+
+const YEARS_TO_SHOW = 24;
 
 type DatepickerCalendarContextType = {
   single?: TSingle;
@@ -65,8 +72,6 @@ type DatepickerCalendarContextType = {
   }[];
   disabledPrevMonth: boolean;
   disabledNextMonth: boolean;
-  handlePrevMonth: () => void;
-  handleNextMonth: () => void;
   onDayClick: (data: TDate) => void;
   onDayHover: (data: TDate) => void;
   viewMode: TViewMode;
@@ -85,6 +90,13 @@ export const DatepickerCalendarContext = createContext(
 export function DatepickerCalendarProvider(
   props: TDatepickerCalendarProviderProps
 ) {
+  const { currentLanguage } = useTranslation([
+    { lng: "en", resources: en },
+    { lng: "pt-BR", resources: ptBr },
+  ]);
+  setDefaultOptions({
+    locale: currentLanguage === "pt-BR" ? ptBR : undefined,
+  });
   const {
     children,
     disabled,
@@ -144,7 +156,7 @@ export function DatepickerCalendarProvider(
     })
   );
 
-  const years = Array.from({ length: 12 }, (_, i) =>
+  const years = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
     addYears(startOfYear(startDateInternal), i)
   );
 
@@ -160,8 +172,6 @@ export function DatepickerCalendarProvider(
       selectOnlyVisibleMonth,
     })
   );
-
-  console.log({ years });
 
   const startDate = transformDates({
     dateToVerify: startDateInternal,
@@ -196,15 +206,17 @@ export function DatepickerCalendarProvider(
   const handlePrevYear = () => {
     setStartDateInternal(addYears(startDate.date, -1));
   };
+
   const handleNextYear = () => {
     setStartDateInternal(addYears(startDate.date, 1));
   };
 
   const handlePrevGroupYears = () => {
-    setStartDateInternal(addYears(startDate.date, -12));
+    setStartDateInternal(addYears(startDate.date, -YEARS_TO_SHOW));
   };
+
   const handleNextGroupYears = () => {
-    setStartDateInternal(addYears(startDate.date, 12));
+    setStartDateInternal(addYears(startDate.date, YEARS_TO_SHOW));
   };
 
   const onClickArrow = (type: "next" | "prev") => {
@@ -245,10 +257,11 @@ export function DatepickerCalendarProvider(
 
   const headers = Array.from({ length: 7 }, (_, index) => {
     const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
-    const dayName = format(day, "EEEE");
+    const dayName = capitalize(format(day, "EEEE").slice(0, 3));
+    console.log({ dayName });
     const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
     return {
-      text: dayName.slice(0, 3).toUpperCase(),
+      text: dayName,
       isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
         dayOfWeek,
         weeks,
@@ -433,8 +446,6 @@ export function DatepickerCalendarProvider(
       startDate,
       endDate,
       weeks,
-      handlePrevMonth,
-      handleNextMonth,
       headers,
       onDayClick,
       onDayHover,

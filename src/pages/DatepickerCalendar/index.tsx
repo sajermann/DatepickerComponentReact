@@ -24,7 +24,10 @@ const TODO_LIST = [
   { checked: false, text: `Date - Disabled Year (Year Picker)` },
 ];
 
-const COMPONENTS = [{ e: <TodoList list={TODO_LIST} /> }, { e: <Daypicker /> }];
+const COMPONENTS = [
+  // { e: <TodoList list={TODO_LIST} /> },
+  { e: <Daypicker /> },
+];
 
 export function DatepickerCalendarPage() {
   const { translate } = useTranslation();

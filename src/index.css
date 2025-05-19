@@ -13,6 +13,15 @@
   --breakpoint-3xl: 1536px;
   --breakpoint-4xl: 1980px;
 
+  --container-xm: 400px;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1366px;
+  --container-3xl: 1536px;
+  --container-4xl: 1980px;
+
   --color-brand-300: #996dff;
   --color-brand-500: #8257e6;
 

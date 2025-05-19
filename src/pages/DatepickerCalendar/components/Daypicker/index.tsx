@@ -1,6 +1,11 @@
 import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
 import * as DatepickerCalendar from "~/components/DatepickerCalendar";
+import {
+  TMulti,
+  TSelectedRange,
+  TSingle,
+} from "~/components/DatepickerCalendar/types";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
@@ -15,6 +20,31 @@ const OPTIONS_BOOLEAN = [
   { value: "false", label: "False" },
 ];
 
+type TPlaygroundParams = {
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  selectOnlyVisibleMonth?: boolean;
+  disabledDates?: Date[];
+  date?: Date | null;
+  fixedWeeks: boolean;
+  single?: {
+    selectedDate: Date | null;
+    toggle?: boolean;
+  };
+  multi?: {
+    selectedDates: Date[];
+    enableHeaderSelection?: boolean;
+  };
+  range?: {
+    selectedDate: { from: Date | null; to: Date | null };
+    disabledAfterFirstDisabledDates?: boolean;
+    disabledSameDate?: boolean;
+    maxInterval?: number;
+    minInterval?: number;
+  };
+  disabledAfter?: Date;
+  disabledBefore?: Date;
+};
+
 export function Daypicker() {
   const { translate } = useTranslation();
   const [showCalendar, setShowCalendar] = useState(true);
@@ -22,12 +52,11 @@ export function Daypicker() {
   const [dateDisabledToInclude, setDateDisabledToInclude] =
     useState<Date | null>(null);
 
-  const [playgroundParams, setPlaygroundParams] = useState<any>({
+  const [playgroundParams, setPlaygroundParams] = useState<TPlaygroundParams>({
     date: null,
     fixedWeeks: true,
     single: {
       selectedDate: null,
-      toggle: null,
     },
   });
 
@@ -266,73 +295,70 @@ export function Daypicker() {
       <Section title="Playground" variant="h3">
         <Params inputs={inputs} />
       </Section>
-      <div className="flex gap-2 items-center justify-center flex-wrap">
-        <Section
-          title={translate("CALENDAR")}
-          variant="h3"
-          // className="w-[200px]"
-        >
-          {showCalendar && (
-            <DatepickerCalendar.Root
-              weekStartsOn={playgroundParams.weekStartsOn}
-              fixedWeeks={playgroundParams.fixedWeeks}
-              selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
-              date={playgroundParams.date}
-              disabled={{
-                after: playgroundParams.disabledAfter,
-                before: playgroundParams.disabledBefore,
-                dates: playgroundParams.disabledDates,
-              }}
-              single={
-                playgroundParams.single && {
-                  toggle: playgroundParams.single?.toggle,
-                  selectedDate: playgroundParams.single?.selectedDate,
-                  onSelectedDate: (e) =>
-                    onChangeInputByType({
-                      type: "single",
-                      value: e,
-                      prop: "selectedDate",
-                    }),
-                }
+
+      <Section
+        title={translate("CALENDAR")}
+        variant="h3"
+        className="p-4 resize h-[550px] w-full overflow-auto"
+      >
+        {showCalendar && (
+          <DatepickerCalendar.Root
+            weekStartsOn={playgroundParams.weekStartsOn}
+            fixedWeeks={playgroundParams.fixedWeeks}
+            selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
+            date={playgroundParams.date}
+            disabled={{
+              after: playgroundParams.disabledAfter,
+              before: playgroundParams.disabledBefore,
+              dates: playgroundParams.disabledDates,
+            }}
+            single={
+              playgroundParams.single && {
+                toggle: playgroundParams.single?.toggle,
+                selectedDate: playgroundParams.single?.selectedDate,
+                onSelectedDate: (e) =>
+                  onChangeInputByType({
+                    type: "single",
+                    value: e,
+                    prop: "selectedDate",
+                  }),
               }
-              multi={
-                playgroundParams.multi && {
-                  selectedDates: playgroundParams.multi?.selectedDates,
-                  onSelectedDates: (e) =>
-                    onChangeInputByType({
-                      type: "multi",
-                      value: e,
-                      prop: "selectedDates",
-                    }),
-                  enableHeaderSelection:
-                    playgroundParams.multi.enableHeaderSelection,
-                }
+            }
+            multi={
+              playgroundParams.multi && {
+                selectedDates: playgroundParams.multi.selectedDates,
+                onSelectedDates: (e) =>
+                  onChangeInputByType({
+                    type: "multi",
+                    value: e,
+                    prop: "selectedDates",
+                  }),
+                enableHeaderSelection:
+                  playgroundParams.multi.enableHeaderSelection,
               }
-              range={
-                playgroundParams.range && {
-                  selectedDate: playgroundParams.range?.selectedDate,
-                  onSelectedDate: (e) =>
-                    onChangeInputByType({
-                      type: "range",
-                      value: e,
-                      prop: "selectedDate",
-                    }),
-                  disabledAfterFirstDisabledDates:
-                    playgroundParams.range.disabledAfterFirstDisabledDates,
-                  disabledSameDate: playgroundParams.range.disabledSameDate,
-                  minInterval: playgroundParams.range.minInterval,
-                  maxInterval: playgroundParams.range.maxInterval,
-                }
+            }
+            range={
+              playgroundParams.range && {
+                selectedDate: playgroundParams.range?.selectedDate,
+                onSelectedDate: (e) =>
+                  onChangeInputByType({
+                    type: "range",
+                    value: e,
+                    prop: "selectedDate",
+                  }),
+                disabledAfterFirstDisabledDates:
+                  playgroundParams.range.disabledAfterFirstDisabledDates,
+                disabledSameDate: playgroundParams.range.disabledSameDate,
+                minInterval: playgroundParams.range.minInterval,
+                maxInterval: playgroundParams.range.maxInterval,
               }
-            >
-              <DatepickerCalendar.Calendar>
-                <DatepickerCalendar.Header />
-                <DatepickerCalendar.Body />
-              </DatepickerCalendar.Calendar>
-            </DatepickerCalendar.Root>
-          )}
-        </Section>
-      </div>
+            }
+          >
+            <DatepickerCalendar.Daypicker />
+          </DatepickerCalendar.Root>
+        )}
+      </Section>
+
       {neccessaryReload && (
         <button
           className={managerClassNames([

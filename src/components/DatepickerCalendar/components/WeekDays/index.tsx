@@ -1,9 +1,10 @@
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { capitalize } from "../../utils";
 
 const commonClassNames =
-  "w-full font-bold text-center text-[clamp(0.25rem,4cqi,2.5rem)]";
+  "font-bold text-center w-full h-full flex items-center justify-center";
 
 export const WeekDays = memo(() => {
   const { multi, single, headers, viewMode } = useDatepickerCalendar();
@@ -11,11 +12,14 @@ export const WeekDays = memo(() => {
   if (viewMode !== "days") return null;
 
   return (
-    <div className="grid grid-cols-7 w-full @container">
+    <div className="justify-items-center grid grid-cols-7 w-full @container">
       {headers.map((weekDay) => (
         <div
           key={weekDay.text}
           className={managerClassNames([
+            "text-[clamp(0.25rem,4cqi,1rem)]",
+            "h-[clamp(0.25rem,16cqi,3rem)]",
+            "w-[clamp(0.25rem,13cqi,3rem)]",
             {
               "hover:bg-slate-500 rounded": multi?.enableHeaderSelection,
             },
@@ -36,7 +40,7 @@ export const WeekDays = memo(() => {
               className={commonClassNames}
               onClick={weekDay.onClick}
             >
-              {weekDay.text}
+              {capitalize(weekDay.text)}
             </button>
           )}
         </div>

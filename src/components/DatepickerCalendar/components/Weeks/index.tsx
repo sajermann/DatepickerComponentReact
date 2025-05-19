@@ -12,7 +12,7 @@ export const Weeks = memo(() => {
     <>
       {weeks.map((days) => (
         <div
-          className="items-center grid grid-cols-7 @container"
+          className="justify-items-center grid grid-cols-7 @container"
           key={days[0].date.toISOString()}
         >
           {days.map((day) => (
@@ -26,8 +26,10 @@ export const Weeks = memo(() => {
               data-is-next-month={day.isNextMonth}
               data-is-hovered-range={day.isHoveredRange}
               className={managerClassNames([
-                "hover:bg-slate-500 rounded",
-                "text-[clamp(0.25rem,4cqi,2.5rem)]",
+                "hover:bg-slate-500 rounded flex",
+                "text-[clamp(0.25rem,4cqi,1rem)]",
+                "h-[clamp(0.25rem,16cqi,3rem)]",
+                "w-[clamp(0.25rem,13cqi,3rem)]",
                 { "bg-slate-700": day.isSelected },
                 { "hover:bg-slate-600": day.isSelected },
                 { "opacity-25 !cursor-not-allowed": day.isDisabled },
@@ -39,7 +41,7 @@ export const Weeks = memo(() => {
             >
               <button
                 type="button"
-                className="w-full"
+                className="w-full h-full flex items-center justify-center"
                 onMouseEnter={() => onDayHover(day)}
                 onClick={() => onDayClick(day)}
                 disabled={day.isDisabled}
