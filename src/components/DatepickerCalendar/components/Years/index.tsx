@@ -15,7 +15,7 @@ export const Years = memo(() => {
           key={year.date.toISOString()}
           data-is-selected={year.isSelected}
           data-is-disabled={year.isDisabled}
-          // data-is-current-year={year.isCurrentYear}
+          data-is-today={year.isToday}
           data-is-hovered-range={year.isHoveredRange}
           className={managerClassNames([
             "hover:bg-slate-500 rounded",
@@ -25,7 +25,7 @@ export const Years = memo(() => {
             { "bg-slate-700": year.isSelected },
             { "hover:bg-slate-600": year.isSelected },
             { "opacity-25 !cursor-not-allowed": year.isDisabled },
-            // { "border rounded border-slate-500": year.isCurrentYear },
+            { "border rounded border-slate-500": year.isToday },
             { "bg-slate-500": year.isHoveredRange },
             { "opacity-50": year.isSelected && year.isDisabled },
           ])}

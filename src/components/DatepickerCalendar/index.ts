@@ -1,2 +1,1 @@
-export * from './components/Root';
-export * from './components/Daypicker';
+export { Root as DatepickerCalendar } from './components/Root';

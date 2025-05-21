@@ -40,6 +40,7 @@ export type TMonth = {
   isSelected: boolean;
   isDisabled: boolean;
   isHoveredRange: boolean;
+  isToday: boolean;
 };
 
 export type TYear = {
@@ -48,6 +49,7 @@ export type TYear = {
   isSelected: boolean;
   isDisabled: boolean;
   isHoveredRange: boolean;
+  isToday: boolean;
 };
 
 export type TSelectedRange = {
@@ -73,7 +75,7 @@ export type TSelectionByRange = {
 };
 
 export type TBaseProps = {
-  children: ReactNode;
+  children?: ReactNode;
   disabled?: TDisabled;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   date?: Date | null;

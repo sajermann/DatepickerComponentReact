@@ -2,7 +2,6 @@ export * from './allDatesIsSelectedsByDayOfWeek';
 export * from './canSelectDay';
 export * from './dateIsInArray';
 export * from './fixSelectionByRange';
-export * from './getClassNames';
 export * from './handleHoverRangeSelection';
 export * from './handleSelectByRange';
 export * from './handleToggleHeader';

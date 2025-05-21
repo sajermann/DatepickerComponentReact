@@ -1,6 +1,6 @@
 import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
-import * as DatepickerCalendar from "~/components/DatepickerCalendar";
+import { DatepickerCalendar } from "~/components/DatepickerCalendar";
 import {
   TMulti,
   TSelectedRange,
@@ -302,7 +302,7 @@ export function Daypicker() {
         className="p-4 resize h-[550px] w-full overflow-auto"
       >
         {showCalendar && (
-          <DatepickerCalendar.Root
+          <DatepickerCalendar
             weekStartsOn={playgroundParams.weekStartsOn}
             fixedWeeks={playgroundParams.fixedWeeks}
             selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
@@ -353,9 +353,7 @@ export function Daypicker() {
                 maxInterval: playgroundParams.range.maxInterval,
               }
             }
-          >
-            <DatepickerCalendar.Daypicker />
-          </DatepickerCalendar.Root>
+          />
         )}
       </Section>
 

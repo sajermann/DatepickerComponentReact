@@ -13,7 +13,6 @@ import {
   TDisabled,
   TMulti,
   TRange,
-  TSelectOptions,
   TSelectedRange,
   TSingle,
 } from '../../types';

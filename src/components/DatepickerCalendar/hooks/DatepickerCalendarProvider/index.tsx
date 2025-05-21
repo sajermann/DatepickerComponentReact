@@ -52,15 +52,14 @@ import {
   transformeYears,
 } from "../../utils";
 import { transformMonths } from "../../utils/transformeMonths";
-
-const YEARS_TO_SHOW = 24;
+import { useDatePicker } from "../useDatepicker";
 
 type DatepickerCalendarContextType = {
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
   disabled?: TDisabled;
-  weekStartsOn?: number;
+  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   startDate: TDate;
   endDate: TDate;
   weeks: TDate[][];
@@ -108,157 +107,69 @@ export function DatepickerCalendarProvider(
   const single = "single" in props ? props.single : undefined;
   const multi = "multi" in props ? props.multi : undefined;
   const range = "range" in props ? props.range : undefined;
-  const [startDateInternal, setStartDateInternal] = useState(
-    startOfMonth(date || new Date())
-  );
+
   const [daysInHover, setDaysInHover] = useState<Date[]>([]);
   const [viewMode, setViewMode] = useState<TViewMode>("days");
 
-  const endDateInternal = endOfMonth(startDateInternal);
-  const startWeek = startOfWeek(startDateInternal, { weekStartsOn });
-  const endWeek = endOfWeek(endDateInternal, { weekStartsOn });
-  const days = fixedWeeks
-    ? Array.from({ length: 42 }, (_, i) => addDays(startWeek, i))
-    : eachDayOfInterval({ start: startWeek, end: endWeek });
-
-  const daysTransformeds = days.map((i) =>
-    transformDates({
-      dateToVerify: i,
-      startDate: startDateInternal,
-      disabled,
-      daysInHover,
-      single,
-      multi,
-      range,
-      selectOnlyVisibleMonth,
-    })
-  );
-
-  const weeks: Array<TDate[]> = [];
-  for (let i = 0; i < days.length; i += 7) {
-    weeks.push(daysTransformeds.slice(i, i + 7));
-  }
-
-  const months = Array.from({ length: 12 }, (_, i) =>
-    addMonths(startOfYear(startDateInternal), i)
-  );
-
-  const monthsTransformeds = months.map((i) =>
-    transformMonths({
-      dateToVerify: i,
-      startDate: startDateInternal,
-      disabled,
-      daysInHover,
-      single,
-      multi,
-      range,
-      selectOnlyVisibleMonth,
-    })
-  );
-
-  const years = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
-    addYears(startOfYear(startDateInternal), i)
-  );
-
-  const yearsTransformeds = years.map((i) =>
-    transformeYears({
-      dateToVerify: i,
-      startDate: startDateInternal,
-      disabled,
-      daysInHover,
-      single,
-      multi,
-      range,
-      selectOnlyVisibleMonth,
-    })
-  );
-
-  const startDate = transformDates({
-    dateToVerify: startDateInternal,
-    startDate: startDateInternal,
-    disabled,
+  const {
+    weeks,
+    months,
+    years,
+    startDate,
+    endDate,
+    handlePrevMonthOfView,
+    handleNextMonthOfView,
+    handlePrevYearOfView,
+    handleNextYearOfView,
+    handlePrevGroupYearsOfView,
+    handleNextGroupYearsOfView,
+    setMonthOfView,
+    setYearOfView,
+    disabledPrevMonth,
+    disabledNextMonth,
+  } = useDatePicker({
+    date,
     daysInHover,
+    disabled,
+    fixedWeeks,
     single,
     multi,
     range,
     selectOnlyVisibleMonth,
+    weekStartsOn,
   });
-
-  const endDate = transformDates({
-    dateToVerify: endDateInternal,
-    startDate: startDateInternal,
-    disabled,
-    daysInHover,
-    single,
-    multi,
-    range,
-    selectOnlyVisibleMonth,
-  });
-
-  const handlePrevMonth = () => {
-    setStartDateInternal(addMonths(startDate.date, -1));
-  };
-
-  const handleNextMonth = () => {
-    setStartDateInternal(addMonths(startDate.date, 1));
-  };
-
-  const handlePrevYear = () => {
-    setStartDateInternal(addYears(startDate.date, -1));
-  };
-
-  const handleNextYear = () => {
-    setStartDateInternal(addYears(startDate.date, 1));
-  };
-
-  const handlePrevGroupYears = () => {
-    setStartDateInternal(addYears(startDate.date, -YEARS_TO_SHOW));
-  };
-
-  const handleNextGroupYears = () => {
-    setStartDateInternal(addYears(startDate.date, YEARS_TO_SHOW));
-  };
 
   const onClickArrow = (type: "next" | "prev") => {
     const config = {
       days: {
-        prev: handlePrevMonth,
-        next: handleNextMonth,
+        prev: handlePrevMonthOfView,
+        next: handleNextMonthOfView,
       },
       months: {
-        prev: handlePrevYear,
-        next: handleNextYear,
+        prev: handlePrevYearOfView,
+        next: handleNextYearOfView,
       },
       years: {
-        prev: handlePrevGroupYears,
-        next: handleNextGroupYears,
+        prev: handlePrevGroupYearsOfView,
+        next: handleNextGroupYearsOfView,
       },
     };
     config[viewMode][type]();
   };
 
   const onMonthClick = (month: number) => {
-    setStartDateInternal((prev) => {
-      const newDate = new Date(prev.getTime());
-      newDate.setMonth(month);
-      return newDate;
-    });
+    setMonthOfView(month);
     setViewMode("days");
   };
 
   const onYearClick = (year: number) => {
-    setStartDateInternal((prev) => {
-      const newDate = new Date(prev.getTime());
-      newDate.setFullYear(year);
-      return newDate;
-    });
+    setYearOfView(year);
     setViewMode("months");
   };
 
   const headers = Array.from({ length: 7 }, (_, index) => {
     const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
     const dayName = capitalize(format(day, "EEEE").slice(0, 3));
-    console.log({ dayName });
     const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
     return {
       text: dayName,
@@ -394,16 +305,6 @@ export function DatepickerCalendarProvider(
     setDaysInHover(daysInHoverInternal);
   };
 
-  const disabledPrevMonth = useMemo(
-    () => !!(disabled?.before && isBefore(startDateInternal, disabled.before)),
-    [disabled?.before, startDateInternal]
-  );
-
-  const disabledNextMonth = useMemo(
-    () => !!(disabled?.after && isAfter(endDateInternal, disabled.after)),
-    [disabled?.after, endDateInternal]
-  );
-
   const handleKeyDown = useCallback(
     async (event: KeyboardEvent) => {
       if (event.key === "Escape" && range?.selectedDate.from) {
@@ -454,10 +355,10 @@ export function DatepickerCalendarProvider(
       selectOnlyVisibleMonth,
       viewMode,
       onToggleViewMode,
-      months: monthsTransformeds,
+      months,
       onMonthClick,
       onClickArrow,
-      years: yearsTransformeds,
+      years,
       onYearClick,
     }),
     [
@@ -474,7 +375,7 @@ export function DatepickerCalendarProvider(
       disabledPrevMonth,
       selectOnlyVisibleMonth,
       viewMode,
-      monthsTransformeds,
+      months,
       years,
     ]
   );

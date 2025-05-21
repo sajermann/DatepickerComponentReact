@@ -86,6 +86,7 @@ export function transformeYears({
   return {
     date: dateToVerify,
     year: dateToVerify.getFullYear(),
+    isToday: isSameYear(dateToVerify, new Date()),
     isSelected,
     isDisabled,
     isHoveredRange:

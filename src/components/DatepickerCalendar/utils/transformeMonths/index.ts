@@ -99,7 +99,7 @@ export function transformMonths({
     isOctober: monthOfYear === 9,
     isNovember: monthOfYear === 10,
     isDecember: monthOfYear === 11,
-
+    isToday: isSameMonth(dateToVerify, new Date()),
     isSelected,
     isDisabled,
     isHoveredRange:
