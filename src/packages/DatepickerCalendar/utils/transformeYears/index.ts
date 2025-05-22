@@ -1,9 +1,11 @@
 import {
   addDays,
+  endOfYear,
   isAfter,
   isBefore,
   isSameDay,
   isSameMonth,
+  isSameYear,
   isToday,
   isWithinInterval,
   startOfDay,
@@ -17,31 +19,28 @@ import {
   TSelectOptions,
   TSelectedRange,
   TSingle,
+  TYear,
 } from '../../types';
 
 type TProps = {
   dateToVerify: Date;
   firstDateOfCurrentMonthOfView: Date;
   disabled?: TDisabled;
-  daysInHover?: Date[];
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
   selectOnlyVisibleMonth?: boolean;
 };
 
-export function transformMonths({
+export function transformeYears({
   firstDateOfCurrentMonthOfView,
   dateToVerify,
   disabled,
-  daysInHover,
   single,
   multi,
   range,
   selectOnlyVisibleMonth,
-}: TProps): TMonth {
-  const monthOfYear = dateToVerify.getMonth();
-
+}: TProps): TYear {
   const isDisabled =
     isDisabledDates({ dateToVerify, disabled }) ||
     isDisabledBefore({ dateToVerify, disabled }) ||
@@ -85,30 +84,10 @@ export function transformMonths({
     });
   return {
     date: dateToVerify,
-    month: dateToVerify.getMonth(),
     year: dateToVerify.getFullYear(),
-    isJanuary: monthOfYear === 0,
-    isFebruary: monthOfYear === 1,
-    isMarch: monthOfYear === 2,
-    isApril: monthOfYear === 3,
-    isMay: monthOfYear === 4,
-    isJune: monthOfYear === 5,
-    isJuly: monthOfYear === 6,
-    isAugust: monthOfYear === 7,
-    isSeptember: monthOfYear === 8,
-    isOctober: monthOfYear === 9,
-    isNovember: monthOfYear === 10,
-    isDecember: monthOfYear === 11,
-    isToday: isSameMonth(dateToVerify, new Date()),
+    isToday: isSameYear(dateToVerify, new Date()),
     isSelected,
     isDisabled,
-    isHoveredRange:
-      !isSelected &&
-      isHoveredRange({
-        dateToVerify,
-        daysInHover,
-        selectedDateByRange: range?.selectedDate,
-      }),
   };
 }
 
@@ -117,7 +96,7 @@ function isSelectedSingle({
   selectedDate,
 }: { dateToVerify: Date; selectedDate?: Date | null }) {
   if (!selectedDate) return false;
-  return isSameMonth(dateToVerify, selectedDate);
+  return isSameYear(dateToVerify, selectedDate);
 }
 
 function isSelectedMulti({
@@ -147,17 +126,6 @@ function isSelectedRange({
   );
 }
 
-function isHoveredRange({
-  daysInHover,
-  dateToVerify,
-  selectedDateByRange,
-}: { dateToVerify: Date; daysInHover?: Date[]; selectedDateByRange?: TRange }) {
-  if (selectedDateByRange?.from && selectedDateByRange?.to) {
-    return false;
-  }
-  return !!daysInHover?.find(item => item.getTime() === dateToVerify.getTime());
-}
-
 function isDisabledDates({
   dateToVerify,
   disabled,
@@ -172,7 +140,7 @@ function isDisabledBefore({
   disabled,
 }: { dateToVerify: Date; disabled?: TDisabled }) {
   return disabled?.before
-    ? isBefore(startOfDay(dateToVerify), startOfDay(disabled.before))
+    ? isBefore(endOfYear(dateToVerify), startOfDay(disabled.before))
     : false;
 }
 

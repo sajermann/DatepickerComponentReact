@@ -33,11 +33,11 @@ type TProps = {
   fixedWeeks?: boolean;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
-  daysInHover: Date[];
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
   viewMode: TViewMode;
+  lastHoveredDate: Date | null;
 };
 export function useDatePicker({
   date,
@@ -45,20 +45,18 @@ export function useDatePicker({
   fixedWeeks,
   selectOnlyVisibleMonth,
   disabled,
-  daysInHover,
   single,
   multi,
   range,
   viewMode,
+  lastHoveredDate,
 }: TProps) {
   const [firstDateOfCurrentMonthOfView, setFirstDateOfCurrentMonthOfView] =
     useState(startOfMonth(date || new Date()));
   const lastDateOfCurrentMonthOfView = endOfMonth(
     firstDateOfCurrentMonthOfView,
   );
-
   const { weeks } = useWeeks({
-    daysInHover,
     firstDateOfCurrentMonthOfView,
     endDate: lastDateOfCurrentMonthOfView,
     disabled,
@@ -68,13 +66,10 @@ export function useDatePicker({
     selectOnlyVisibleMonth,
     single,
     weekStartsOn,
+    lastHoveredDate,
   });
 
-  const firstDateOfView = weeks.at(0)?.at(0);
-  const lastDateOfView = weeks.at(-1)?.at(-1);
-
   const { months } = useMonths({
-    daysInHover,
     firstDateOfCurrentMonthOfView,
     disabled,
     multi,
@@ -84,7 +79,6 @@ export function useDatePicker({
   });
 
   const { years } = useYears({
-    daysInHover,
     firstDateOfCurrentMonthOfView: firstDateOfCurrentMonthOfView,
     disabled,
     multi,
@@ -92,6 +86,9 @@ export function useDatePicker({
     selectOnlyVisibleMonth,
     single,
   });
+
+  const firstDateOfView = weeks.at(0)?.at(0);
+  const lastDateOfView = weeks.at(-1)?.at(-1);
 
   const setMonthOfView = (month: number) => {
     setFirstDateOfCurrentMonthOfView(prev => {

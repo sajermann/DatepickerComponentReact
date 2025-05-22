@@ -39,7 +39,6 @@ export type TMonth = {
   isDecember: boolean;
   isSelected: boolean;
   isDisabled: boolean;
-  isHoveredRange: boolean;
   isToday: boolean;
 };
 
@@ -48,7 +47,6 @@ export type TYear = {
   year: number;
   isSelected: boolean;
   isDisabled: boolean;
-  isHoveredRange: boolean;
   isToday: boolean;
 };
 

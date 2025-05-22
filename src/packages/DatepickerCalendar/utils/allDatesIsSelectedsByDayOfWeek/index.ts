@@ -1,7 +1,6 @@
-import { isSameDay, isSameMonth } from 'date-fns';
+import { isSameDay } from 'date-fns';
 
-import { TDate, TDisabled, TMulti, TSelectOptions } from '../../types';
-import { dateIsInArray } from '../dateIsInArray';
+import { TDate, TMulti } from '../../types';
 
 type PropsAllDatesIsSelecteds = {
   dayOfWeek: number;

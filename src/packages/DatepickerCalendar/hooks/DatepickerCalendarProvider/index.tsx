@@ -85,7 +85,7 @@ export function DatepickerCalendarProvider(
   const multi = "multi" in props ? props.multi : undefined;
   const range = "range" in props ? props.range : undefined;
 
-  const [daysInHover, setDaysInHover] = useState<Date[]>([]);
+  const [lastHoveredDate, setLastHoveredDate] = useState<Date | null>(null);
   const [viewMode, setViewMode] = useState<TViewMode>("days");
 
   const {
@@ -105,7 +105,6 @@ export function DatepickerCalendarProvider(
     firstDateOfCurrentMonthOfView,
   } = useDatePicker({
     date,
-    daysInHover,
     disabled,
     fixedWeeks,
     single,
@@ -114,6 +113,7 @@ export function DatepickerCalendarProvider(
     selectOnlyVisibleMonth,
     weekStartsOn,
     viewMode,
+    lastHoveredDate,
   });
 
   const onClickArrow = (type: "next" | "prev") => {
@@ -239,7 +239,7 @@ export function DatepickerCalendarProvider(
       };
 
       if (range.selectedDate.from && range.selectedDate.to) {
-        setDaysInHover([]);
+        setLastHoveredDate(null);
         finalRangeDate = { from: date, to: null };
       } else if (
         range.selectedDate.from &&
@@ -254,17 +254,6 @@ export function DatepickerCalendarProvider(
         finalRangeDate = { from: null, to: null };
       }
 
-      // if (finalRangeDate.from && finalRangeDate.to) {
-      //   const t = eachDayOfInterval({
-      //     start: finalRangeDate.from,
-      //     end: finalRangeDate.to,
-      //   });
-      //   const result = disabledDate?.dates?.some((item) =>
-      //     t.find((tt) => tt.getTime() === startOfDay(item).getTime())
-      //   );
-      //   console.log({ result, t, b: disabledDate?.dates });
-      // }
-
       range.onSelectedDate(finalRangeDate);
     }
   };
@@ -273,24 +262,22 @@ export function DatepickerCalendarProvider(
     if (!range?.selectedDate.from || range?.selectedDate.to) {
       return;
     }
-
-    const daysInHoverInternal = eachDayOfInterval({
-      start: date < range.selectedDate.from ? date : range.selectedDate.from,
-      end: date < range.selectedDate.from ? range.selectedDate.from : date,
-    });
-
-    setDaysInHover(daysInHoverInternal);
+    setLastHoveredDate(date);
   };
 
   const handleKeyDown = useCallback(
     async (event: KeyboardEvent) => {
-      if (event.key === "Escape" && range?.selectedDate.from) {
-        setDaysInHover([]);
+      if (
+        event.key === "Escape" &&
+        range?.selectedDate.from &&
+        !range?.selectedDate.to
+      ) {
+        setLastHoveredDate(null);
         await delay(1);
         range.onSelectedDate({ from: null, to: null });
       }
     },
-    [range, daysInHover]
+    [range, lastHoveredDate]
   );
 
   const onToggleViewMode = () => {
@@ -312,7 +299,7 @@ export function DatepickerCalendarProvider(
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [range, daysInHover]);
+  }, [range, lastHoveredDate]);
 
   const memoizedValue = useMemo<DatepickerCalendarContextType>(
     () => ({

@@ -1,15 +1,15 @@
 import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
-import { DatepickerCalendar } from "~/components/DatepickerCalendar";
+import { JsonViewer } from "~/components/JsonViewer";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import { DatepickerCalendar } from "~/packages/DatepickerCalendar";
 import {
   TDatepickerCalendarProviderProps,
   TMulti,
   TSelectedRange,
   TSingle,
-} from "~/components/DatepickerCalendar/types";
-import { JsonViewer } from "~/components/JsonViewer";
-import { Section } from "~/components/Section";
-import { useTranslation } from "~/hooks/useTranslation";
+} from "~/packages/DatepickerCalendar/types";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { Params } from "../Params";

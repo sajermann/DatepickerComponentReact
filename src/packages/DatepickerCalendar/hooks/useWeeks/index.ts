@@ -1,13 +1,6 @@
-import {
-  addDays,
-  addMonths,
-  eachDayOfInterval,
-  endOfWeek,
-  startOfWeek,
-  startOfYear,
-} from 'date-fns';
+import { addDays, eachDayOfInterval, endOfWeek, startOfWeek } from 'date-fns';
 import { TDate, TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
-import { transformDates, transformMonths } from '../../utils';
+import { transformDates } from '../../utils';
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
@@ -16,10 +9,10 @@ type TProps = {
   fixedWeeks?: boolean;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
-  daysInHover: Date[];
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
+  lastHoveredDate: Date | null;
 };
 export function useWeeks({
   firstDateOfCurrentMonthOfView,
@@ -28,10 +21,10 @@ export function useWeeks({
   fixedWeeks,
   selectOnlyVisibleMonth,
   disabled,
-  daysInHover,
   single,
   multi,
   range,
+  lastHoveredDate,
 }: TProps) {
   const startWeek = startOfWeek(firstDateOfCurrentMonthOfView, {
     weekStartsOn,
@@ -46,11 +39,11 @@ export function useWeeks({
       dateToVerify: i,
       firstDateOfCurrentMonthOfView,
       disabled,
-      daysInHover,
       single,
       multi,
       range,
       selectOnlyVisibleMonth,
+      lastHoveredDate,
     }),
   );
 

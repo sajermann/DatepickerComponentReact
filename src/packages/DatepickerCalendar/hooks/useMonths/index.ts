@@ -1,42 +1,37 @@
-import { addYears, startOfYear } from 'date-fns';
+import { addMonths, startOfYear } from 'date-fns';
 import { TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
-import { transformeYears } from '../../utils';
-
-const YEARS_TO_SHOW = 24;
+import { transformMonths } from '../../utils';
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
-  daysInHover: Date[];
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
 };
-export function useYears({
+export function useMonths({
   firstDateOfCurrentMonthOfView,
   selectOnlyVisibleMonth,
   disabled,
-  daysInHover,
   single,
   multi,
   range,
 }: TProps) {
-  const yearsToTransform = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
-    addYears(startOfYear(firstDateOfCurrentMonthOfView), i),
+  const monthsToTransform = Array.from({ length: 12 }, (_, i) =>
+    addMonths(startOfYear(firstDateOfCurrentMonthOfView), i),
   );
 
-  const years = yearsToTransform.map(i =>
-    transformeYears({
+  const months = monthsToTransform.map(i =>
+    transformMonths({
       dateToVerify: i,
       firstDateOfCurrentMonthOfView,
       disabled,
-      daysInHover,
       single,
       multi,
       range,
       selectOnlyVisibleMonth,
     }),
   );
-  return { years };
+  return { months };
 }
