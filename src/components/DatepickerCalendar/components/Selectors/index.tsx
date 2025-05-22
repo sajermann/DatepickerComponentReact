@@ -8,9 +8,9 @@ import { Button } from "../Button";
 
 export const Selectors = memo(() => {
   const {
-    startDate,
-    disabledPrevMonth,
-    disabledNextMonth,
+    firstDateOfCurrentMonthOfView,
+    disabledPrev,
+    disabledNext,
     onToggleViewMode,
     viewMode,
     onClickArrow,
@@ -18,8 +18,8 @@ export const Selectors = memo(() => {
   } = useDatepickerCalendar();
 
   const TEXT = {
-    days: capitalize(format(startDate.date, "MMM yyyy")),
-    months: format(startDate.date, "yyyy"),
+    days: capitalize(format(firstDateOfCurrentMonthOfView, "MMM yyyy")),
+    months: format(firstDateOfCurrentMonthOfView, "yyyy"),
     years: `${years.at(0)?.year} - ${years.at(-1)?.year}`,
   };
 
@@ -33,10 +33,10 @@ export const Selectors = memo(() => {
           "col-span-1 p-0",
           "h-[clamp(0.25rem,16cqi,3rem)]",
           "w-[clamp(0.25rem,13cqi,3rem)]",
-          { "!cursor-default": disabledPrevMonth },
+          { "!cursor-default": disabledPrev },
         ])}
         onClick={() => onClickArrow("prev")}
-        disabled={disabledPrevMonth}
+        disabled={disabledPrev}
       >
         <ChevronLeft />
       </Button>
@@ -62,10 +62,10 @@ export const Selectors = memo(() => {
           "col-span-1 p-0",
           "h-[clamp(0.25rem,16cqi,3rem)]",
           "w-[clamp(0.25rem,13cqi,3rem)]",
-          { "!cursor-default": disabledNextMonth },
+          { "!cursor-default": disabledNext },
         ])}
         onClick={() => onClickArrow("next")}
-        disabled={disabledNextMonth}
+        disabled={disabledNext}
       >
         <ChevronRight />
       </Button>

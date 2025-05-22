@@ -2,6 +2,7 @@ import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
 import { DatepickerCalendar } from "~/components/DatepickerCalendar";
 import {
+  TDatepickerCalendarProviderProps,
   TMulti,
   TSelectedRange,
   TSingle,
@@ -245,21 +246,22 @@ export function Daypicker() {
     },
     {
       type: "input-date",
-      label: "Date Disabled After",
+      label: "Date Disabled Before",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        parseDateInput(target.value);
         onChangeInputProp({
-          value: target.value ? startOfDay(new Date(target.value)) : null,
-          prop: "disabledAfter",
+          value: parseDateInput(target.value),
+          prop: "disabledBefore",
         });
       },
     },
     {
       type: "input-date",
-      label: "Date Disabled Before",
+      label: "Date Disabled After",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
         onChangeInputProp({
-          value: target.value ? startOfDay(new Date(target.value)) : null,
-          prop: "disabledBefore",
+          value: parseDateInput(target.value),
+          prop: "disabledAfter",
         });
       },
     },
@@ -267,9 +269,7 @@ export function Daypicker() {
       type: "input-date",
       label: "Dates Disabled",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
-        setDateDisabledToInclude(
-          target.value ? startOfDay(new Date(target.value)) : null
-        );
+        setDateDisabledToInclude(parseDateInput(target.value));
       },
       onInclude: () => {
         if (!dateDisabledToInclude) {
@@ -289,6 +289,65 @@ export function Daypicker() {
       tooltip: translate("DISABLED_DATES_TOOLTIP"),
     },
   ];
+
+  function parseDateInput(value?: string | null) {
+    if (!value) return null;
+    const [year, month, day] = value.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  }
+
+  function getParams(): TDatepickerCalendarProviderProps {
+    if (playgroundParams.single) {
+      return {
+        single: {
+          toggle: playgroundParams.single?.toggle,
+          selectedDate: playgroundParams.single?.selectedDate,
+          onSelectedDate: (e) =>
+            onChangeInputByType({
+              type: "single",
+              value: e,
+              prop: "selectedDate",
+            }),
+        },
+      };
+    }
+
+    if (playgroundParams.multi) {
+      return {
+        multi: {
+          selectedDates: playgroundParams.multi.selectedDates,
+          onSelectedDates: (e) =>
+            onChangeInputByType({
+              type: "multi",
+              value: e,
+              prop: "selectedDates",
+            }),
+          enableHeaderSelection: playgroundParams.multi.enableHeaderSelection,
+        },
+      };
+    }
+
+    if (playgroundParams.range) {
+      return {
+        range: {
+          selectedDate: playgroundParams.range?.selectedDate,
+          onSelectedDate: (e) =>
+            onChangeInputByType({
+              type: "range",
+              value: e,
+              prop: "selectedDate",
+            }),
+          disabledAfterFirstDisabledDates:
+            playgroundParams.range.disabledAfterFirstDisabledDates,
+          disabledSameDate: playgroundParams.range.disabledSameDate,
+          minInterval: playgroundParams.range.minInterval,
+          maxInterval: playgroundParams.range.maxInterval,
+        },
+      };
+    }
+
+    return {} as TDatepickerCalendarProviderProps;
+  }
 
   return (
     <Section title="Daypicker" variant="h2">
@@ -312,47 +371,7 @@ export function Daypicker() {
               before: playgroundParams.disabledBefore,
               dates: playgroundParams.disabledDates,
             }}
-            single={
-              playgroundParams.single && {
-                toggle: playgroundParams.single?.toggle,
-                selectedDate: playgroundParams.single?.selectedDate,
-                onSelectedDate: (e) =>
-                  onChangeInputByType({
-                    type: "single",
-                    value: e,
-                    prop: "selectedDate",
-                  }),
-              }
-            }
-            multi={
-              playgroundParams.multi && {
-                selectedDates: playgroundParams.multi.selectedDates,
-                onSelectedDates: (e) =>
-                  onChangeInputByType({
-                    type: "multi",
-                    value: e,
-                    prop: "selectedDates",
-                  }),
-                enableHeaderSelection:
-                  playgroundParams.multi.enableHeaderSelection,
-              }
-            }
-            range={
-              playgroundParams.range && {
-                selectedDate: playgroundParams.range?.selectedDate,
-                onSelectedDate: (e) =>
-                  onChangeInputByType({
-                    type: "range",
-                    value: e,
-                    prop: "selectedDate",
-                  }),
-                disabledAfterFirstDisabledDates:
-                  playgroundParams.range.disabledAfterFirstDisabledDates,
-                disabledSameDate: playgroundParams.range.disabledSameDate,
-                minInterval: playgroundParams.range.minInterval,
-                maxInterval: playgroundParams.range.maxInterval,
-              }
-            }
+            {...getParams()}
           />
         )}
       </Section>

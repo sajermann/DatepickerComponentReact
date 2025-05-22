@@ -5,7 +5,7 @@ import { transformeYears } from '../../utils';
 const YEARS_TO_SHOW = 24;
 
 type TProps = {
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
   daysInHover: Date[];
@@ -14,7 +14,7 @@ type TProps = {
   range?: TSelectedRange;
 };
 export function useYears({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   selectOnlyVisibleMonth,
   disabled,
   daysInHover,
@@ -23,13 +23,13 @@ export function useYears({
   range,
 }: TProps) {
   const yearsToTransform = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
-    addYears(startOfYear(startDate), i),
+    addYears(startOfYear(firstDateOfCurrentMonthOfView), i),
   );
 
   const years = yearsToTransform.map(i =>
     transformeYears({
       dateToVerify: i,
-      startDate,
+      firstDateOfCurrentMonthOfView,
       disabled,
       daysInHover,
       single,

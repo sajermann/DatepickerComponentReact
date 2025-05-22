@@ -1,30 +1,17 @@
 import {
   addDays,
-  addMonths,
-  addYears,
   eachDayOfInterval,
-  endOfMonth,
-  endOfWeek,
   format,
-  isAfter,
-  isBefore,
   isSameDay,
-  isSameMonth,
   setDefaultOptions,
-  startOfDay,
-  startOfMonth,
   startOfWeek,
-  startOfYear,
 } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import {
-  ReactNode,
-  RefObject,
   createContext,
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
@@ -37,21 +24,12 @@ import {
   TDisabled,
   TMonth,
   TMulti,
-  TSelectOptions,
   TSelectedRange,
   TSingle,
   TViewMode,
   TYear,
 } from "../../types";
-import {
-  allDatesIsSelectedsByDayOfWeek,
-  capitalize,
-  dateIsInArray,
-  handleToggleHeader,
-  transformDates,
-  transformeYears,
-} from "../../utils";
-import { transformMonths } from "../../utils/transformeMonths";
+import { allDatesIsSelectedsByDayOfWeek, capitalize } from "../../utils";
 import { useDatePicker } from "../useDatepicker";
 
 type DatepickerCalendarContextType = {
@@ -60,8 +38,6 @@ type DatepickerCalendarContextType = {
   range?: TSelectedRange;
   disabled?: TDisabled;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  startDate: TDate;
-  endDate: TDate;
   weeks: TDate[][];
   selectOnlyVisibleMonth?: boolean;
   headers: {
@@ -69,8 +45,8 @@ type DatepickerCalendarContextType = {
     isSelectedAllDays: boolean;
     onClick: () => void;
   }[];
-  disabledPrevMonth: boolean;
-  disabledNextMonth: boolean;
+  disabledPrev: boolean;
+  disabledNext: boolean;
   onDayClick: (data: TDate) => void;
   onDayHover: (data: TDate) => void;
   viewMode: TViewMode;
@@ -80,6 +56,7 @@ type DatepickerCalendarContextType = {
   onClickArrow: (type: "next" | "prev") => void;
   years: TYear[];
   onYearClick: (year: number) => void;
+  firstDateOfCurrentMonthOfView: Date;
 };
 
 export const DatepickerCalendarContext = createContext(
@@ -115,8 +92,6 @@ export function DatepickerCalendarProvider(
     weeks,
     months,
     years,
-    startDate,
-    endDate,
     handlePrevMonthOfView,
     handleNextMonthOfView,
     handlePrevYearOfView,
@@ -125,8 +100,9 @@ export function DatepickerCalendarProvider(
     handleNextGroupYearsOfView,
     setMonthOfView,
     setYearOfView,
-    disabledPrevMonth,
-    disabledNextMonth,
+    disabledPrev,
+    disabledNext,
+    firstDateOfCurrentMonthOfView,
   } = useDatePicker({
     date,
     daysInHover,
@@ -137,6 +113,7 @@ export function DatepickerCalendarProvider(
     range,
     selectOnlyVisibleMonth,
     weekStartsOn,
+    viewMode,
   });
 
   const onClickArrow = (type: "next" | "prev") => {
@@ -344,14 +321,12 @@ export function DatepickerCalendarProvider(
       range,
       disabled,
       weekStartsOn,
-      startDate,
-      endDate,
       weeks,
       headers,
       onDayClick,
       onDayHover,
-      disabledNextMonth,
-      disabledPrevMonth,
+      disabledNext,
+      disabledPrev,
       selectOnlyVisibleMonth,
       viewMode,
       onToggleViewMode,
@@ -360,6 +335,7 @@ export function DatepickerCalendarProvider(
       onClickArrow,
       years,
       onYearClick,
+      firstDateOfCurrentMonthOfView,
     }),
     [
       single,
@@ -367,16 +343,15 @@ export function DatepickerCalendarProvider(
       range,
       disabled,
       weekStartsOn,
-      startDate,
-      endDate,
       weeks,
       headers,
-      disabledNextMonth,
-      disabledPrevMonth,
+      disabledNext,
+      disabledPrev,
       selectOnlyVisibleMonth,
       viewMode,
       months,
       years,
+      firstDateOfCurrentMonthOfView,
     ]
   );
 

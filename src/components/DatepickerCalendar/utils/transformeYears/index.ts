@@ -1,5 +1,6 @@
 import {
   addDays,
+  endOfYear,
   isAfter,
   isBefore,
   isSameDay,
@@ -23,7 +24,7 @@ import {
 
 type TProps = {
   dateToVerify: Date;
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   disabled?: TDisabled;
   daysInHover?: Date[];
   single?: TSingle;
@@ -33,7 +34,7 @@ type TProps = {
 };
 
 export function transformeYears({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   dateToVerify,
   disabled,
   daysInHover,
@@ -49,7 +50,7 @@ export function transformeYears({
     isDisabledVisibleMonth({
       dateToVerify,
       selectOnlyVisibleMonth,
-      startDate,
+      firstDateOfCurrentMonthOfView,
     }) ||
     isDisabledCancelOnDisabledDate({
       dateToVerify,
@@ -159,7 +160,7 @@ function isDisabledBefore({
   disabled,
 }: { dateToVerify: Date; disabled?: TDisabled }) {
   return disabled?.before
-    ? isBefore(startOfDay(dateToVerify), startOfDay(disabled.before))
+    ? isBefore(endOfYear(dateToVerify), startOfDay(disabled.before))
     : false;
 }
 
@@ -175,9 +176,16 @@ function isDisabledAfter({
 function isDisabledVisibleMonth({
   dateToVerify,
   selectOnlyVisibleMonth,
-  startDate,
-}: { dateToVerify: Date; selectOnlyVisibleMonth?: boolean; startDate: Date }) {
-  return !!(selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
+  firstDateOfCurrentMonthOfView,
+}: {
+  dateToVerify: Date;
+  selectOnlyVisibleMonth?: boolean;
+  firstDateOfCurrentMonthOfView: Date;
+}) {
+  return !!(
+    selectOnlyVisibleMonth &&
+    !isSameMonth(dateToVerify, firstDateOfCurrentMonthOfView)
+  );
 }
 
 function isDisabledCancelOnDisabledDate({

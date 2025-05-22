@@ -19,7 +19,7 @@ import {
 
 type TProps = {
   dateToVerify: Date;
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   disabled?: TDisabled;
   daysInHover?: Date[];
   single?: TSingle;
@@ -29,7 +29,7 @@ type TProps = {
 };
 
 export function transformDates({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   dateToVerify,
   disabled,
   daysInHover,
@@ -40,13 +40,13 @@ export function transformDates({
 }: TProps): TDate {
   const dayOfWeek = dateToVerify.getDay();
   const prevMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() - 1,
+    firstDateOfCurrentMonthOfView.getFullYear(),
+    firstDateOfCurrentMonthOfView.getMonth() - 1,
     1,
   );
   const nextMonth = new Date(
-    startDate.getFullYear(),
-    startDate.getMonth() + 1,
+    firstDateOfCurrentMonthOfView.getFullYear(),
+    firstDateOfCurrentMonthOfView.getMonth() + 1,
     1,
   );
 
@@ -57,7 +57,7 @@ export function transformDates({
     isDisabledVisibleMonth({
       dateToVerify,
       selectOnlyVisibleMonth,
-      startDate,
+      firstDateOfCurrentMonthOfView,
     }) ||
     isDisabledCancelOnDisabledDate({
       dateToVerify,
@@ -98,7 +98,7 @@ export function transformDates({
     year: dateToVerify.getFullYear(),
     isToday: isToday(dateToVerify),
     isPrevMonth: isSameMonth(dateToVerify, prevMonth),
-    isCurrentMonth: isSameMonth(dateToVerify, startDate),
+    isCurrentMonth: isSameMonth(dateToVerify, firstDateOfCurrentMonthOfView),
     isNextMonth: isSameMonth(dateToVerify, nextMonth),
     isSunday: dayOfWeek === 0,
     isMonday: dayOfWeek === 1,
@@ -194,9 +194,16 @@ function isDisabledAfter({
 function isDisabledVisibleMonth({
   dateToVerify,
   selectOnlyVisibleMonth,
-  startDate,
-}: { dateToVerify: Date; selectOnlyVisibleMonth?: boolean; startDate: Date }) {
-  return !!(selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
+  firstDateOfCurrentMonthOfView,
+}: {
+  dateToVerify: Date;
+  selectOnlyVisibleMonth?: boolean;
+  firstDateOfCurrentMonthOfView: Date;
+}) {
+  return !!(
+    selectOnlyVisibleMonth &&
+    !isSameMonth(dateToVerify, firstDateOfCurrentMonthOfView)
+  );
 }
 
 function isDisabledCancelOnDisabledDate({

@@ -10,7 +10,7 @@ import { TDate, TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
 import { transformDates, transformMonths } from '../../utils';
 
 type TProps = {
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   endDate: Date;
   weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   fixedWeeks?: boolean;
@@ -22,7 +22,7 @@ type TProps = {
   range?: TSelectedRange;
 };
 export function useWeeks({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   endDate,
   weekStartsOn,
   fixedWeeks,
@@ -33,7 +33,9 @@ export function useWeeks({
   multi,
   range,
 }: TProps) {
-  const startWeek = startOfWeek(startDate, { weekStartsOn });
+  const startWeek = startOfWeek(firstDateOfCurrentMonthOfView, {
+    weekStartsOn,
+  });
   const endWeek = endOfWeek(endDate, { weekStartsOn });
   const days = fixedWeeks
     ? Array.from({ length: 42 }, (_, i) => addDays(startWeek, i))
@@ -42,7 +44,7 @@ export function useWeeks({
   const daysTransformeds = days.map(i =>
     transformDates({
       dateToVerify: i,
-      startDate,
+      firstDateOfCurrentMonthOfView,
       disabled,
       daysInHover,
       single,

@@ -21,7 +21,7 @@ import {
 
 type TProps = {
   dateToVerify: Date;
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   disabled?: TDisabled;
   daysInHover?: Date[];
   single?: TSingle;
@@ -31,7 +31,7 @@ type TProps = {
 };
 
 export function transformMonths({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   dateToVerify,
   disabled,
   daysInHover,
@@ -49,7 +49,7 @@ export function transformMonths({
     isDisabledVisibleMonth({
       dateToVerify,
       selectOnlyVisibleMonth,
-      startDate,
+      firstDateOfCurrentMonthOfView,
     }) ||
     isDisabledCancelOnDisabledDate({
       dateToVerify,
@@ -188,9 +188,16 @@ function isDisabledAfter({
 function isDisabledVisibleMonth({
   dateToVerify,
   selectOnlyVisibleMonth,
-  startDate,
-}: { dateToVerify: Date; selectOnlyVisibleMonth?: boolean; startDate: Date }) {
-  return !!(selectOnlyVisibleMonth && !isSameMonth(dateToVerify, startDate));
+  firstDateOfCurrentMonthOfView,
+}: {
+  dateToVerify: Date;
+  selectOnlyVisibleMonth?: boolean;
+  firstDateOfCurrentMonthOfView: Date;
+}) {
+  return !!(
+    selectOnlyVisibleMonth &&
+    !isSameMonth(dateToVerify, firstDateOfCurrentMonthOfView)
+  );
 }
 
 function isDisabledCancelOnDisabledDate({

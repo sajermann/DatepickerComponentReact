@@ -3,7 +3,7 @@ import { TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
 import { transformMonths } from '../../utils';
 
 type TProps = {
-  startDate: Date;
+  firstDateOfCurrentMonthOfView: Date;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
   daysInHover: Date[];
@@ -12,7 +12,7 @@ type TProps = {
   range?: TSelectedRange;
 };
 export function useMonths({
-  startDate,
+  firstDateOfCurrentMonthOfView,
   selectOnlyVisibleMonth,
   disabled,
   daysInHover,
@@ -21,13 +21,13 @@ export function useMonths({
   range,
 }: TProps) {
   const monthsToTransform = Array.from({ length: 12 }, (_, i) =>
-    addMonths(startOfYear(startDate), i),
+    addMonths(startOfYear(firstDateOfCurrentMonthOfView), i),
   );
 
   const months = monthsToTransform.map(i =>
     transformMonths({
       dateToVerify: i,
-      startDate,
+      firstDateOfCurrentMonthOfView,
       disabled,
       daysInHover,
       single,
