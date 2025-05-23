@@ -63,6 +63,7 @@ export type TDisabled = {
   dates?: Date[];
   before?: Date;
   after?: Date;
+  weeeks?: TWeek[];
 };
 
 export type TRange = { from: Date | null; to: Date | null };
@@ -72,10 +73,12 @@ export type TSelectionByRange = {
   end: Date | null;
 };
 
+export type TWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
 export type TBaseProps = {
   children?: ReactNode;
   disabled?: TDisabled;
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: TWeek;
   date?: Date | null;
   fixedWeeks?: boolean;
   selectOnlyVisibleMonth?: boolean;
@@ -119,3 +122,10 @@ export type TSelectOptions = {
 };
 
 export type TViewMode = 'days' | 'months' | 'years';
+
+export type THeaders = {
+  text: string;
+  isSelectedAllDays: boolean;
+  onClick: () => void;
+  isDisabled: boolean;
+};

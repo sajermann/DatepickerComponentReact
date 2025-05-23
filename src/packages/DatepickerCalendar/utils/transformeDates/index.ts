@@ -1,5 +1,6 @@
 import {
   addDays,
+  eachDayOfInterval,
   isAfter,
   isBefore,
   isSameDay,
@@ -15,6 +16,7 @@ import {
   TRange,
   TSelectedRange,
   TSingle,
+  TWeek,
 } from '../../types';
 
 type TProps = {
@@ -76,6 +78,10 @@ export function transformDates({
     isDisabledByMaxInterval({
       dateToVerify,
       selectedDateByRange: range,
+    }) ||
+    isDisabledWeek({
+      dateToVerify,
+      disabledWeeks: disabled?.weeeks,
     });
 
   const isSelected =
@@ -255,14 +261,25 @@ function isDisabledCancelOnDisabledDate({
       item => item.getTime() > (selectedDateByRange.from as Date).getTime(),
     ) || [];
 
-  if (
-    selectedDateByRange.from &&
+  const eachDay = eachDayOfInterval({
+    start: selectedDateByRange.from,
+    end: dateToVerify,
+  });
+
+  const disabledByDisabledWeeks =
+    eachDay.some(day => disabled?.weeeks?.includes(day.getDay() as TWeek)) &&
     !selectedDateByRange.to &&
-    disabledAfterFirstDisabledDates &&
-    sortabledDates &&
-    sortabledDates.length &&
-    isAfter(disabledDatesAfterDateToVerify[0], selectedDateByRange.from) &&
-    isAfter(dateToVerify, disabledDatesAfterDateToVerify[0])
+    disabledAfterFirstDisabledDates;
+
+  if (
+    disabledByDisabledWeeks ||
+    (selectedDateByRange.from &&
+      !selectedDateByRange.to &&
+      disabledAfterFirstDisabledDates &&
+      sortabledDates &&
+      sortabledDates.length &&
+      isAfter(disabledDatesAfterDateToVerify[0], selectedDateByRange.from) &&
+      isAfter(dateToVerify, disabledDatesAfterDateToVerify[0]))
   ) {
     return true;
   }
@@ -348,5 +365,14 @@ function isDisabledByMaxInterval({
     ),
   );
 }
-// preciso colocar o disabled.dates em sort pq se vou pegar a ultima precisa estar sortable
-// preciso garantir que todas as datas entrando ou sendo verificadas esejam no horario 0
+
+function isDisabledWeek({
+  dateToVerify,
+  disabledWeeks,
+}: {
+  dateToVerify: Date;
+  disabledWeeks?: TWeek[];
+}) {
+  if (!disabledWeeks) return false;
+  return disabledWeeks.includes(dateToVerify.getDay() as TWeek);
+}

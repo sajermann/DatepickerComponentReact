@@ -57,6 +57,7 @@ export function Params({ inputs }: { inputs: Input[] }) {
             </div>
           );
         }
+
         if (input.type === "input-number" && !input.hide) {
           return (
             <div key={input.label} className="flex gap-2 items-end">
@@ -138,6 +139,49 @@ export function Params({ inputs }: { inputs: Input[] }) {
                   <Tooltip>{input.tooltip}</Tooltip>
                 </div>
               )}
+            </div>
+          );
+        }
+
+        if (input.type === "input-checkbox" && !input.hide) {
+          return (
+            <div key={input.label} className="flex flex-col gap-2">
+              <label className="flex flex-col gap-1 dark:text-gray-200  flex-1">
+                <span className="mb-1 font-medium" title={input.tooltip}>
+                  {input.label}
+                </span>
+              </label>
+              <div className="flex gap-2">
+                {input.options?.map((opt) => {
+                  return (
+                    <label
+                      key={opt.value}
+                      className="text-center flex flex-col gap-1 items-center flex-1"
+                    >
+                      <span className="mb-1 font-medium" title={input.tooltip}>
+                        {opt.label}
+                      </span>
+                      <input
+                        type="checkbox"
+                        className={managerClassNames([
+                          "dark:bg-neutral-900 border border-neutral-700",
+                          "dark:text-gray-100 rounded-lg px-3 py-2",
+                          "focus:outline-none focus:ring-2 focus:ring-indigo-500",
+                          "transition shadow-sm placeholder-gray-500",
+                          "dark:[color-scheme:dark] w-fit",
+                        ])}
+                        onChange={({ target }) =>
+                          input.onChange({
+                            option: opt,
+                            checked: target.checked,
+                          })
+                        }
+                        placeholder="Fill number"
+                      />
+                    </label>
+                  );
+                })}
+              </div>
             </div>
           );
         }

@@ -21,13 +21,16 @@ export const WeekDays = memo(() => {
             "h-[clamp(0.25rem,16cqi,3rem)]",
             "w-[clamp(0.25rem,13cqi,3rem)]",
             {
-              "hover:bg-slate-500 rounded": multi?.enableHeaderSelection,
+              "hover:bg-slate-500 rounded":
+                multi?.enableHeaderSelection && !weekDay.isDisabled,
             },
             { "cursor-pointer": multi?.enableHeaderSelection },
             { "cursor-auto": single },
             {
               "bg-slate-700 hover:bg-slate-600 opacity-100":
-                multi?.enableHeaderSelection && weekDay.isSelectedAllDays,
+                multi?.enableHeaderSelection &&
+                weekDay.isSelectedAllDays &&
+                !weekDay.isDisabled,
             },
           ])}
         >
@@ -39,6 +42,7 @@ export const WeekDays = memo(() => {
               type="button"
               className={commonClassNames}
               onClick={weekDay.onClick}
+              disabled={weekDay.isDisabled}
             >
               {capitalize(weekDay.text)}
             </button>

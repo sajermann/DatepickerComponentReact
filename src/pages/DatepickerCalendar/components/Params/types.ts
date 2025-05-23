@@ -22,17 +22,23 @@ export interface SelectInput extends BaseInput {
 }
 
 // Input do tipo 'input-number'
-export interface InputNumberInput extends BaseInput {
+export interface InputNumber extends BaseInput {
   type: 'input-number';
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 // Input do tipo 'input-date'
-export interface InputDateInput extends BaseInput {
+export interface InputDate extends BaseInput {
   type: 'input-date';
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onInclude?: () => void;
 }
 
+// Input do tipo 'input-checkbox'
+export interface InputCheckbox extends BaseInput {
+  type: 'input-checkbox';
+  onChange: (event: { option: Option; checked: boolean }) => void;
+}
+
 // União de todos os tipos possíveis de input
-export type Input = SelectInput | InputNumberInput | InputDateInput;
+export type Input = SelectInput | InputNumber | InputDate | InputCheckbox;

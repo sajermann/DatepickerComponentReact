@@ -7,6 +7,7 @@ export * from './components/Minute';
 export * from './components/Divider';
 export * from './components/PickerTrigger';
 export * from './components/AmPmToggle';
+export * from './components/SingleDayPickerOld';
 export * from './components/SingleDayPicker';
 export * from './components/SingleMonthPicker';
 export * from './components/SingleYearPicker';

@@ -4,12 +4,8 @@ import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import { DatepickerCalendar } from "~/packages/DatepickerCalendar";
-import {
-  TDatepickerCalendarProviderProps,
-  TMulti,
-  TSelectedRange,
-  TSingle,
-} from "~/packages/DatepickerCalendar/types";
+import { TWeek } from "~/packages/DatepickerCalendar";
+import { TDatepickerCalendarProviderProps } from "~/packages/DatepickerCalendar/types";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { Params } from "../Params";
@@ -22,7 +18,7 @@ const OPTIONS_BOOLEAN = [
 ];
 
 type TPlaygroundParams = {
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: TWeek;
   selectOnlyVisibleMonth?: boolean;
   disabledDates?: Date[];
   date?: Date | null;
@@ -44,6 +40,7 @@ type TPlaygroundParams = {
   };
   disabledAfter?: Date;
   disabledBefore?: Date;
+  disabledWeeks: TWeek[];
 };
 
 export function Daypicker() {
@@ -59,6 +56,7 @@ export function Daypicker() {
     single: {
       selectedDate: null,
     },
+    disabledWeeks: [],
   });
 
   const onChangeInputByType = ({
@@ -288,6 +286,40 @@ export function Daypicker() {
       },
       tooltip: translate("DISABLED_DATES_TOOLTIP"),
     },
+    {
+      type: "input-checkbox",
+      label: "Weeks Disabled",
+      onChange: ({
+        option,
+        checked,
+      }: {
+        option: { value: string | undefined; label: string };
+        checked: boolean;
+      }) => {
+        setPlaygroundParams((prev) => {
+          const ifChecked = [
+            ...prev.disabledWeeks,
+            Number(option.value),
+          ] as TWeek[];
+          const ifUnChecked = prev.disabledWeeks?.filter(
+            (item) => item !== Number(option.value)
+          );
+          return {
+            ...prev,
+            disabledWeeks: checked ? ifChecked : ifUnChecked,
+          };
+        });
+      },
+      options: [
+        { label: "Sun", value: "0" },
+        { label: "Mon", value: "1" },
+        { label: "Tue", value: "2" },
+        { label: "Wed", value: "3" },
+        { label: "Thu", value: "4" },
+        { label: "Fri", value: "5" },
+        { label: "Sat", value: "6" },
+      ],
+    },
   ];
 
   function parseDateInput(value?: string | null) {
@@ -361,18 +393,21 @@ export function Daypicker() {
         className="p-4 resize h-[550px] w-full overflow-auto"
       >
         {showCalendar && (
-          <DatepickerCalendar
-            weekStartsOn={playgroundParams.weekStartsOn}
-            fixedWeeks={playgroundParams.fixedWeeks}
-            selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
-            date={playgroundParams.date}
-            disabled={{
-              after: playgroundParams.disabledAfter,
-              before: playgroundParams.disabledBefore,
-              dates: playgroundParams.disabledDates,
-            }}
-            {...getParams()}
-          />
+          <div className="border rounded h-full">
+            <DatepickerCalendar
+              weekStartsOn={playgroundParams.weekStartsOn}
+              fixedWeeks={playgroundParams.fixedWeeks}
+              selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
+              date={playgroundParams.date}
+              disabled={{
+                after: playgroundParams.disabledAfter,
+                before: playgroundParams.disabledBefore,
+                dates: playgroundParams.disabledDates,
+                weeeks: playgroundParams.disabledWeeks,
+              }}
+              {...getParams()}
+            />
+          </div>
         )}
       </Section>
 

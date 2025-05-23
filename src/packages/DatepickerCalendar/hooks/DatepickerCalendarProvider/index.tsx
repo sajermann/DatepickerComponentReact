@@ -22,11 +22,13 @@ import {
   TDate,
   TDatepickerCalendarProviderProps,
   TDisabled,
+  THeaders,
   TMonth,
   TMulti,
   TSelectedRange,
   TSingle,
   TViewMode,
+  TWeek,
   TYear,
 } from "../../types";
 import { allDatesIsSelectedsByDayOfWeek, capitalize } from "../../utils";
@@ -37,14 +39,10 @@ type DatepickerCalendarContextType = {
   multi?: TMulti;
   range?: TSelectedRange;
   disabled?: TDisabled;
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: TWeek;
   weeks: TDate[][];
   selectOnlyVisibleMonth?: boolean;
-  headers: {
-    text: string;
-    isSelectedAllDays: boolean;
-    onClick: () => void;
-  }[];
+  headers: THeaders[];
   disabledPrev: boolean;
   disabledNext: boolean;
   onDayClick: (data: TDate) => void;
@@ -160,6 +158,7 @@ export function DatepickerCalendarProvider(
           dayOfWeek,
           weeks,
         }),
+      isDisabled: !!disabled?.weeeks?.includes(index as TWeek),
     };
   });
 

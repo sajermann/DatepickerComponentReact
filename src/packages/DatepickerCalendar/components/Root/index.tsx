@@ -12,7 +12,7 @@ export function Root(props: TDatepickerCalendarProviderProps) {
     <DatepickerCalendarProvider {...props}>
       <section
         className={managerClassNames([
-          "w-full flex flex-col border rounded h-full flex-1 justify-around",
+          "w-full flex flex-col h-full flex-1 justify-around",
         ])}
       >
         <Selectors />
