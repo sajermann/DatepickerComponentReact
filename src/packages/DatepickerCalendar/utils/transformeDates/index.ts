@@ -25,9 +25,10 @@ type TProps = {
   disabled?: TDisabled;
   single?: TSingle;
   multi?: TMulti;
-  range?: TSelectedRange;
+  range?: TSelectedRange & {
+    lastHoveredDate?: Date | null;
+  };
   selectOnlyVisibleMonth?: boolean;
-  lastHoveredDate: Date | null;
 };
 
 export function transformDates({
@@ -38,7 +39,6 @@ export function transformDates({
   multi,
   range,
   selectOnlyVisibleMonth,
-  lastHoveredDate,
 }: TProps): TDate {
   const dayOfWeek = dateToVerify.getDay();
   const prevMonth = new Date(
@@ -120,7 +120,7 @@ export function transformDates({
       isHoveredRange({
         dateToVerify,
         selectedDateByRange: range?.selectedDate,
-        lastHoveredDate,
+        lastHoveredDate: range?.lastHoveredDate,
       }),
   };
 }
@@ -166,7 +166,7 @@ function isHoveredRange({
 }: {
   dateToVerify: Date;
   selectedDateByRange?: TRange;
-  lastHoveredDate: Date | null;
+  lastHoveredDate?: Date | null;
 }) {
   if (
     (selectedDateByRange?.from && selectedDateByRange?.to) ||

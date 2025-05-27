@@ -59,6 +59,10 @@ export type TSelectedRange = {
   minInterval?: number;
 };
 
+export type TSelectedRangeWithHover = TSelectedRange & {
+  lastHoveredDate: Date | null;
+};
+
 export type TDisabled = {
   dates?: Date[];
   before?: Date;

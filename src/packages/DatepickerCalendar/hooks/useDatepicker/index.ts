@@ -1,26 +1,37 @@
 import {
+  addDays,
   addMonths,
   addYears,
   endOfDay,
   endOfMonth,
   endOfYear,
+  format,
   isAfter,
   isBefore,
+  isSameDay,
   isSameMonth,
   startOfDay,
   startOfMonth,
+  startOfWeek,
   startOfYear,
   subMilliseconds,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
 import {
+  TDate,
   TDisabled,
   TMulti,
   TSelectedRange,
+  TSelectedRangeWithHover,
   TSingle,
   TViewMode,
+  TWeek,
 } from '../../types';
-import { transformDates } from '../../utils';
+import {
+  allDatesIsSelectedsByDayOfWeek,
+  capitalize,
+  transformDates,
+} from '../../utils';
 import { useMonths } from '../useMonths';
 import { useWeeks } from '../useWeeks';
 import { useYears } from '../useYears';
@@ -35,9 +46,7 @@ type TProps = {
   disabled?: TDisabled;
   single?: TSingle;
   multi?: TMulti;
-  range?: TSelectedRange;
-  viewMode: TViewMode;
-  lastHoveredDate: Date | null;
+  range?: TSelectedRangeWithHover;
 };
 export function useDatePicker({
   date,
@@ -48,14 +57,14 @@ export function useDatePicker({
   single,
   multi,
   range,
-  viewMode,
-  lastHoveredDate,
 }: TProps) {
   const [firstDateOfCurrentMonthOfView, setFirstDateOfCurrentMonthOfView] =
     useState(startOfMonth(date || new Date()));
+  const [viewMode, setViewMode] = useState<TViewMode>('days');
   const lastDateOfCurrentMonthOfView = endOfMonth(
     firstDateOfCurrentMonthOfView,
   );
+
   const { weeks } = useWeeks({
     firstDateOfCurrentMonthOfView,
     endDate: lastDateOfCurrentMonthOfView,
@@ -66,7 +75,6 @@ export function useDatePicker({
     selectOnlyVisibleMonth,
     single,
     weekStartsOn,
-    lastHoveredDate,
   });
 
   const { months } = useMonths({
@@ -201,20 +209,96 @@ export function useDatePicker({
     return false;
   }, [months, years, disabled?.after, lastDateOfView?.date]);
 
-  return {
+  const headers = Array.from({ length: 7 }, (_, index) => {
+    const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
+    const dayName = capitalize(format(day, 'EEEE').slice(0, 3));
+    const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
+    return {
+      text: dayName,
+      isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
+        dayOfWeek,
+        weeks,
+        multi,
+      }),
+      onClick: () =>
+        onHeaderClick({
+          dayOfWeek,
+          weeks,
+        }),
+      isDisabled: !!disabled?.weeeks?.includes(index as TWeek),
+    };
+  });
+
+  const onHeaderClick = ({
+    dayOfWeek,
     weeks,
-    months,
-    years,
-    handlePrevMonthOfView,
-    handleNextMonthOfView,
-    handlePrevYearOfView,
-    handleNextYearOfView,
-    handlePrevGroupYearsOfView,
-    handleNextGroupYearsOfView,
-    setMonthOfView,
-    setYearOfView,
-    disabledPrev,
-    disabledNext,
-    firstDateOfCurrentMonthOfView,
+  }: {
+    dayOfWeek: number;
+    weeks: Array<TDate[]>;
+  }) => {
+    if (!multi) return;
+    const daysToAddOrRemove: Date[] = [];
+
+    for (const item of weeks) {
+      // Verify if is same month and if date is not disabled
+      if (!item[dayOfWeek].isDisabled) {
+        daysToAddOrRemove.push(item[dayOfWeek].date);
+      }
+    }
+
+    const selectedDates = [...multi.selectedDates];
+    // Verify if all dates of week is selecteds
+    const allSelected = daysToAddOrRemove.every(day =>
+      selectedDates.some(date => isSameDay(date, day)),
+    );
+
+    if (allSelected) {
+      const result = selectedDates.filter(item => item.getDay() !== dayOfWeek);
+      multi.onSelectedDates(result);
+      return;
+    }
+    // Else, add dates not is selecteds
+    daysToAddOrRemove.forEach(day => {
+      if (!selectedDates.some(date => isSameDay(date, day))) {
+        selectedDates.push(day);
+      }
+    });
+
+    multi.onSelectedDates(selectedDates);
   };
+
+  const memoizedValue = useMemo(
+    () => ({
+      weeks,
+      months,
+      years,
+      handlePrevMonthOfView,
+      handleNextMonthOfView,
+      handlePrevYearOfView,
+      handleNextYearOfView,
+      handlePrevGroupYearsOfView,
+      handleNextGroupYearsOfView,
+      setMonthOfView,
+      setYearOfView,
+      disabledPrev,
+      disabledNext,
+      firstDateOfCurrentMonthOfView,
+      headers,
+      viewMode,
+      setViewMode,
+    }),
+    [
+      weeks,
+      months,
+      years,
+      disabledPrev,
+      disabledNext,
+      firstDateOfCurrentMonthOfView,
+      headers,
+      viewMode,
+      setViewMode,
+    ],
+  );
+
+  return memoizedValue;
 }

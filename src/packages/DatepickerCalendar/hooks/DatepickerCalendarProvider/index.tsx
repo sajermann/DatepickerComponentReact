@@ -79,12 +79,13 @@ export function DatepickerCalendarProvider(
     selectOnlyVisibleMonth,
     fixedWeeks = true,
   } = props;
+  const [lastHoveredDate, setLastHoveredDate] = useState<Date | null>(null);
+
   const single = "single" in props ? props.single : undefined;
   const multi = "multi" in props ? props.multi : undefined;
   const range = "range" in props ? props.range : undefined;
 
-  const [lastHoveredDate, setLastHoveredDate] = useState<Date | null>(null);
-  const [viewMode, setViewMode] = useState<TViewMode>("days");
+  const rangeWithHover = range ? { ...range, lastHoveredDate } : undefined;
 
   const {
     weeks,
@@ -101,17 +102,18 @@ export function DatepickerCalendarProvider(
     disabledPrev,
     disabledNext,
     firstDateOfCurrentMonthOfView,
+    headers,
+    viewMode,
+    setViewMode,
   } = useDatePicker({
     date,
     disabled,
     fixedWeeks,
     single,
     multi,
-    range,
+    range: rangeWithHover,
     selectOnlyVisibleMonth,
     weekStartsOn,
-    viewMode,
-    lastHoveredDate,
   });
 
   const onClickArrow = (type: "next" | "prev") => {
@@ -140,66 +142,6 @@ export function DatepickerCalendarProvider(
   const onYearClick = (year: number) => {
     setYearOfView(year);
     setViewMode("months");
-  };
-
-  const headers = Array.from({ length: 7 }, (_, index) => {
-    const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
-    const dayName = capitalize(format(day, "EEEE").slice(0, 3));
-    const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
-    return {
-      text: dayName,
-      isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
-        dayOfWeek,
-        weeks,
-        multi,
-      }),
-      onClick: () =>
-        onHeaderClick({
-          dayOfWeek,
-          weeks,
-        }),
-      isDisabled: !!disabled?.weeeks?.includes(index as TWeek),
-    };
-  });
-
-  const onHeaderClick = ({
-    dayOfWeek,
-    weeks,
-  }: {
-    dayOfWeek: number;
-    weeks: Array<TDate[]>;
-  }) => {
-    if (!multi) return;
-    const daysToAddOrRemove: Date[] = [];
-
-    for (const item of weeks) {
-      // Verify if is same month and if date is not disabled
-      if (!item[dayOfWeek].isDisabled) {
-        daysToAddOrRemove.push(item[dayOfWeek].date);
-      }
-    }
-
-    const selectedDates = [...multi.selectedDates];
-    // Verify if all dates of week is selecteds
-    const allSelected = daysToAddOrRemove.every((day) =>
-      selectedDates.some((date) => isSameDay(date, day))
-    );
-
-    if (allSelected) {
-      const result = selectedDates.filter(
-        (item) => item.getDay() !== dayOfWeek
-      );
-      multi.onSelectedDates(result);
-      return;
-    }
-    // Else, add dates not is selecteds
-    daysToAddOrRemove.forEach((day) => {
-      if (!selectedDates.some((date) => isSameDay(date, day))) {
-        selectedDates.push(day);
-      }
-    });
-
-    multi.onSelectedDates(selectedDates);
   };
 
   const onDayClick = ({ date }: TDate) => {
