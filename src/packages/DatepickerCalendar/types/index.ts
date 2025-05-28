@@ -19,6 +19,8 @@ export type TDate = {
   isSelected: boolean;
   isDisabled: boolean;
   isHoveredRange: boolean;
+  onClick: () => void;
+  onMouseEnter: () => void;
 };
 
 export type TMonth = {
@@ -61,6 +63,7 @@ export type TSelectedRange = {
 
 export type TSelectedRangeWithHover = TSelectedRange & {
   lastHoveredDate: Date | null;
+  setLastHoveredDate: (date: Date | null) => void;
 };
 
 export type TDisabled = {

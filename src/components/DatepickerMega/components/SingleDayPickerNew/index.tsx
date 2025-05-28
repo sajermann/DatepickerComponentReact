@@ -46,15 +46,14 @@ export function SingleDayPickerNew() {
     },
     single: {
       onSelectedDate: (date) => {
-        console.log({ date });
-        // onChangeDatepicker({
-        //   dates: date ? [date] : [],
-        //   setDate,
-        //   onChange,
-        //   dayRef: inputDayRef,
-        //   monthRef: inputMonthRef,
-        //   yearRef: inputYearRef,
-        // });
+        onChangeDatepicker({
+          dates: date ? [date] : [],
+          setDate,
+          onChange,
+          dayRef: inputDayRef,
+          monthRef: inputMonthRef,
+          yearRef: inputYearRef,
+        });
         setIsOpenCalendar(false);
       },
       selectedDate: date.current.date,
@@ -216,8 +215,8 @@ export function SingleDayPickerNew() {
                             "border border-slate-500": day.isToday,
                           },
                         ])}
-                        //                     onMouseEnter={() => onDayHover(day)}
-                        // onClick={() => onDayClick(day)}
+                        onMouseEnter={day.onMouseEnter}
+                        onClick={day.onClick}
                         disabled={day.isDisabled}
                       >
                         {day.date ? format(day.date, "d") : ""}

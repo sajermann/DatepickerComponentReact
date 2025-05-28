@@ -45,8 +45,6 @@ type DatepickerCalendarContextType = {
   headers: THeaders[];
   disabledPrev: boolean;
   disabledNext: boolean;
-  onDayClick: (data: TDate) => void;
-  onDayHover: (data: TDate) => void;
   viewMode: TViewMode;
   onToggleViewMode: () => void;
   months: TMonth[];
@@ -85,7 +83,9 @@ export function DatepickerCalendarProvider(
   const multi = "multi" in props ? props.multi : undefined;
   const range = "range" in props ? props.range : undefined;
 
-  const rangeWithHover = range ? { ...range, lastHoveredDate } : undefined;
+  const rangeWithHover = range
+    ? { ...range, lastHoveredDate, setLastHoveredDate }
+    : undefined;
 
   const {
     weeks,
@@ -144,68 +144,6 @@ export function DatepickerCalendarProvider(
     setViewMode("months");
   };
 
-  const onDayClick = ({ date }: TDate) => {
-    if (single) {
-      if (
-        single.selectedDate === null ||
-        !isSameDay(date, single.selectedDate)
-      ) {
-        single.onSelectedDate(date);
-        return;
-      }
-      if (isSameDay(date, single.selectedDate) && single.toggle) {
-        single.onSelectedDate(null);
-      }
-    }
-
-    if (multi) {
-      const dateSelectedLocated = multi?.selectedDates.find((item) =>
-        isSameDay(item, date)
-      );
-      if (!dateSelectedLocated) {
-        multi?.onSelectedDates([...multi.selectedDates, date]);
-      } else {
-        multi?.onSelectedDates(
-          multi.selectedDates.filter(
-            (item) => !isSameDay(item, dateSelectedLocated)
-          )
-        );
-      }
-    }
-
-    if (range) {
-      let finalRangeDate: { from: Date | null; to: Date | null } = {
-        from: null,
-        to: null,
-      };
-
-      if (range.selectedDate.from && range.selectedDate.to) {
-        setLastHoveredDate(null);
-        finalRangeDate = { from: date, to: null };
-      } else if (
-        range.selectedDate.from &&
-        date.getTime() < range.selectedDate.from.getTime()
-      ) {
-        finalRangeDate = { from: date, to: range.selectedDate.from };
-      } else if (!range.selectedDate.from) {
-        finalRangeDate = { ...range.selectedDate, from: date };
-      } else if (range.selectedDate.from && !range.selectedDate.to) {
-        finalRangeDate = { ...range.selectedDate, to: date };
-      } else {
-        finalRangeDate = { from: null, to: null };
-      }
-
-      range.onSelectedDate(finalRangeDate);
-    }
-  };
-
-  const onDayHover = ({ date }: TDate) => {
-    if (!range?.selectedDate.from || range?.selectedDate.to) {
-      return;
-    }
-    setLastHoveredDate(date);
-  };
-
   const handleKeyDown = useCallback(
     async (event: KeyboardEvent) => {
       if (
@@ -251,8 +189,6 @@ export function DatepickerCalendarProvider(
       weekStartsOn,
       weeks,
       headers,
-      onDayClick,
-      onDayHover,
       disabledNext,
       disabledPrev,
       selectOnlyVisibleMonth,

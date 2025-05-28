@@ -4,7 +4,7 @@ import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
 
 export const Weeks = memo(() => {
-  const { weeks, onDayHover, onDayClick, viewMode } = useDatepickerCalendar();
+  const { weeks, viewMode } = useDatepickerCalendar();
 
   if (viewMode !== "days") return null;
 
@@ -42,8 +42,8 @@ export const Weeks = memo(() => {
               <button
                 type="button"
                 className="w-full h-full flex items-center justify-center"
-                onMouseEnter={() => onDayHover(day)}
-                onClick={() => onDayClick(day)}
+                onMouseEnter={day.onMouseEnter}
+                onClick={day.onClick}
                 disabled={day.isDisabled}
               >
                 {day.date ? format(day.date, "d") : ""}
