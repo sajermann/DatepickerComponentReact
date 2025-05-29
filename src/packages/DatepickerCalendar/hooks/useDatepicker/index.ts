@@ -1,37 +1,26 @@
 import {
-  addDays,
   addMonths,
   addYears,
   endOfDay,
   endOfMonth,
   endOfYear,
-  format,
   isAfter,
   isBefore,
-  isSameDay,
-  isSameMonth,
   startOfDay,
   startOfMonth,
-  startOfWeek,
   startOfYear,
   subMilliseconds,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
 import {
-  TDate,
   TDisabled,
   TMulti,
-  TSelectedRange,
   TSelectedRangeWithHover,
   TSingle,
   TViewMode,
   TWeek,
 } from '../../types';
-import {
-  allDatesIsSelectedsByDayOfWeek,
-  capitalize,
-  transformDates,
-} from '../../utils';
+import { useHeaders } from '../useHeaders';
 import { useMonths } from '../useMonths';
 import { useWeeks } from '../useWeeks';
 import { useYears } from '../useYears';
@@ -40,7 +29,7 @@ const YEARS_TO_SHOW = 24;
 
 type TProps = {
   date?: Date | null;
-  weekStartsOn?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+  weekStartsOn?: TWeek;
   fixedWeeks?: boolean;
   selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
@@ -84,6 +73,8 @@ export function useDatePicker({
     range,
     selectOnlyVisibleMonth,
     single,
+    setFirstDateOfCurrentMonthOfView,
+    setViewMode,
   });
 
   const { years } = useYears({
@@ -93,26 +84,19 @@ export function useDatePicker({
     range,
     selectOnlyVisibleMonth,
     single,
+    setFirstDateOfCurrentMonthOfView,
+    setViewMode,
+  });
+
+  const { headers } = useHeaders({
+    weeks,
+    disabled,
+    multi,
+    weekStartsOn,
   });
 
   const firstDateOfView = weeks.at(0)?.at(0);
   const lastDateOfView = weeks.at(-1)?.at(-1);
-
-  const setMonthOfView = (month: number) => {
-    setFirstDateOfCurrentMonthOfView(prev => {
-      const newDate = new Date(prev.getTime());
-      newDate.setMonth(month);
-      return newDate;
-    });
-  };
-
-  const setYearOfView = (year: number) => {
-    setFirstDateOfCurrentMonthOfView(prev => {
-      const newDate = new Date(prev.getTime());
-      newDate.setFullYear(year);
-      return newDate;
-    });
-  };
 
   const handlePrevMonthOfView = () => {
     setFirstDateOfCurrentMonthOfView(
@@ -209,64 +193,6 @@ export function useDatePicker({
     return false;
   }, [months, years, disabled?.after, lastDateOfView?.date]);
 
-  const headers = Array.from({ length: 7 }, (_, index) => {
-    const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
-    const dayName = capitalize(format(day, 'EEEE').slice(0, 3));
-    const dayOfWeek = (index + (weekStartsOn ?? 0)) % 7;
-    return {
-      text: dayName,
-      isSelectedAllDays: allDatesIsSelectedsByDayOfWeek({
-        dayOfWeek,
-        weeks,
-        multi,
-      }),
-      onClick: () =>
-        onHeaderClick({
-          dayOfWeek,
-          weeks,
-        }),
-      isDisabled: !!disabled?.weeeks?.includes(index as TWeek),
-    };
-  });
-
-  const onHeaderClick = ({
-    dayOfWeek,
-    weeks,
-  }: {
-    dayOfWeek: number;
-    weeks: Array<TDate[]>;
-  }) => {
-    if (!multi) return;
-    const daysToAddOrRemove: Date[] = [];
-
-    for (const item of weeks) {
-      // Verify if is same month and if date is not disabled
-      if (!item[dayOfWeek].isDisabled) {
-        daysToAddOrRemove.push(item[dayOfWeek].date);
-      }
-    }
-
-    const selectedDates = [...multi.selectedDates];
-    // Verify if all dates of week is selecteds
-    const allSelected = daysToAddOrRemove.every(day =>
-      selectedDates.some(date => isSameDay(date, day)),
-    );
-
-    if (allSelected) {
-      const result = selectedDates.filter(item => item.getDay() !== dayOfWeek);
-      multi.onSelectedDates(result);
-      return;
-    }
-    // Else, add dates not is selecteds
-    daysToAddOrRemove.forEach(day => {
-      if (!selectedDates.some(date => isSameDay(date, day))) {
-        selectedDates.push(day);
-      }
-    });
-
-    multi.onSelectedDates(selectedDates);
-  };
-
   const memoizedValue = useMemo(
     () => ({
       weeks,
@@ -278,8 +204,6 @@ export function useDatePicker({
       handleNextYearOfView,
       handlePrevGroupYearsOfView,
       handleNextGroupYearsOfView,
-      setMonthOfView,
-      setYearOfView,
       disabledPrev,
       disabledNext,
       firstDateOfCurrentMonthOfView,

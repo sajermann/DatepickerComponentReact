@@ -7,7 +7,7 @@ import {
   TSelectedRangeWithHover,
   TSingle,
 } from '../../types';
-import { transformDates } from '../../utils';
+import { transformDates } from './utils';
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
@@ -55,6 +55,5 @@ export function useWeeks({
   for (let i = 0; i < days.length; i += 7) {
     weeks.push(daysTransformeds.slice(i, i + 7));
   }
-  console.log(weeks.flat());
   return { weeks };
 }

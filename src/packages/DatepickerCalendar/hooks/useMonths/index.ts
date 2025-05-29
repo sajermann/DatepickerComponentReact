@@ -1,6 +1,13 @@
 import { addMonths, startOfYear } from 'date-fns';
-import { TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
-import { transformMonths } from '../../utils';
+import { Dispatch, SetStateAction } from 'react';
+import {
+  TDisabled,
+  TMulti,
+  TSelectedRange,
+  TSingle,
+  TViewMode,
+} from '../../types';
+import { transformMonths } from './utils';
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
@@ -9,6 +16,8 @@ type TProps = {
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
+  setFirstDateOfCurrentMonthOfView: Dispatch<SetStateAction<Date>>;
+  setViewMode: Dispatch<SetStateAction<TViewMode>>;
 };
 export function useMonths({
   firstDateOfCurrentMonthOfView,
@@ -17,6 +26,8 @@ export function useMonths({
   single,
   multi,
   range,
+  setFirstDateOfCurrentMonthOfView,
+  setViewMode,
 }: TProps) {
   const monthsToTransform = Array.from({ length: 12 }, (_, i) =>
     addMonths(startOfYear(firstDateOfCurrentMonthOfView), i),
@@ -31,6 +42,8 @@ export function useMonths({
       multi,
       range,
       selectOnlyVisibleMonth,
+      setFirstDateOfCurrentMonthOfView,
+      setViewMode,
     }),
   );
   return { months };

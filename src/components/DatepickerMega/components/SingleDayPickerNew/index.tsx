@@ -28,6 +28,7 @@ export function SingleDayPickerNew() {
     maxDate,
   } = useDatepickerMega();
   const {
+    months,
     weeks,
     years,
     handlePrevMonthOfView,
@@ -163,13 +164,15 @@ export function SingleDayPickerNew() {
                 }
               )}
             >
-              {/* <div className="col-span-1 w-full">
+              <div className="col-span-1 w-full">
                 <SelectorVertical
-                  data={months.map((item) => ({ ...item, label: item.month }))}
+                  data={months}
                   onChange={changeToMonth}
-                  currentIndex={getIndex(months)}
+                  currentIndex={getIndex(
+                    months.map((month) => ({ active: month.isSelected }))
+                  )}
                 />
-              </div> */}
+              </div>
               {/* <div className="col-span-1 w-full">
                 <SelectorVertical
                   data={years.map((item) => ({

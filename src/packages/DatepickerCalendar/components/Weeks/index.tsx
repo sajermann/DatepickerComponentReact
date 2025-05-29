@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { getDataAttributes } from "../../utils/getDataAttributes";
 
 export const Weeks = memo(() => {
   const { weeks, viewMode } = useDatepickerCalendar();
@@ -18,13 +19,7 @@ export const Weeks = memo(() => {
           {days.map((day) => (
             <div
               key={day.date.toISOString()}
-              data-is-selected={day.isSelected}
-              data-is-disabled={day.isDisabled}
-              data-is-current-month={day.isCurrentMonth}
-              data-is-today={day.isToday}
-              data-is-prev-month={day.isPrevMonth}
-              data-is-next-month={day.isNextMonth}
-              data-is-hovered-range={day.isHoveredRange}
+              {...getDataAttributes(day)}
               className={managerClassNames([
                 "hover:bg-slate-500 rounded flex",
                 "text-[clamp(0.25rem,4cqi,1rem)]",
@@ -46,7 +41,7 @@ export const Weeks = memo(() => {
                 onClick={day.onClick}
                 disabled={day.isDisabled}
               >
-                {day.date ? format(day.date, "d") : ""}
+                {day.text}
               </button>
             </div>
           ))}

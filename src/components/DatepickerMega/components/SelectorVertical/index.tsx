@@ -1,9 +1,10 @@
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-import { Button } from '../Button';
+import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { TMonth, TYear } from "~/packages/DatepickerCalendar";
+import { Button } from "../Button";
 
 type TProps = {
-  data: { label: string; disabled: boolean }[];
+  data: TMonth[] | TYear[];
   currentIndex?: number;
   visibleItems?: number;
   onChange?: (index: number) => void;
@@ -31,21 +32,44 @@ export default function SelectorVertical({
   };
 
   const getVisibleData = () => {
-    const visibleItemsList = [];
-    const safeVisibleItems =
-      visibleItems % 2 === 0 ? visibleItems + 1 : visibleItems;
-    const middleIndex = Math.floor(safeVisibleItems / 2);
+    const centralItem = data.find(
+      (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+    );
+    if (!centralItem) {
+      return;
+    }
+    const centralItemIndex = data.findIndex(
+      (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+    );
 
-    for (let i = 0; i < safeVisibleItems; i += 1) {
-      const monthIndex =
-        (currentIndexInternal.current + i - middleIndex + data.length) %
-        data.length;
-      visibleItemsList.push({
-        ...data[monthIndex],
-        index: data.indexOf(data[monthIndex]),
-      });
+    const itemsToDivide = (visibleItems - 1) / 2;
+
+    const visibleItemsList = [];
+
+    for (let index = visibleItems; index > 0; index = index - 1) {
+      if (index >= centralItemIndex) {
+        visibleItemsList.push({
+          ...data[index + 1],
+        });
+      }
+      if (index === centralItemIndex) {
+        visibleItemsList.push({
+          ...data[index],
+        });
+      }
+      // if (index === itemsToDivide) {
+      //   visibleItemsList.push({
+      //     ...data[centralItemIndex],
+      //   });
+      // }
     }
 
+    // console.log({
+    //   centralItem,
+    //   centralItemIndex,
+    //   itemsToDivide,
+    //   visibleItemsList,
+    // });
     return visibleItemsList;
   };
 
@@ -69,10 +93,10 @@ export default function SelectorVertical({
       }
     };
 
-    document.addEventListener('wheel', handleWheel, { passive: false });
+    document.addEventListener("wheel", handleWheel, { passive: false });
 
     return () => {
-      document.removeEventListener('wheel', handleWheel);
+      document.removeEventListener("wheel", handleWheel);
     };
   }, []);
 
@@ -85,7 +109,7 @@ export default function SelectorVertical({
         colorStyle="mono"
         aria-label="previous"
         onClick={() => onChangeInternal(currentIndexInternal.current - 1)}
-        disabled={data[currentIndexInternal.current - 1]?.disabled}
+        disabled={data[currentIndexInternal.current - 1]?.isDisabled}
       >
         <ChevronUpIcon />
       </Button>
@@ -93,14 +117,14 @@ export default function SelectorVertical({
       <div ref={elementRef} className="flex flex-col gap-2">
         {getVisibleData().map((item, index) => (
           <Button
-            key={item.label}
+            key={item.text}
             className="p-0 text-xs h-4 w-auto"
             variant="option"
-            colorStyle={index === 2 ? 'primary' : 'mono'}
-            disabled={item.disabled}
-            onClick={() => onChangeInternal?.(item.index)}
+            colorStyle={index === 2 ? "primary" : "mono"}
+            disabled={item.isDisabled}
+            onClick={item.onClick}
           >
-            {item.label}
+            {item.text}
           </Button>
         ))}
       </div>
@@ -112,7 +136,7 @@ export default function SelectorVertical({
         colorStyle="mono"
         aria-label="next"
         onClick={() => onChangeInternal(currentIndexInternal.current + 1)}
-        disabled={data[currentIndexInternal.current + 1]?.disabled}
+        disabled={data[currentIndexInternal.current + 1]?.isDisabled}
       >
         <ChevronDownIcon />
       </Button>

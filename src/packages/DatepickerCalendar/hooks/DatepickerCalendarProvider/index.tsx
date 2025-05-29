@@ -48,10 +48,8 @@ type DatepickerCalendarContextType = {
   viewMode: TViewMode;
   onToggleViewMode: () => void;
   months: TMonth[];
-  onMonthClick: (month: number) => void;
   onClickArrow: (type: "next" | "prev") => void;
   years: TYear[];
-  onYearClick: (year: number) => void;
   firstDateOfCurrentMonthOfView: Date;
 };
 
@@ -97,8 +95,6 @@ export function DatepickerCalendarProvider(
     handleNextYearOfView,
     handlePrevGroupYearsOfView,
     handleNextGroupYearsOfView,
-    setMonthOfView,
-    setYearOfView,
     disabledPrev,
     disabledNext,
     firstDateOfCurrentMonthOfView,
@@ -132,16 +128,6 @@ export function DatepickerCalendarProvider(
       },
     };
     config[viewMode][type]();
-  };
-
-  const onMonthClick = (month: number) => {
-    setMonthOfView(month);
-    setViewMode("days");
-  };
-
-  const onYearClick = (year: number) => {
-    setYearOfView(year);
-    setViewMode("months");
   };
 
   const handleKeyDown = useCallback(
@@ -195,10 +181,8 @@ export function DatepickerCalendarProvider(
       viewMode,
       onToggleViewMode,
       months,
-      onMonthClick,
       onClickArrow,
       years,
-      onYearClick,
       firstDateOfCurrentMonthOfView,
     }),
     [

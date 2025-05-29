@@ -1,6 +1,13 @@
 import { addYears, startOfYear } from 'date-fns';
-import { TDisabled, TMulti, TSelectedRange, TSingle } from '../../types';
-import { transformeYears } from '../../utils';
+import { Dispatch, SetStateAction } from 'react';
+import {
+  TDisabled,
+  TMulti,
+  TSelectedRange,
+  TSingle,
+  TViewMode,
+} from '../../types';
+import { transformeYears } from './utils';
 
 const YEARS_TO_SHOW = 24;
 
@@ -11,6 +18,8 @@ type TProps = {
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
+  setFirstDateOfCurrentMonthOfView: Dispatch<SetStateAction<Date>>;
+  setViewMode: Dispatch<SetStateAction<TViewMode>>;
 };
 export function useYears({
   firstDateOfCurrentMonthOfView,
@@ -19,6 +28,8 @@ export function useYears({
   single,
   multi,
   range,
+  setFirstDateOfCurrentMonthOfView,
+  setViewMode,
 }: TProps) {
   const yearsToTransform = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
     addYears(startOfYear(firstDateOfCurrentMonthOfView), i),
@@ -33,6 +44,8 @@ export function useYears({
       multi,
       range,
       selectOnlyVisibleMonth,
+      setFirstDateOfCurrentMonthOfView,
+      setViewMode,
     }),
   );
   return { years };

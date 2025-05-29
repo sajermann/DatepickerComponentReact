@@ -21,6 +21,7 @@ export type TDate = {
   isHoveredRange: boolean;
   onClick: () => void;
   onMouseEnter: () => void;
+  text: string;
 };
 
 export type TMonth = {
@@ -42,6 +43,9 @@ export type TMonth = {
   isSelected: boolean;
   isDisabled: boolean;
   isToday: boolean;
+  isMonthOfView: boolean;
+  text: string;
+  onClick: () => void;
 };
 
 export type TYear = {
@@ -50,6 +54,9 @@ export type TYear = {
   isSelected: boolean;
   isDisabled: boolean;
   isToday: boolean;
+  text: string;
+  isYearOfView: boolean;
+  onClick: () => void;
 };
 
 export type TSelectedRange = {

@@ -1,11 +1,10 @@
-import { format } from "date-fns";
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
-import { capitalize } from "../../utils";
+import { getDataAttributes } from "../../utils";
 
 export const Months = memo(() => {
-  const { months, viewMode, onMonthClick } = useDatepickerCalendar();
+  const { months, viewMode } = useDatepickerCalendar();
 
   if (viewMode !== "months") return null;
   return (
@@ -13,10 +12,7 @@ export const Months = memo(() => {
       {months.map((month) => (
         <div
           key={month.date.toISOString()}
-          data-is-selected={month.isSelected}
-          data-is-disabled={month.isDisabled}
-          data-is-today={month.isToday}
-          data-is-hovered-range={month.isHoveredRange}
+          {...getDataAttributes(month)}
           className={managerClassNames([
             "col-span-6 @xm/months:col-span-3",
             "hover:bg-slate-500 rounded",
@@ -27,18 +23,16 @@ export const Months = memo(() => {
             { "hover:bg-slate-600": month.isSelected },
             { "opacity-25 !cursor-not-allowed": month.isDisabled },
             { "border rounded border-slate-500": month.isToday },
-            { "bg-slate-500": month.isHoveredRange },
             { "opacity-50": month.isSelected && month.isDisabled },
           ])}
         >
           <button
             type="button"
             className="w-full h-full flex items-center justify-center"
-            // onMouseEnter={() => onDayHover(day)}
-            onClick={() => onMonthClick(month.month)}
+            onClick={month.onClick}
             disabled={month.isDisabled}
           >
-            {month.date ? capitalize(format(month.date, "MMM")) : ""}
+            {month.text}
           </button>
         </div>
       ))}

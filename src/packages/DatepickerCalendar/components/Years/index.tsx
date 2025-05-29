@@ -2,9 +2,10 @@ import { format } from "date-fns";
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { getDataAttributes } from "../../utils/getDataAttributes";
 
 export const Years = memo(() => {
-  const { years, viewMode, onYearClick } = useDatepickerCalendar();
+  const { years, viewMode } = useDatepickerCalendar();
 
   if (viewMode !== "years") return null;
 
@@ -13,10 +14,7 @@ export const Years = memo(() => {
       {years.map((year) => (
         <div
           key={year.date.toISOString()}
-          data-is-selected={year.isSelected}
-          data-is-disabled={year.isDisabled}
-          data-is-today={year.isToday}
-          data-is-hovered-range={year.isHoveredRange}
+          {...getDataAttributes(year)}
           className={managerClassNames([
             "hover:bg-slate-500 rounded",
             "text-[clamp(0.25rem,4cqi,1rem)]",
@@ -26,18 +24,16 @@ export const Years = memo(() => {
             { "hover:bg-slate-600": year.isSelected },
             { "opacity-25 !cursor-not-allowed": year.isDisabled },
             { "border rounded border-slate-500": year.isToday },
-            { "bg-slate-500": year.isHoveredRange },
             { "opacity-50": year.isSelected && year.isDisabled },
           ])}
         >
           <button
             type="button"
             className="w-full h-full flex items-center justify-center"
-            // onMouseEnter={() => onDayHover(day)}
-            onClick={() => onYearClick(year.year)}
+            onClick={year.onClick}
             disabled={year.isDisabled}
           >
-            {year.date ? format(year.date, "yyyy") : ""}
+            {year.text}
           </button>
         </div>
       ))}

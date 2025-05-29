@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
-import { capitalize } from "../../utils";
+import { capitalize, getDataAttributes } from "../../utils";
 
 const commonClassNames =
   "font-bold text-center w-full h-full flex items-center justify-center";
@@ -16,6 +16,7 @@ export const WeekDays = memo(() => {
       {headers.map((weekDay) => (
         <div
           key={weekDay.text}
+          {...getDataAttributes(weekDay)}
           className={managerClassNames([
             "text-[clamp(0.25rem,4cqi,1rem)]",
             "h-[clamp(0.25rem,16cqi,3rem)]",
