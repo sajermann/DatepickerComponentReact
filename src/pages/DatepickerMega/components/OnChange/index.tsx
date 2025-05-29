@@ -26,7 +26,7 @@ export function OnChange() {
             <DatepickerMega.PickerTrigger>
               <CalendarIcon />
             </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPickerNew />
+            <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
         <div className="w-full">

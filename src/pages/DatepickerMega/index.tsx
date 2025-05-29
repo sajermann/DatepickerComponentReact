@@ -43,11 +43,11 @@ const TODO_LIST = [
 
 const COMPONENTS = [
   // { e: <TodoList list={TODO_LIST} /> },
-  { e: <OnChange /> },
+  // { e: <OnChange /> },
   // { e: <DefaultValue /> },
   // { e: <Controlled /> },
   // { e: <HookForm /> },
-  // { e: <Composition /> },
+  { e: <Composition /> },
   // { e: <Disabled /> },
   // { e: <ReadOnly /> },
   // { e: <Trigger /> },

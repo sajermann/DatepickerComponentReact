@@ -1,95 +1,70 @@
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { TMonth, TYear } from "~/packages/DatepickerCalendar";
 import { Button } from "../Button";
 
+const ITEMS_BEFORE_DEFAULT = 2;
+const ITEMS_AFTER_DEFAULT = 2;
+
 type TProps = {
   data: TMonth[] | TYear[];
-  currentIndex?: number;
-  visibleItems?: number;
-  onChange?: (index: number) => void;
+  itemsBefore?: number;
+  itemsAfter?: number;
 };
 
-export default function SelectorVertical({
-  currentIndex = 0,
-  visibleItems = 5,
-  onChange,
+export function SelectorVertical({
+  itemsBefore = ITEMS_BEFORE_DEFAULT,
+  itemsAfter = ITEMS_AFTER_DEFAULT,
+
   data,
 }: TProps) {
-  const currentIndexInternal = useRef(currentIndex);
+  const currentIndexInternal = data.findIndex(
+    (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+  );
   const elementRef = useRef<HTMLDivElement>(null);
 
-  const onChangeInternal = (month: number) => {
-    let fixed = month;
-    if (month < 0) {
-      fixed = data.length - 1;
-    }
-    if (month > data.length - 1) {
-      fixed = 0;
-    }
-    currentIndexInternal.current = fixed;
-    onChange?.(fixed);
+  const onChangeInternal = (up?: boolean) => {
+    const indexToClick = up
+      ? currentIndexInternal - 1
+      : currentIndexInternal + 1;
+    const result = (indexToClick + data.length) % data.length;
+    data[result]?.onClick();
   };
 
-  const getVisibleData = () => {
+  const getVisibleData = useMemo(() => {
+    const itemsBeforeInternal =
+      itemsBefore < 0 ? ITEMS_BEFORE_DEFAULT : itemsBefore;
+    const itemsAfterInternal =
+      itemsAfter < 0 ? ITEMS_AFTER_DEFAULT : itemsAfter;
     const centralItem = data.find(
       (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
     );
     if (!centralItem) {
-      return;
+      return [];
     }
     const centralItemIndex = data.findIndex(
       (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
     );
-
-    const itemsToDivide = (visibleItems - 1) / 2;
-
     const visibleItemsList = [];
 
-    for (let index = visibleItems; index > 0; index = index - 1) {
-      if (index >= centralItemIndex) {
-        visibleItemsList.push({
-          ...data[index + 1],
-        });
-      }
-      if (index === centralItemIndex) {
-        visibleItemsList.push({
-          ...data[index],
-        });
-      }
-      // if (index === itemsToDivide) {
-      //   visibleItemsList.push({
-      //     ...data[centralItemIndex],
-      //   });
-      // }
+    for (
+      let index = -itemsBeforeInternal;
+      index <= itemsAfterInternal;
+      index = index + 1
+    ) {
+      const idx = (centralItemIndex + index + data.length) % data.length;
+      visibleItemsList.push(data[idx]);
     }
 
-    // console.log({
-    //   centralItem,
-    //   centralItemIndex,
-    //   itemsToDivide,
-    //   visibleItemsList,
-    // });
     return visibleItemsList;
-  };
+  }, [data, itemsBefore, itemsAfter]);
 
   useEffect(() => {
-    currentIndexInternal.current = currentIndex;
-  }, [currentIndex]);
-
-  useEffect(() => {
-    // TODO: Essa função está com algum tipo de bug que não consegui resolver
     const handleWheel = (e: WheelEvent) => {
       if (elementRef?.current?.contains(e.target as Node)) {
-        console.log(elementRef.current, e.target);
         e.preventDefault();
         e.stopPropagation();
-        const fixed =
-          e.deltaY < 0
-            ? currentIndexInternal.current - 1
-            : currentIndexInternal.current + 1;
-        // console.log(`está indo`, { fixed, item: data[fixed]?.label });
-        onChangeInternal(fixed);
+        onChangeInternal(e.deltaY < 0);
       }
     };
 
@@ -98,7 +73,7 @@ export default function SelectorVertical({
     return () => {
       document.removeEventListener("wheel", handleWheel);
     };
-  }, []);
+  }, [currentIndexInternal, data]);
 
   return (
     <>
@@ -108,19 +83,23 @@ export default function SelectorVertical({
         variant="option"
         colorStyle="mono"
         aria-label="previous"
-        onClick={() => onChangeInternal(currentIndexInternal.current - 1)}
-        disabled={data[currentIndexInternal.current - 1]?.isDisabled}
+        onClick={() => onChangeInternal(true)}
+        disabled={data[currentIndexInternal - 1]?.isDisabled}
       >
         <ChevronUpIcon />
       </Button>
 
       <div ref={elementRef} className="flex flex-col gap-2">
-        {getVisibleData().map((item, index) => (
+        {getVisibleData.map((item) => (
           <Button
             key={item.text}
             className="p-0 text-xs h-4 w-auto"
             variant="option"
-            colorStyle={index === 2 ? "primary" : "mono"}
+            colorStyle={
+              (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+                ? "primary"
+                : "mono"
+            }
             disabled={item.isDisabled}
             onClick={item.onClick}
           >
@@ -135,8 +114,8 @@ export default function SelectorVertical({
         variant="option"
         colorStyle="mono"
         aria-label="next"
-        onClick={() => onChangeInternal(currentIndexInternal.current + 1)}
-        disabled={data[currentIndexInternal.current + 1]?.isDisabled}
+        onClick={() => onChangeInternal(false)}
+        disabled={data[currentIndexInternal + 1]?.isDisabled}
       >
         <ChevronDownIcon />
       </Button>

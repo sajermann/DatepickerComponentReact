@@ -1,4 +1,4 @@
-import { addYears, startOfYear } from 'date-fns';
+import { add, eachYearOfInterval, startOfYear, subYears } from 'date-fns';
 import { Dispatch, SetStateAction } from 'react';
 import {
   TDisabled,
@@ -10,6 +10,9 @@ import {
 import { transformeYears } from './utils';
 
 const YEARS_TO_SHOW = 24;
+
+const ITEMS_BEFORE_DEFAULT = YEARS_TO_SHOW / 2;
+const ITEMS_AFTER_DEFAULT = YEARS_TO_SHOW / 2 - 1;
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
@@ -31,11 +34,20 @@ export function useYears({
   setFirstDateOfCurrentMonthOfView,
   setViewMode,
 }: TProps) {
-  const yearsToTransform = Array.from({ length: YEARS_TO_SHOW }, (_, i) =>
-    addYears(startOfYear(firstDateOfCurrentMonthOfView), i),
-  );
-
-  const years = yearsToTransform.map(i =>
+  const yearsBefore = eachYearOfInterval({
+    start: subYears(
+      startOfYear(firstDateOfCurrentMonthOfView),
+      ITEMS_BEFORE_DEFAULT,
+    ),
+    end: subYears(startOfYear(firstDateOfCurrentMonthOfView), 1),
+  });
+  const yearsAfter = eachYearOfInterval({
+    start: startOfYear(firstDateOfCurrentMonthOfView),
+    end: add(startOfYear(firstDateOfCurrentMonthOfView), {
+      years: ITEMS_AFTER_DEFAULT,
+    }),
+  });
+  const years = [...yearsBefore, ...yearsAfter].map(i =>
     transformeYears({
       dateToVerify: i,
       firstDateOfCurrentMonthOfView,
