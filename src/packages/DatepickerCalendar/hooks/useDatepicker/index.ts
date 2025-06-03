@@ -73,8 +73,14 @@ export function useDatePicker({
     range,
     selectOnlyVisibleMonth,
     single,
-    setFirstDateOfCurrentMonthOfView,
-    setViewMode,
+    onMonthClick: ({ month }) => {
+      setFirstDateOfCurrentMonthOfView(prev => {
+        const newDate = new Date(prev.getTime());
+        newDate.setMonth(month);
+        return newDate;
+      });
+      setViewMode('days');
+    },
   });
 
   const { years } = useYears({
@@ -84,8 +90,14 @@ export function useDatePicker({
     range,
     selectOnlyVisibleMonth,
     single,
-    setFirstDateOfCurrentMonthOfView,
-    setViewMode,
+    onYearClick: ({ year }) => {
+      setFirstDateOfCurrentMonthOfView(prev => {
+        const newDate = new Date(prev.getTime());
+        newDate.setFullYear(year);
+        return newDate;
+      });
+      setViewMode('months');
+    },
   });
 
   const { headers } = useHeaders({

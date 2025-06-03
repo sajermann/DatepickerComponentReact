@@ -1,13 +1,13 @@
-import { useDatePicker } from '@rehookify/datepicker';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { useState } from 'react';
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+import { TWeek, useDatePicker } from "~/packages/DatepickerCalendar";
 
-import { useTranslation } from '~/hooks/useTranslation';
-import { managerClassNames } from '~/utils/managerClassNames';
-import { useDatepickerMega } from '../../hooks';
-import { onChangeDatepicker } from '../../utils';
-import { Button } from '../Button';
-import { PopoverArrow, PopoverContent, PopoverPortal } from '../Popover';
+import { useTranslation } from "~/hooks/useTranslation";
+import { managerClassNames } from "~/utils/managerClassNames";
+import { useDatepickerMega } from "../../hooks";
+import { onChangeDatepicker } from "../../utils";
+import { Button } from "../Button";
+import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 
 export function SingleMonthPicker() {
   const { currentLanguage } = useTranslation();
@@ -25,53 +25,36 @@ export function SingleMonthPicker() {
     minDate,
     maxDate,
   } = useDatepickerMega();
-  const {
-    data: { calendars, months, years },
-    propGetters: {
-      monthButton,
-      yearButton,
-      previousYearsButton,
-      nextYearsButton,
+  const { months, years } = useDatePicker({
+    disabled: {
+      dates: disabledDates,
+      after: maxDate,
+      before: minDate,
+      weeeks: disabledWeeks as TWeek[],
     },
-  } = useDatePicker({
-    selectedDates: date?.current.date ? [date.current.date] : [],
-    onDatesChange: dates => {
-      onChangeDatepicker({
-        dates,
-        setDate,
-        onChange,
-        dayRef: inputDayRef,
-        monthRef: inputMonthRef,
-        yearRef: inputYearRef,
-      });
-      setIsOpenCalendar(false);
-    },
-
-    calendar: {
-      startDay: 0,
-      offsets: [-1, 1],
-    },
-    exclude: {
-      date: disabledDates,
-      day: disabledWeeks,
-    },
-    locale: {
-      locale: currentLanguage,
-    },
-    dates: {
-      minDate,
-      maxDate,
+    single: {
+      onSelectedDate: (date) => {
+        onChangeDatepicker({
+          dates: date ? [date] : [],
+          setDate,
+          onChange,
+          dayRef: inputDayRef,
+          monthRef: inputMonthRef,
+          yearRef: inputYearRef,
+        });
+        setIsOpenCalendar(false);
+      },
+      selectedDate: date.current.date,
     },
   });
-
   const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
 
   return (
     <PopoverPortal>
       <PopoverContent onInteractOutside={() => setIsOpenCalendar(false)}>
         <PopoverArrow />
-        <section
-          className={managerClassNames('flex flex-col min-w-48')}
+        {/* <section
+          className={managerClassNames("flex flex-col min-w-48")}
           style={{
             width: rootRef.current?.getBoundingClientRect().width
               ? rootRef.current.getBoundingClientRect().width - 10
@@ -84,7 +67,7 @@ export function SingleMonthPicker() {
               variant="option"
               colorStyle="mono"
               className={managerClassNames({
-                '!opacity-0 !cursor-default': !isOpenSelectorYear,
+                "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
               {...previousYearsButton({ disabled: !isOpenSelectorYear })}
             >
@@ -92,11 +75,11 @@ export function SingleMonthPicker() {
             </Button>
             <button
               type="button"
-              onClick={() => setIsOpenSelectorYear(prev => !prev)}
+              onClick={() => setIsOpenSelectorYear((prev) => !prev)}
               className="text-center text-sm flex-1 hover:opacity-70 transition-opacity duration-500"
             >
               {calendars[0].month.charAt(0).toUpperCase() +
-                calendars[0].month.slice(1)}{' '}
+                calendars[0].month.slice(1)}{" "}
               {calendars[0].year}
             </button>
             <Button
@@ -104,7 +87,7 @@ export function SingleMonthPicker() {
               variant="option"
               colorStyle="mono"
               className={managerClassNames({
-                '!opacity-0 !cursor-default': !isOpenSelectorYear,
+                "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
               {...nextYearsButton({ disabled: !isOpenSelectorYear })}
             >
@@ -114,31 +97,31 @@ export function SingleMonthPicker() {
           <main className="w-full h-44 relative">
             <div
               className={managerClassNames(
-                'absolute transition-opacity duration-500 w-full',
+                "absolute transition-opacity duration-500 w-full",
                 {
-                  'opacity-0 z-0': !isOpenSelectorYear,
-                  'z-10': isOpenSelectorYear,
-                },
+                  "opacity-0 z-0": !isOpenSelectorYear,
+                  "z-10": isOpenSelectorYear,
+                }
               )}
             >
               <main className=" items-center grid grid-cols-3 gap-x-2 gap-y-6">
-                {years.map(y => (
+                {years.map((y) => (
                   <button
                     type="button"
                     key={y.year.toString()}
                     className={managerClassNames([
-                      'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
+                      "h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs",
                       {
-                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                        "bg-slate-700 text-white hover:bg-slate-700 opacity-100":
                           y.selected,
-                        'border border-slate-500': y.now && !y.selected,
-                        'border border-dashed border-slate-500':
+                        "border border-slate-500": y.now && !y.selected,
+                        "border border-dashed border-slate-500":
                           y.active && !y.selected,
-                        'opacity-25 cursor-not-allowed': y.disabled,
+                        "opacity-25 cursor-not-allowed": y.disabled,
                       },
                     ])}
                     {...yearButton(y)}
-                    onClick={e => {
+                    onClick={(e) => {
                       yearButton?.(y).onClick?.(e);
                       setIsOpenSelectorYear(false);
                     }}
@@ -150,30 +133,30 @@ export function SingleMonthPicker() {
             </div>
             <div
               className={managerClassNames(
-                'absolute top-0 left-0 right-0 transition-opacity duration-500',
+                "absolute top-0 left-0 right-0 transition-opacity duration-500",
                 {
-                  'opacity-0 z-0': isOpenSelectorYear,
-                },
+                  "opacity-0 z-0": isOpenSelectorYear,
+                }
               )}
             >
               <main className=" items-center grid grid-cols-3 gap-x-2 gap-y-6">
-                {months.map(m => (
+                {months.map((m) => (
                   <button
                     type="button"
                     key={m.month.toString()}
                     className={managerClassNames([
-                      'h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs',
+                      "h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs",
                       {
-                        'bg-slate-700 text-white hover:bg-slate-700 opacity-100':
+                        "bg-slate-700 text-white hover:bg-slate-700 opacity-100":
                           m.selected,
-                        'border border-slate-500': m.now && !m.selected,
-                        'border border-dashed border-slate-500':
+                        "border border-slate-500": m.now && !m.selected,
+                        "border border-dashed border-slate-500":
                           m.active && !m.selected,
-                        'opacity-25 cursor-not-allowed': m.disabled,
+                        "opacity-25 cursor-not-allowed": m.disabled,
                       },
                     ])}
                     {...monthButton(m)}
-                    onClick={e => {
+                    onClick={(e) => {
                       monthButton?.(m).onClick?.(e);
                       onChangeDatepicker({
                         dates: [m.$date],
@@ -192,7 +175,7 @@ export function SingleMonthPicker() {
               </main>
             </div>
           </main>
-        </section>
+        </section> */}
       </PopoverContent>
     </PopoverPortal>
   );

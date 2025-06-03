@@ -31,8 +31,7 @@ type TProps = {
   multi?: TMulti;
   range?: TSelectedRange;
   selectOnlyVisibleMonth?: boolean;
-  setFirstDateOfCurrentMonthOfView: Dispatch<SetStateAction<Date>>;
-  setViewMode: Dispatch<SetStateAction<TViewMode>>;
+  onYearClick?: (data: Omit<TYear, 'onClick'>) => void;
 };
 
 export function transformeYears({
@@ -43,8 +42,7 @@ export function transformeYears({
   multi,
   range,
   selectOnlyVisibleMonth,
-  setFirstDateOfCurrentMonthOfView,
-  setViewMode,
+  onYearClick,
 }: TProps): TYear {
   const isDisabled =
     isDisabledDates({ dateToVerify, disabled }) ||
@@ -88,7 +86,7 @@ export function transformeYears({
       selectedDateByRange: range?.selectedDate,
     });
   const year = dateToVerify.getFullYear();
-  return {
+  const finalResult = {
     date: dateToVerify,
     year,
     isToday: isSameYear(dateToVerify, new Date()),
@@ -96,13 +94,10 @@ export function transformeYears({
     isDisabled,
     text: format(dateToVerify, 'yyyy'),
     isYearOfView: year === firstDateOfCurrentMonthOfView.getFullYear(),
-    onClick: () => {
-      setFirstDateOfCurrentMonthOfView(prev => {
-        const newDate = new Date(prev.getTime());
-        newDate.setFullYear(year);
-        return newDate;
-      });
-      setViewMode('months');
-    },
+    onClick: () => {},
+  };
+  return {
+    ...finalResult,
+    onClick: () => onYearClick?.({ ...finalResult }),
   };
 }

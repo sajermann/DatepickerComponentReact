@@ -6,6 +6,7 @@ import {
   TSelectedRange,
   TSingle,
   TViewMode,
+  TYear,
 } from '../../types';
 import { transformeYears } from './utils';
 
@@ -21,8 +22,7 @@ type TProps = {
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRange;
-  setFirstDateOfCurrentMonthOfView: Dispatch<SetStateAction<Date>>;
-  setViewMode: Dispatch<SetStateAction<TViewMode>>;
+  onYearClick?: (data: Omit<TYear, 'onClick'>) => void;
 };
 export function useYears({
   firstDateOfCurrentMonthOfView,
@@ -31,8 +31,7 @@ export function useYears({
   single,
   multi,
   range,
-  setFirstDateOfCurrentMonthOfView,
-  setViewMode,
+  onYearClick,
 }: TProps) {
   const yearsBefore = eachYearOfInterval({
     start: subYears(
@@ -56,8 +55,7 @@ export function useYears({
       multi,
       range,
       selectOnlyVisibleMonth,
-      setFirstDateOfCurrentMonthOfView,
-      setViewMode,
+      onYearClick,
     }),
   );
   return { years };

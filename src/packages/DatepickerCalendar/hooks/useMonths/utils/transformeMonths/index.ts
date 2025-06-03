@@ -1,5 +1,4 @@
 import { format, isSameMonth } from 'date-fns';
-import { Dispatch, SetStateAction } from 'react';
 import {
   isDisabledAfter,
   isDisabledBefore,
@@ -31,8 +30,7 @@ type TProps = {
   multi?: TMulti;
   range?: TSelectedRange;
   selectOnlyVisibleMonth?: boolean;
-  setFirstDateOfCurrentMonthOfView: Dispatch<SetStateAction<Date>>;
-  setViewMode: Dispatch<SetStateAction<TViewMode>>;
+  onMonthClick?: (data: Omit<TMonth, 'onClick'>) => void;
 };
 
 export function transformMonths({
@@ -43,8 +41,7 @@ export function transformMonths({
   multi,
   range,
   selectOnlyVisibleMonth,
-  setFirstDateOfCurrentMonthOfView,
-  setViewMode,
+  onMonthClick,
 }: TProps): TMonth {
   const monthOfYear = dateToVerify.getMonth();
 
@@ -90,11 +87,14 @@ export function transformMonths({
       selectedDateByRange: range?.selectedDate,
     });
 
+  const date = dateToVerify;
+
   const month = dateToVerify.getMonth();
-  return {
-    date: dateToVerify,
+
+  const finalResult = {
+    date,
     month,
-    year: dateToVerify.getFullYear(),
+    year: date.getFullYear(),
     isJanuary: monthOfYear === 0,
     isFebruary: monthOfYear === 1,
     isMarch: monthOfYear === 2,
@@ -107,18 +107,14 @@ export function transformMonths({
     isOctober: monthOfYear === 9,
     isNovember: monthOfYear === 10,
     isDecember: monthOfYear === 11,
-    isToday: isSameMonth(dateToVerify, new Date()),
+    isToday: isSameMonth(date, new Date()),
     isSelected,
     isDisabled,
-    text: capitalize(format(dateToVerify, 'MMM')),
+    text: capitalize(format(date, 'MMM')),
     isMonthOfView: month === firstDateOfCurrentMonthOfView.getMonth(),
-    onClick: () => {
-      setFirstDateOfCurrentMonthOfView(prev => {
-        const newDate = new Date(prev.getTime());
-        newDate.setMonth(month);
-        return newDate;
-      });
-      setViewMode('days');
-    },
+  };
+  return {
+    ...finalResult,
+    onClick: () => onMonthClick?.({ ...finalResult }),
   };
 }
