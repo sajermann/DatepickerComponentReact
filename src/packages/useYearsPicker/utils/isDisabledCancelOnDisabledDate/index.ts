@@ -1,0 +1,56 @@
+import { isAfter, isBefore } from 'date-fns';
+import { TDisabled, TRange } from '~/packages/types';
+
+export function isDisabledCancelOnDisabledDate({
+  dateToVerify,
+  disabled,
+  selectedDateByRange,
+  disabledAfterFirstDisabledDates,
+}: {
+  dateToVerify: Date;
+  disabled?: TDisabled;
+  selectedDateByRange?: TRange;
+  disabledAfterFirstDisabledDates?: boolean;
+}) {
+  if (!selectedDateByRange || !selectedDateByRange.from) {
+    return false;
+  }
+
+  if (
+    selectedDateByRange.from &&
+    !selectedDateByRange.to &&
+    isBefore(dateToVerify, selectedDateByRange.from)
+  ) {
+    return true;
+  }
+
+  const sortabledDates = disabled?.dates?.sort((a, b) => {
+    if (a.getTime() < b.getTime()) {
+      return -1;
+    }
+    if (a.getTime() > b.getTime()) {
+      return 1;
+    }
+
+    return 0;
+  });
+
+  const disabledDatesAfterDateToVerify =
+    sortabledDates?.filter(
+      item => item.getTime() > (selectedDateByRange.from as Date).getTime(),
+    ) || [];
+
+  if (
+    selectedDateByRange.from &&
+    !selectedDateByRange.to &&
+    disabledAfterFirstDisabledDates &&
+    sortabledDates &&
+    sortabledDates.length &&
+    isAfter(disabledDatesAfterDateToVerify[0], selectedDateByRange.from) &&
+    isAfter(dateToVerify, disabledDatesAfterDateToVerify[0])
+  ) {
+    return true;
+  }
+
+  return false;
+}

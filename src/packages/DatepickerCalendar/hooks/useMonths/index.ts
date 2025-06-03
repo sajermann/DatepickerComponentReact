@@ -7,12 +7,11 @@ import {
   TSelectedRange,
   TSingle,
   TViewMode,
-} from '../../types';
+} from '../../../types';
 import { transformMonths } from './utils';
 
 type TProps = {
   firstDateOfCurrentMonthOfView: Date;
-  selectOnlyVisibleMonth?: boolean;
   disabled?: TDisabled;
   single?: TSingle;
   multi?: TMulti;
@@ -21,7 +20,6 @@ type TProps = {
 };
 export function useMonths({
   firstDateOfCurrentMonthOfView,
-  selectOnlyVisibleMonth,
   disabled,
   single,
   multi,
@@ -40,7 +38,6 @@ export function useMonths({
       single,
       multi,
       range,
-      selectOnlyVisibleMonth,
       onMonthClick,
     }),
   );

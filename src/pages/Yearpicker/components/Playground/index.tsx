@@ -4,8 +4,9 @@ import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import { DatepickerCalendar } from "~/packages/DatepickerCalendar";
-import { TWeek } from "~/packages/DatepickerCalendar";
+import { Yearpicker } from "~/packages/Yearpicker";
 import { TDatepickerCalendarProviderProps } from "~/packages/types";
+import { useYearsPicker } from "~/packages/useYearsPicker";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { Params } from "../Params";
@@ -18,18 +19,14 @@ const OPTIONS_BOOLEAN = [
 ];
 
 type TPlaygroundParams = {
-  weekStartsOn?: TWeek;
-  selectOnlyVisibleMonth?: boolean;
   disabledDates?: Date[];
   date?: Date | null;
-  fixedWeeks: boolean;
   single?: {
     selectedDate: Date | null;
     toggle?: boolean;
   };
   multi?: {
     selectedDates: Date[];
-    enableHeaderSelection?: boolean;
   };
   range?: {
     selectedDate: { from: Date | null; to: Date | null };
@@ -40,10 +37,9 @@ type TPlaygroundParams = {
   };
   disabledAfter?: Date;
   disabledBefore?: Date;
-  disabledWeeks: TWeek[];
 };
 
-export function Daypicker() {
+export function Playground() {
   const { translate } = useTranslation();
   const [showCalendar, setShowCalendar] = useState(true);
   const [neccessaryReload, setIsNecessaryReload] = useState(false);
@@ -52,11 +48,9 @@ export function Daypicker() {
 
   const [playgroundParams, setPlaygroundParams] = useState<TPlaygroundParams>({
     date: null,
-    fixedWeeks: true,
     single: {
       selectedDate: null,
     },
-    disabledWeeks: [],
   });
 
   const onChangeInputByType = ({
@@ -107,7 +101,6 @@ export function Daypicker() {
       label: "Mode",
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) => {
         const value = target.value as "single" | "multi" | "range";
-
         onChangeInputByType({
           type: value,
           value:
@@ -128,27 +121,6 @@ export function Daypicker() {
     },
     {
       type: "select",
-      label: "Fixed Weeks",
-      onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
-        onChangeInputProp({
-          value: target.value === "null" ? null : target.value === "true",
-          prop: "fixedWeeks",
-        }),
-      options: OPTIONS_BOOLEAN,
-      tooltip: translate("FIXED_WEEKS_TOOLTIP"),
-    },
-    {
-      type: "select",
-      label: "Select Only Visible Month",
-      onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
-        onChangeInputProp({
-          value: target.value === "null" ? null : target.value === "true",
-          prop: "selectOnlyVisibleMonth",
-        }),
-      options: OPTIONS_BOOLEAN,
-    },
-    {
-      type: "select",
       label: "Toggle",
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
         onChangeInputByType({
@@ -158,18 +130,6 @@ export function Daypicker() {
         }),
       options: OPTIONS_BOOLEAN,
       hide: !playgroundParams.single,
-    },
-    {
-      type: "select",
-      label: "Header Selection",
-      onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
-        onChangeInputByType({
-          type: "multi",
-          value: target.value === "null" ? null : target.value === "true",
-          prop: "enableHeaderSelection",
-        }),
-      options: OPTIONS_BOOLEAN,
-      hide: !playgroundParams.multi,
     },
     {
       type: "select",
@@ -216,20 +176,6 @@ export function Daypicker() {
           prop: "maxInterval",
         }),
       hide: !playgroundParams.range,
-    },
-    {
-      type: "input-number",
-      label: "Week Starts On",
-      onChange: ({ target }: ChangeEvent<HTMLInputElement>) =>
-        onChangeInputProp({
-          value:
-            Number(target.value) < 0
-              ? 0
-              : Number(target.value) > 6
-              ? 6
-              : Number(target.value),
-          prop: "weekStartsOn",
-        }),
     },
     {
       type: "input-date",
@@ -286,40 +232,6 @@ export function Daypicker() {
       },
       tooltip: translate("DISABLED_DATES_TOOLTIP"),
     },
-    {
-      type: "input-checkbox",
-      label: "Weeks Disabled",
-      onChange: ({
-        option,
-        checked,
-      }: {
-        option: { value: string | undefined; label: string };
-        checked: boolean;
-      }) => {
-        setPlaygroundParams((prev) => {
-          const ifChecked = [
-            ...prev.disabledWeeks,
-            Number(option.value),
-          ] as TWeek[];
-          const ifUnChecked = prev.disabledWeeks?.filter(
-            (item) => item !== Number(option.value)
-          );
-          return {
-            ...prev,
-            disabledWeeks: checked ? ifChecked : ifUnChecked,
-          };
-        });
-      },
-      options: [
-        { label: "Sun", value: "0" },
-        { label: "Mon", value: "1" },
-        { label: "Tue", value: "2" },
-        { label: "Wed", value: "3" },
-        { label: "Thu", value: "4" },
-        { label: "Fri", value: "5" },
-        { label: "Sat", value: "6" },
-      ],
-    },
   ];
 
   function parseDateInput(value?: string | null) {
@@ -354,7 +266,6 @@ export function Daypicker() {
               value: e,
               prop: "selectedDates",
             }),
-          enableHeaderSelection: playgroundParams.multi.enableHeaderSelection,
         },
       };
     }
@@ -394,16 +305,11 @@ export function Daypicker() {
       >
         {showCalendar && (
           <div className="border rounded h-full">
-            <DatepickerCalendar
-              weekStartsOn={playgroundParams.weekStartsOn}
-              fixedWeeks={playgroundParams.fixedWeeks}
-              selectOnlyVisibleMonth={playgroundParams.selectOnlyVisibleMonth}
-              date={playgroundParams.date}
+            <Yearpicker
               disabled={{
                 after: playgroundParams.disabledAfter,
                 before: playgroundParams.disabledBefore,
                 dates: playgroundParams.disabledDates,
-                weeeks: playgroundParams.disabledWeeks,
               }}
               {...getParams()}
             />

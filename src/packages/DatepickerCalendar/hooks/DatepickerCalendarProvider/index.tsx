@@ -16,8 +16,6 @@ import {
 } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
 import { delay } from "~/utils/delay";
-import en from "../../i18n/en.json";
-import ptBr from "../../i18n/pt-br.json";
 import {
   TDate,
   TDatepickerCalendarProviderProps,
@@ -30,8 +28,9 @@ import {
   TViewMode,
   TWeek,
   TYear,
-} from "../../types";
-import { allDatesIsSelectedsByDayOfWeek, capitalize } from "../../utils";
+} from "../../../types";
+import en from "../../i18n/en.json";
+import ptBr from "../../i18n/pt-br.json";
 import { useDatePicker } from "../useDatepicker";
 
 type DatepickerCalendarContextType = {

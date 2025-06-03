@@ -1,6 +1,6 @@
 import { isSameDay } from 'date-fns';
 
-import { TDate, TMulti } from '../../../../types';
+import { TDate, TMulti } from '../../../../../types';
 
 type TProps = {
   dayOfWeek: number;

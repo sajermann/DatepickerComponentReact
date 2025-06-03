@@ -1,4 +1,4 @@
-import { format, isSameMonth } from 'date-fns';
+import { format, isSameYear } from 'date-fns';
 import {
   isDisabledAfter,
   isDisabledBefore,
@@ -11,36 +11,37 @@ import {
   isSelectedRange,
   isSelectedSingle,
 } from '..';
+
 import {
   TDisabled,
-  TMonth,
   TMulti,
   TSelectedRange,
+  TSelectedRangeWithHover,
   TSingle,
-} from '../../../../../types';
-import { capitalize } from '../../../../utils/capitalize';
+  TViewMode,
+  TYear,
+} from '../../../types';
+import { onYearClick } from '../onYearClick';
 
 type TProps = {
   dateToVerify: Date;
-  firstDateOfCurrentMonthOfView: Date;
+  startOfYear: Date;
   disabled?: TDisabled;
   single?: TSingle;
   multi?: TMulti;
-  range?: TSelectedRange;
-  onMonthClick?: (data: Omit<TMonth, 'onClick'>) => void;
+  range?: TSelectedRangeWithHover;
+  // onYearClick?: (data: Omit<TYear, 'onClick'>) => void;
 };
 
-export function transformMonths({
-  firstDateOfCurrentMonthOfView,
+export function transformeYears({
+  startOfYear,
   dateToVerify,
   disabled,
   single,
   multi,
   range,
-  onMonthClick,
-}: TProps): TMonth {
-  const monthOfYear = dateToVerify.getMonth();
-
+  // onYearClick,
+}: TProps): TYear {
   const isDisabled =
     isDisabledDates({ dateToVerify, disabled }) ||
     isDisabledBefore({ dateToVerify, disabled }) ||
@@ -77,35 +78,21 @@ export function transformMonths({
       dateToVerify,
       selectedDateByRange: range?.selectedDate,
     });
-
-  const date = dateToVerify;
-
-  const month = dateToVerify.getMonth();
-
+  const year = dateToVerify.getFullYear();
   const finalResult = {
-    date,
-    month,
-    year: date.getFullYear(),
-    isJanuary: monthOfYear === 0,
-    isFebruary: monthOfYear === 1,
-    isMarch: monthOfYear === 2,
-    isApril: monthOfYear === 3,
-    isMay: monthOfYear === 4,
-    isJune: monthOfYear === 5,
-    isJuly: monthOfYear === 6,
-    isAugust: monthOfYear === 7,
-    isSeptember: monthOfYear === 8,
-    isOctober: monthOfYear === 9,
-    isNovember: monthOfYear === 10,
-    isDecember: monthOfYear === 11,
-    isToday: isSameMonth(date, new Date()),
+    date: dateToVerify,
+    year,
+    isToday: isSameYear(dateToVerify, new Date()),
     isSelected,
     isDisabled,
-    text: capitalize(format(date, 'MMM')),
-    isMonthOfView: month === firstDateOfCurrentMonthOfView.getMonth(),
+    text: format(dateToVerify, 'yyyy'),
+    isYearOfView: year === startOfYear.getFullYear(),
   };
+
   return {
     ...finalResult,
-    onClick: () => onMonthClick?.({ ...finalResult }),
+    onClick: () => {
+      onYearClick?.({ dateToVerify, single, multi, range });
+    },
   };
 }

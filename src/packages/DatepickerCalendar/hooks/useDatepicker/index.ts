@@ -12,6 +12,7 @@ import {
   subMilliseconds,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
+import { useYearsPicker } from '~/packages/useYearsPicker';
 import {
   TDisabled,
   TMulti,
@@ -19,11 +20,10 @@ import {
   TSingle,
   TViewMode,
   TWeek,
-} from '../../types';
+} from '../../../types';
+import { useDays } from '../useDays';
 import { useHeaders } from '../useHeaders';
 import { useMonths } from '../useMonths';
-import { useWeeks } from '../useWeeks';
-import { useYears } from '../useYears';
 
 const YEARS_TO_SHOW = 24;
 
@@ -54,7 +54,7 @@ export function useDatePicker({
     firstDateOfCurrentMonthOfView,
   );
 
-  const { weeks } = useWeeks({
+  const { days, weeks } = useDays({
     firstDateOfCurrentMonthOfView,
     endDate: lastDateOfCurrentMonthOfView,
     disabled,
@@ -71,7 +71,6 @@ export function useDatePicker({
     disabled,
     multi,
     range,
-    selectOnlyVisibleMonth,
     single,
     onMonthClick: ({ month }) => {
       setFirstDateOfCurrentMonthOfView(prev => {
@@ -83,12 +82,11 @@ export function useDatePicker({
     },
   });
 
-  const { years } = useYears({
-    firstDateOfCurrentMonthOfView: firstDateOfCurrentMonthOfView,
+  const { years } = useYearsPicker({
+    year: startOfYear(firstDateOfCurrentMonthOfView).getFullYear(),
     disabled,
     multi,
     range,
-    selectOnlyVisibleMonth,
     single,
     onYearClick: ({ year }) => {
       setFirstDateOfCurrentMonthOfView(prev => {
@@ -107,8 +105,8 @@ export function useDatePicker({
     weekStartsOn,
   });
 
-  const firstDateOfView = weeks.at(0)?.at(0);
-  const lastDateOfView = weeks.at(-1)?.at(-1);
+  const firstDateOfView = days.at(0);
+  const lastDateOfView = days.at(-1);
 
   const handlePrevMonthOfView = () => {
     setFirstDateOfCurrentMonthOfView(
@@ -207,6 +205,7 @@ export function useDatePicker({
 
   const memoizedValue = useMemo(
     () => ({
+      days,
       weeks,
       months,
       years,
@@ -224,6 +223,7 @@ export function useDatePicker({
       setViewMode,
     }),
     [
+      days,
       weeks,
       months,
       years,

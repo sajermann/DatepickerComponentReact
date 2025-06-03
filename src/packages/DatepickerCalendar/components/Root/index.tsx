@@ -1,6 +1,6 @@
 import { managerClassNames } from "~/utils/managerClassNames";
+import { TDatepickerCalendarProviderProps } from "../../../types";
 import { DatepickerCalendarProvider } from "../../hooks";
-import { TDatepickerCalendarProviderProps } from "../../types";
 import { Months } from "../Months";
 import { Selectors } from "../Selectors";
 import { WeekDays } from "../WeekDays";
