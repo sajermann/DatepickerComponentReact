@@ -1,12 +1,14 @@
-import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import { DatepickerCalendar } from "~/packages/DatepickerCalendar";
-import { Yearpicker } from "~/packages/Yearpicker";
-import { TDatepickerCalendarProviderProps } from "~/packages/types";
-import { useYearsPicker } from "~/packages/useYearsPicker";
+import { Yearpicker } from "~/packages/YearPicker";
+import {
+  TMulti,
+  TSelectedRange,
+  TSelectedRangeWithHover,
+  TSingle,
+} from "~/packages/useYearsPicker";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { Params } from "../Params";
@@ -19,37 +21,38 @@ const OPTIONS_BOOLEAN = [
 ];
 
 type TPlaygroundParams = {
-  disabledDates?: Date[];
-  date?: Date | null;
+  disabledYears?: number[];
+  year?: number | null;
   single?: {
-    selectedDate: Date | null;
+    selectedYear: number | null;
     toggle?: boolean;
   };
   multi?: {
-    selectedDates: Date[];
+    selectedYears: number[];
   };
   range?: {
-    selectedDate: { from: Date | null; to: Date | null };
-    disabledAfterFirstDisabledDates?: boolean;
-    disabledSameDate?: boolean;
+    selectedYear: { from: number | null; to: number | null };
+    disabledAfterFirstDisabledYears?: boolean;
+    disabledSameYear?: boolean;
     maxInterval?: number;
     minInterval?: number;
   };
-  disabledAfter?: Date;
-  disabledBefore?: Date;
+  disabledAfter?: number;
+  disabledBefore?: number;
 };
 
 export function Playground() {
   const { translate } = useTranslation();
   const [showCalendar, setShowCalendar] = useState(true);
   const [neccessaryReload, setIsNecessaryReload] = useState(false);
-  const [dateDisabledToInclude, setDateDisabledToInclude] =
-    useState<Date | null>(null);
+  const [yearDisabledToInclude, setYearDisabledToInclude] = useState<
+    number | null
+  >(null);
 
   const [playgroundParams, setPlaygroundParams] = useState<TPlaygroundParams>({
-    date: null,
+    year: null,
     single: {
-      selectedDate: null,
+      selectedYear: null,
     },
   });
 
@@ -109,7 +112,7 @@ export function Playground() {
               : value === "multi"
               ? []
               : { from: null, to: null },
-          prop: value === "multi" ? "selectedDates" : "selectedDate",
+          prop: value === "multi" ? "selectedYears" : "selectedYear",
         });
       },
       options: [
@@ -133,24 +136,24 @@ export function Playground() {
     },
     {
       type: "select",
-      label: "Disabled After First Disabled Dates",
+      label: "Disabled After First Disabled Years",
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
         onChangeInputByType({
           type: "range",
           value: target.value === "null" ? null : target.value === "true",
-          prop: "disabledAfterFirstDisabledDates",
+          prop: "disabledAfterFirstDisabledYears",
         }),
       options: OPTIONS_BOOLEAN,
       hide: !playgroundParams.range,
     },
     {
       type: "select",
-      label: "Disabled Same Date",
+      label: "Disabled Same Year",
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
         onChangeInputByType({
           type: "range",
           value: target.value === "null" ? null : target.value === "true",
-          prop: "disabledSameDate",
+          prop: "disabledSameYear",
         }),
       options: OPTIONS_BOOLEAN,
       hide: !playgroundParams.range,
@@ -178,79 +181,75 @@ export function Playground() {
       hide: !playgroundParams.range,
     },
     {
-      type: "input-date",
-      label: "Date",
+      type: "input-number",
+      label: "Year",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
         onChangeInputProp({
-          value: target.value ? startOfDay(new Date(target.value)) : null,
-          prop: "date",
+          value: target.value ? Number(target.value) : null,
+          prop: "year",
         });
         setIsNecessaryReload(true);
       },
     },
     {
-      type: "input-date",
-      label: "Date Disabled Before",
+      type: "input-number",
+      label: "Year Disabled Before",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
-        parseDateInput(target.value);
         onChangeInputProp({
-          value: parseDateInput(target.value),
+          value: Number(target.value),
           prop: "disabledBefore",
         });
       },
     },
     {
-      type: "input-date",
-      label: "Date Disabled After",
+      type: "input-number",
+      label: "Year Disabled After",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
         onChangeInputProp({
-          value: parseDateInput(target.value),
+          value: Number(target.value),
           prop: "disabledAfter",
         });
       },
     },
     {
-      type: "input-date",
-      label: "Dates Disabled",
+      type: "input-number",
+      label: "Years Disabled",
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
-        setDateDisabledToInclude(parseDateInput(target.value));
+        setYearDisabledToInclude(Number(target.value));
       },
       onInclude: () => {
-        if (!dateDisabledToInclude) {
+        if (!yearDisabledToInclude) {
           return;
         }
         setPlaygroundParams((prev) => {
           return {
             ...prev,
-            disabledDates: !prev.disabledDates
-              ? [dateDisabledToInclude]
-              : [...prev.disabledDates, dateDisabledToInclude],
+            disabledYears: !prev.disabledYears
+              ? [yearDisabledToInclude]
+              : [...prev.disabledYears, yearDisabledToInclude],
           };
         });
 
-        setDateDisabledToInclude(null);
+        setYearDisabledToInclude(null);
       },
       tooltip: translate("DISABLED_DATES_TOOLTIP"),
     },
   ];
 
-  function parseDateInput(value?: string | null) {
-    if (!value) return null;
-    const [year, month, day] = value.split("-").map(Number);
-    return new Date(year, month - 1, day);
-  }
-
-  function getParams(): TDatepickerCalendarProviderProps {
+  function getParams():
+    | { single: TSingle }
+    | { multi: TMulti }
+    | { range: TSelectedRange } {
     if (playgroundParams.single) {
       return {
         single: {
           toggle: playgroundParams.single?.toggle,
-          selectedDate: playgroundParams.single?.selectedDate,
-          onSelectedDate: (e) =>
+          selectedYear: playgroundParams.single?.selectedYear,
+          onSelectedYear: (e) =>
             onChangeInputByType({
               type: "single",
               value: e,
-              prop: "selectedDate",
+              prop: "selectedYear",
             }),
         },
       };
@@ -259,12 +258,12 @@ export function Playground() {
     if (playgroundParams.multi) {
       return {
         multi: {
-          selectedDates: playgroundParams.multi.selectedDates,
-          onSelectedDates: (e) =>
+          selectedYears: playgroundParams.multi.selectedYears,
+          onSelectedYears: (e) =>
             onChangeInputByType({
               type: "multi",
               value: e,
-              prop: "selectedDates",
+              prop: "selectedYears",
             }),
         },
       };
@@ -273,30 +272,31 @@ export function Playground() {
     if (playgroundParams.range) {
       return {
         range: {
-          selectedDate: playgroundParams.range?.selectedDate,
-          onSelectedDate: (e) =>
+          selectedYear: playgroundParams.range?.selectedYear,
+          onSelectedYear: (e) =>
             onChangeInputByType({
               type: "range",
               value: e,
-              prop: "selectedDate",
+              prop: "selectedYear",
             }),
-          disabledAfterFirstDisabledDates:
-            playgroundParams.range.disabledAfterFirstDisabledDates,
-          disabledSameDate: playgroundParams.range.disabledSameDate,
+          disabledAfterFirstDisabledYears:
+            playgroundParams.range.disabledAfterFirstDisabledYears,
+          disabledSameYear: playgroundParams.range.disabledSameYear,
           minInterval: playgroundParams.range.minInterval,
           maxInterval: playgroundParams.range.maxInterval,
         },
       };
     }
 
-    return {} as TDatepickerCalendarProviderProps;
+    return {} as
+      | { single: TSingle }
+      | { multi: TMulti }
+      | { range: TSelectedRangeWithHover };
   }
 
   return (
-    <Section title="Daypicker" variant="h2">
-      <Section title="Playground" variant="h3">
-        <Params inputs={inputs} />
-      </Section>
+    <Section title="Playground" variant="h2">
+      <Params inputs={inputs} />
 
       <Section
         title={translate("CALENDAR")}
@@ -306,10 +306,11 @@ export function Playground() {
         {showCalendar && (
           <div className="border rounded h-full">
             <Yearpicker
+              year={playgroundParams.year}
               disabled={{
                 after: playgroundParams.disabledAfter,
                 before: playgroundParams.disabledBefore,
-                dates: playgroundParams.disabledDates,
+                years: playgroundParams.disabledYears,
               }}
               {...getParams()}
             />

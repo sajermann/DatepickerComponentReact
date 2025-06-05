@@ -1,9 +1,7 @@
-import { isSameYear } from 'date-fns';
-
 export function isSelectedSingle({
-  dateToVerify,
-  selectedDate,
-}: { dateToVerify: Date; selectedDate?: Date | null }) {
-  if (!selectedDate) return false;
-  return isSameYear(dateToVerify, selectedDate);
+  yearToVerify,
+  selectedYear,
+}: { yearToVerify: number; selectedYear?: number | null }) {
+  if (!selectedYear) return false;
+  return yearToVerify === selectedYear;
 }

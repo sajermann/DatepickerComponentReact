@@ -1,11 +1,8 @@
-import { isAfter, startOfDay } from 'date-fns';
-import { TDisabled } from '~/packages/types';
+import { TDisabled } from '../../types';
 
 export function isDisabledAfter({
-  dateToVerify,
+  yearToVerify,
   disabled,
-}: { dateToVerify: Date; disabled?: TDisabled }) {
-  return disabled?.after
-    ? isAfter(startOfDay(dateToVerify), startOfDay(disabled.after))
-    : false;
+}: { yearToVerify: number; disabled?: TDisabled }) {
+  return disabled?.after && disabled.after < yearToVerify;
 }

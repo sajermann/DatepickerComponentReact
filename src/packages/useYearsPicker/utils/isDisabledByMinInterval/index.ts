@@ -1,32 +1,28 @@
-import { addYears, isWithinInterval } from 'date-fns';
-import { TSelectedRange } from '~/packages/types';
+import { TSelectedRange } from '../../types';
 
 export function isDisabledByMinInterval({
-  dateToVerify,
-  selectedDateByRange,
+  yearToVerify,
+  selectedYearByRange,
 }: {
-  dateToVerify: Date;
-  selectedDateByRange?: TSelectedRange;
+  yearToVerify: number;
+  selectedYearByRange?: TSelectedRange;
 }) {
   if (
-    !selectedDateByRange?.minInterval ||
-    !selectedDateByRange?.selectedDate.from
+    !selectedYearByRange?.minInterval ||
+    !selectedYearByRange?.selectedYear.from
   ) {
     return false;
   }
 
   if (
-    selectedDateByRange?.selectedDate.from &&
-    selectedDateByRange?.selectedDate.to
+    selectedYearByRange?.selectedYear.from &&
+    selectedYearByRange?.selectedYear.to
   ) {
     return false;
   }
 
-  return isWithinInterval(dateToVerify, {
-    start: selectedDateByRange.selectedDate.from,
-    end: addYears(
-      selectedDateByRange.selectedDate.from,
-      selectedDateByRange.minInterval,
-    ),
-  });
+  return (
+    yearToVerify >
+    selectedYearByRange.selectedYear.from + selectedYearByRange.minInterval
+  );
 }

@@ -6,30 +6,36 @@ import { useTranslation } from "~/hooks/useTranslation";
 import { Playground } from "./components/Playground";
 
 const TODO_LIST = [
-  { checked: true, text: `Date - Normal` },
-  { checked: true, text: `Date - Toggle` },
-  { checked: true, text: `Date - Select only visible month` },
-  { checked: true, text: `Date - Week start on` },
-  { checked: true, text: `Date - Multiple selection` },
-  {
-    checked: true,
-    text: `Date - Disabled arrow month based Date Disabled Before/After params`,
-  },
-  { checked: true, text: `Date - Range Dates` },
-  { checked: true, text: `Date - Composition (Calendar)` },
-  { checked: false, text: `Date - Seletor Meses` },
-  { checked: false, text: `Date - Seletor Anos` },
-  { checked: false, text: `Date - Popup com eventos talvez` },
-  { checked: false, text: `Date - Disabled Month (Month Picker)` },
-  { checked: false, text: `Date - Disabled Year (Year Picker)` },
+  { checked: true, text: `Single - Normal` },
+  { checked: true, text: `Single - Toggle` },
+  { checked: true, text: `Single - Initial Year` },
+  { checked: true, text: `Single - Disabled Before` },
+  { checked: true, text: `Single - Disabled After` },
+  { checked: true, text: `Single - Years Disableds` },
+
+  { checked: true, text: `Multi - Normal` },
+  { checked: true, text: `Multi - Initial Year` },
+  { checked: true, text: `Multi - Disabled Before` },
+  { checked: true, text: `Multi - Disabled After` },
+  { checked: true, text: `Multi - Years Disableds` },
+
+  { checked: true, text: `Range - Normal` },
+  { checked: true, text: `Range - Disabled After First Disabled Years` },
+  { checked: true, text: `Range - Disabled Same Year` },
+  { checked: true, text: `Range - Min Interval` },
+  { checked: true, text: `Range - Max Interval` },
+  { checked: true, text: `Range - Initial Year` },
+  { checked: true, text: `Range - Disabled Before` },
+  { checked: true, text: `Range - Disabled After` },
+  { checked: true, text: `Range - Years Disableds` },
 ];
 
 const COMPONENTS = [
-  // { e: <TodoList list={TODO_LIST} /> },
+  { e: <TodoList list={TODO_LIST} /> },
   { e: <Playground /> },
 ];
 
-export function YearpickerPage() {
+export function YearPickerPage() {
   const { translate } = useTranslation();
 
   return (

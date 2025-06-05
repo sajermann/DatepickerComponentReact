@@ -1,20 +1,17 @@
-import { isWithinInterval } from 'date-fns';
-import { TRange } from '~/packages/types';
+import { TRange } from '../../types';
 
 export function isSelectedRange({
-  dateToVerify,
-  selectedDateByRange,
-}: { dateToVerify: Date; selectedDateByRange?: TRange }) {
+  yearToVerify,
+  selectedYearByRange,
+}: { yearToVerify: number; selectedYearByRange?: TRange }) {
   return (
-    dateToVerify.getTime() === selectedDateByRange?.from?.getTime() ||
-    dateToVerify.getTime() === selectedDateByRange?.to?.getTime() ||
+    yearToVerify === selectedYearByRange?.from ||
+    yearToVerify === selectedYearByRange?.to ||
     !!(
-      selectedDateByRange?.from &&
-      selectedDateByRange?.to &&
-      isWithinInterval(dateToVerify, {
-        start: selectedDateByRange.from,
-        end: selectedDateByRange.to,
-      })
+      selectedYearByRange?.from &&
+      selectedYearByRange?.to &&
+      yearToVerify > selectedYearByRange.from &&
+      yearToVerify < selectedYearByRange.to
     )
   );
 }

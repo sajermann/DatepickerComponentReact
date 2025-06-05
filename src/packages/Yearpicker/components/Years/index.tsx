@@ -1,5 +1,5 @@
 import { getDataAttributes } from "~/packages/DatepickerCalendar/utils";
-import { TYear } from "~/packages/types";
+import { TYear } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 
 export function Years({ years }: { years: TYear[] }) {
@@ -7,7 +7,7 @@ export function Years({ years }: { years: TYear[] }) {
     <div className="justify-items-center grid grid-cols-3 @container">
       {years.map((year) => (
         <div
-          key={year.date.toISOString()}
+          key={year.year}
           {...getDataAttributes(year)}
           className={managerClassNames([
             "hover:bg-slate-500 rounded",
@@ -17,15 +17,18 @@ export function Years({ years }: { years: TYear[] }) {
             { "bg-slate-700": year.isSelected },
             { "hover:bg-slate-600": year.isSelected },
             { "opacity-25 !cursor-not-allowed": year.isDisabled },
-            { "border rounded border-slate-500": year.isToday },
+            { "border rounded border-slate-500": year.isThisYear },
             { "opacity-50": year.isSelected && year.isDisabled },
+            { "bg-slate-500": year.isHoveredRange },
           ])}
         >
           <button
             type="button"
             className="w-full h-full flex items-center justify-center"
             onClick={year.onClick}
+            onMouseEnter={year.onMouseEnter}
             disabled={year.isDisabled}
+            onFocus={year.onFocus}
           >
             {year.text}
           </button>

@@ -1,32 +1,28 @@
-import { addDays, isAfter } from 'date-fns';
-import { TSelectedRange } from '~/packages/types';
+import { TSelectedRange } from '../../types';
 
 export function isDisabledByMaxInterval({
-  dateToVerify,
-  selectedDateByRange,
+  yearToVerify,
+  selectedYearByRange,
 }: {
-  dateToVerify: Date;
-  selectedDateByRange?: TSelectedRange;
+  yearToVerify: number;
+  selectedYearByRange?: TSelectedRange;
 }) {
   if (
-    !selectedDateByRange?.maxInterval ||
-    !selectedDateByRange?.selectedDate.from
+    !selectedYearByRange?.maxInterval ||
+    !selectedYearByRange?.selectedYear.from
   ) {
     return false;
   }
 
   if (
-    selectedDateByRange?.selectedDate.from &&
-    selectedDateByRange?.selectedDate.to
+    selectedYearByRange?.selectedYear.from &&
+    selectedYearByRange?.selectedYear.to
   ) {
     return false;
   }
 
-  return isAfter(
-    dateToVerify,
-    addDays(
-      selectedDateByRange.selectedDate.from,
-      selectedDateByRange.maxInterval,
-    ),
+  return (
+    yearToVerify >
+    selectedYearByRange?.selectedYear.from + selectedYearByRange?.maxInterval
   );
 }

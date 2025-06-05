@@ -1,98 +1,93 @@
-import { format, isSameYear } from 'date-fns';
 import {
   isDisabledAfter,
   isDisabledBefore,
   isDisabledByMaxInterval,
   isDisabledByMinInterval,
   isDisabledCancelOnDisabledDate,
-  isDisabledDates,
-  isDisabledSameDate,
+  isDisabledSameYear,
+  isDisabledYears,
+  isHoveredRange,
   isSelectedMulti,
   isSelectedRange,
   isSelectedSingle,
 } from '..';
 
-import {
-  TDisabled,
-  TMulti,
-  TSelectedRange,
-  TSelectedRangeWithHover,
-  TSingle,
-  TViewMode,
-  TYear,
-} from '../../../types';
+import { TTransformeYearsProps, TYear } from '../../types';
 import { onYearClick } from '../onYearClick';
 
-type TProps = {
-  dateToVerify: Date;
-  startOfYear: Date;
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
-  // onYearClick?: (data: Omit<TYear, 'onClick'>) => void;
-};
-
 export function transformeYears({
-  startOfYear,
-  dateToVerify,
+  yearToVerify,
   disabled,
   single,
   multi,
   range,
-  // onYearClick,
-}: TProps): TYear {
+}: TTransformeYearsProps): TYear {
   const isDisabled =
-    isDisabledDates({ dateToVerify, disabled }) ||
-    isDisabledBefore({ dateToVerify, disabled }) ||
-    isDisabledAfter({ dateToVerify, disabled }) ||
+    isDisabledYears({ yearToVerify, disabled }) ||
+    isDisabledBefore({ yearToVerify, disabled }) ||
+    isDisabledAfter({ yearToVerify, disabled }) ||
     isDisabledCancelOnDisabledDate({
-      dateToVerify,
+      yearToVerify,
       disabled,
-      selectedDateByRange: range?.selectedDate,
-      disabledAfterFirstDisabledDates: range?.disabledAfterFirstDisabledDates,
+      selectedYearByRange: range?.selectedYear,
+      disabledAfterFirstDisabledYears: range?.disabledAfterFirstDisabledYears,
     }) ||
-    isDisabledSameDate({
-      dateToVerify,
+    isDisabledSameYear({
+      yearToVerify,
       selectedDateByRange: range,
     }) ||
     isDisabledByMinInterval({
-      dateToVerify,
-      selectedDateByRange: range,
+      yearToVerify,
+      selectedYearByRange: range,
     }) ||
     isDisabledByMaxInterval({
-      dateToVerify,
-      selectedDateByRange: range,
+      yearToVerify,
+      selectedYearByRange: range,
     });
 
   const isSelected =
     isSelectedSingle({
-      dateToVerify,
-      selectedDate: single?.selectedDate,
+      yearToVerify,
+      selectedYear: single?.selectedYear,
     }) ||
     isSelectedMulti({
-      dateToVerify,
-      selectedDates: multi?.selectedDates,
+      yearToVerify,
+      selectedYears: multi?.selectedYears,
     }) ||
     isSelectedRange({
-      dateToVerify,
-      selectedDateByRange: range?.selectedDate,
+      yearToVerify,
+      selectedYearByRange: range?.selectedYear,
     });
-  const year = dateToVerify.getFullYear();
-  const finalResult = {
-    date: dateToVerify,
+  const year = yearToVerify;
+  const finalResult: TYear = {
     year,
-    isToday: isSameYear(dateToVerify, new Date()),
+    isThisYear: year === new Date().getFullYear(),
     isSelected,
     isDisabled,
-    text: format(dateToVerify, 'yyyy'),
-    isYearOfView: year === startOfYear.getFullYear(),
-  };
-
-  return {
-    ...finalResult,
+    text: String(year),
+    isHoveredRange:
+      !isSelected &&
+      isHoveredRange({
+        yearToVerify,
+        selectedYearByRange: range?.selectedYear,
+        lastHoveredYear: range?.lastHoveredYear,
+      }),
     onClick: () => {
-      onYearClick?.({ dateToVerify, single, multi, range });
+      onYearClick?.({ yearToVerify, single, multi, range });
+    },
+    onMouseEnter: () => {
+      if (!range?.selectedYear.from || range?.selectedYear.to) {
+        return;
+      }
+      range.setLastHoveredYear(year);
+    },
+    onFocus: () => {
+      if (!range?.selectedYear.from || range?.selectedYear.to) {
+        return;
+      }
+      range.setLastHoveredYear(year + 1);
     },
   };
+
+  return finalResult;
 }

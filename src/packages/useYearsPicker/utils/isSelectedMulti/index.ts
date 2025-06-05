@@ -1,8 +1,6 @@
 export function isSelectedMulti({
-  dateToVerify,
-  selectedDates,
-}: { dateToVerify: Date; selectedDates?: Date[] }) {
-  return !!selectedDates?.some(
-    item => item.getTime() === dateToVerify.getTime(),
-  );
+  yearToVerify,
+  selectedYears,
+}: { yearToVerify: number; selectedYears?: number[] }) {
+  return !!selectedYears?.some(item => item === yearToVerify);
 }

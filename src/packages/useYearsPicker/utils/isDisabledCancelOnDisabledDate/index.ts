@@ -1,34 +1,33 @@
-import { isAfter, isBefore } from 'date-fns';
-import { TDisabled, TRange } from '~/packages/types';
+import { TDisabled, TRange } from '../../types';
 
 export function isDisabledCancelOnDisabledDate({
-  dateToVerify,
+  yearToVerify,
   disabled,
-  selectedDateByRange,
-  disabledAfterFirstDisabledDates,
+  selectedYearByRange,
+  disabledAfterFirstDisabledYears,
 }: {
-  dateToVerify: Date;
+  yearToVerify: number;
   disabled?: TDisabled;
-  selectedDateByRange?: TRange;
-  disabledAfterFirstDisabledDates?: boolean;
+  selectedYearByRange?: TRange;
+  disabledAfterFirstDisabledYears?: boolean;
 }) {
-  if (!selectedDateByRange || !selectedDateByRange.from) {
+  if (!selectedYearByRange || !selectedYearByRange.from) {
     return false;
   }
 
   if (
-    selectedDateByRange.from &&
-    !selectedDateByRange.to &&
-    isBefore(dateToVerify, selectedDateByRange.from)
+    selectedYearByRange.from &&
+    !selectedYearByRange.to &&
+    yearToVerify < selectedYearByRange.from
   ) {
     return true;
   }
 
-  const sortabledDates = disabled?.dates?.sort((a, b) => {
-    if (a.getTime() < b.getTime()) {
+  const sortabledYears = disabled?.years?.sort((a, b) => {
+    if (a < b) {
       return -1;
     }
-    if (a.getTime() > b.getTime()) {
+    if (a > b) {
       return 1;
     }
 
@@ -36,18 +35,18 @@ export function isDisabledCancelOnDisabledDate({
   });
 
   const disabledDatesAfterDateToVerify =
-    sortabledDates?.filter(
-      item => item.getTime() > (selectedDateByRange.from as Date).getTime(),
+    sortabledYears?.filter(
+      item => selectedYearByRange?.from && item > selectedYearByRange.from,
     ) || [];
 
   if (
-    selectedDateByRange.from &&
-    !selectedDateByRange.to &&
-    disabledAfterFirstDisabledDates &&
-    sortabledDates &&
-    sortabledDates.length &&
-    isAfter(disabledDatesAfterDateToVerify[0], selectedDateByRange.from) &&
-    isAfter(dateToVerify, disabledDatesAfterDateToVerify[0])
+    selectedYearByRange.from &&
+    !selectedYearByRange.to &&
+    disabledAfterFirstDisabledYears &&
+    sortabledYears &&
+    sortabledYears.length &&
+    disabledDatesAfterDateToVerify[0] > selectedYearByRange.from &&
+    yearToVerify > disabledDatesAfterDateToVerify[0]
   ) {
     return true;
   }

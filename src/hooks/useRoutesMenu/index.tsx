@@ -34,9 +34,15 @@ const DatepickerCalendarPage = lazy(() =>
   )
 );
 
-const YearpickerPage = lazy(() =>
-  import("~/pages/Yearpicker").then(({ YearpickerPage: Yearpicker }) => ({
-    default: Yearpicker,
+const YearPickerPage = lazy(() =>
+  import("~/pages/YearPicker").then(({ YearPickerPage: YearPicker }) => ({
+    default: YearPicker,
+  }))
+);
+
+const MonthPickerPage = lazy(() =>
+  import("~/pages/MonthPicker").then(({ MonthPickerPage: MonthPicker }) => ({
+    default: MonthPicker,
   }))
 );
 
@@ -65,10 +71,17 @@ export function useRoutesMenu() {
         },
         {
           name: "Year Picker",
-          path: "/yearpicker",
+          path: "/year-picker",
           description: "Year Picker",
-          element: <YearpickerPage />,
+          element: <YearPickerPage />,
           label: "Year Picker",
+        },
+        {
+          name: "Month Picker",
+          path: "/month-picker",
+          description: "Month Picker",
+          element: <MonthPickerPage />,
+          label: "Month Picker",
         },
         {
           name: "Datepicker Mega",

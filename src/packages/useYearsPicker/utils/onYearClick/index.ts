@@ -1,69 +1,58 @@
-import { isSameDay, isSameYear } from 'date-fns';
-import { TMulti, TSelectedRangeWithHover, TSingle } from '../../../types';
+import { TMulti, TSelectedRangeWithHover, TSingle } from '../../types';
 
 type TProps = {
-  dateToVerify: Date;
+  yearToVerify: number;
   single?: TSingle;
   multi?: TMulti;
   range?: TSelectedRangeWithHover;
 };
 
-export function onYearClick({
-  dateToVerify,
-  single,
-  multi,
-  range,
-}: Pick<TProps, 'dateToVerify' | 'single' | 'multi' | 'range'>) {
+export function onYearClick({ yearToVerify, single, multi, range }: TProps) {
   if (single) {
-    if (
-      single.selectedDate === null ||
-      !isSameYear(dateToVerify, single.selectedDate)
-    ) {
-      single.onSelectedDate(dateToVerify);
+    if (single.selectedYear === null || yearToVerify !== single.selectedYear) {
+      single.onSelectedYear(yearToVerify);
       return;
     }
-    if (isSameYear(dateToVerify, single.selectedDate) && single.toggle) {
-      single.onSelectedDate(null);
+    if (yearToVerify === single.selectedYear && single.toggle) {
+      single.onSelectedYear(null);
     }
   }
 
   if (multi) {
-    const dateSelectedLocated = multi?.selectedDates.find(item =>
-      isSameDay(item, dateToVerify),
+    const yearSelectedLocated = multi?.selectedYears.find(
+      item => item === yearToVerify,
     );
-    if (!dateSelectedLocated) {
-      multi?.onSelectedDates([...multi.selectedDates, dateToVerify]);
+    if (!yearSelectedLocated) {
+      multi?.onSelectedYears([...multi.selectedYears, yearToVerify]);
     } else {
-      multi?.onSelectedDates(
-        multi.selectedDates.filter(
-          item => !isSameDay(item, dateSelectedLocated),
-        ),
+      multi?.onSelectedYears(
+        multi.selectedYears.filter(item => item !== yearSelectedLocated),
       );
     }
   }
 
   if (range) {
-    let finalRangeDate: { from: Date | null; to: Date | null } = {
+    let finalRangeYear: { from: number | null; to: number | null } = {
       from: null,
       to: null,
     };
 
-    if (range.selectedDate.from && range.selectedDate.to) {
-      range.setLastHoveredDate(null);
-      finalRangeDate = { from: dateToVerify, to: null };
+    if (range.selectedYear.from && range.selectedYear.to) {
+      range.setLastHoveredYear(null);
+      finalRangeYear = { from: yearToVerify, to: null };
     } else if (
-      range.selectedDate.from &&
-      dateToVerify.getTime() < range.selectedDate.from.getTime()
+      range.selectedYear.from &&
+      yearToVerify < range.selectedYear.from
     ) {
-      finalRangeDate = { from: dateToVerify, to: range.selectedDate.from };
-    } else if (!range.selectedDate.from) {
-      finalRangeDate = { ...range.selectedDate, from: dateToVerify };
-    } else if (range.selectedDate.from && !range.selectedDate.to) {
-      finalRangeDate = { ...range.selectedDate, to: dateToVerify };
+      finalRangeYear = { from: yearToVerify, to: range.selectedYear.from };
+    } else if (!range.selectedYear.from) {
+      finalRangeYear = { ...range.selectedYear, from: yearToVerify };
+    } else if (range.selectedYear.from && !range.selectedYear.to) {
+      finalRangeYear = { ...range.selectedYear, to: yearToVerify };
     } else {
-      finalRangeDate = { from: null, to: null };
+      finalRangeYear = { from: null, to: null };
     }
 
-    range.onSelectedDate(finalRangeDate);
+    range.onSelectedYear(finalRangeYear);
   }
 }
