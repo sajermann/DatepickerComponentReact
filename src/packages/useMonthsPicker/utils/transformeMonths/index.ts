@@ -1,4 +1,3 @@
-import { format, isSameMonth } from 'date-fns';
 import i18next from 'i18next';
 import {
   getMonthName,

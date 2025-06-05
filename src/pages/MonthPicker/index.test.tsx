@@ -1,18 +1,18 @@
 /**
  * @vitest-environment jsdom
  */
-import { fireEvent, render, waitFor } from '@testing-library/react';
-import { it, describe } from 'vitest';
-import { InjectorProviders } from '~/Components/InjectorProviders';
+import { fireEvent, render, waitFor } from "@testing-library/react";
+import { describe, it } from "vitest";
 
-import { CalendarPickerPage } from '.';
+import { InjectorProviders } from "~/components/InjectorProviders";
+import { MonthPickerPage } from ".";
 
-describe('Pages/CalendarPickerPage', () => {
-	it(`must render checkbox`, async () => {
-		const { getAllByText } = render(
-			<InjectorProviders>
-				<CalendarPickerPage />
-			</InjectorProviders>
-		);
-	});
+describe("Pages/MonthPickerPage", () => {
+  it(`must render checkbox`, async () => {
+    const { getAllByText } = render(
+      <InjectorProviders>
+        <MonthPickerPage />
+      </InjectorProviders>
+    );
+  });
 });

@@ -1,5 +1,5 @@
 import { isSameDay } from 'date-fns';
-import { TMulti, TSelectedRangeWithHover, TSingle } from '../../../../../types';
+import { TMulti, TSelectedRangeWithHover, TSingle } from '../../types';
 
 type TProps = {
   dateToVerify: Date;

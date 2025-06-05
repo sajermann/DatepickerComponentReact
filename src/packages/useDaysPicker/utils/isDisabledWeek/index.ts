@@ -1,4 +1,4 @@
-import { TWeek } from '~/packages/DatepickerCalendar';
+import { TWeek } from '../../types';
 
 export function isDisabledWeek({
   dateToVerify,

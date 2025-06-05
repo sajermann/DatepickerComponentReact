@@ -1,5 +1,5 @@
 import { addDays, isWithinInterval } from 'date-fns';
-import { TSelectedRange } from '~/packages/types';
+import { TSelectedRange } from '../../types';
 
 export function isDisabledByMinInterval({
   dateToVerify,

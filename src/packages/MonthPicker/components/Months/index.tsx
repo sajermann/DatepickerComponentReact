@@ -1,6 +1,6 @@
-import { getDataAttributes } from "~/packages/DatepickerCalendar/utils";
 import { TMonth } from "~/packages/useMonthsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
+import { getDataAttributes } from "../../utils";
 
 export function Months({ months }: { months: TMonth[] }) {
   console.log({ months });

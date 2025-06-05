@@ -58,25 +58,25 @@ export function SingleYearPicker() {
   //   },
   // });
 
-  const { years } = useYearsPicker({
-    year: 2025,
-    yearToShow: 12,
-    single: {
-      selectedDate: date.current.date,
-      onSelectedDate: console.log,
-    },
-    onYearClick: ({ date }) => {
-      onChangeDatepicker({
-        dates: [date],
-        setDate,
-        onChange,
-        dayRef: inputDayRef,
-        monthRef: inputMonthRef,
-        yearRef: inputYearRef,
-      });
-      setIsOpenCalendar(false);
-    },
-  });
+  // const { years } = useYearsPicker({
+  //   year: 2025,
+  //   yearToShow: 12,
+  //   single: {
+  //     selectedDate: date.current.date,
+  //     onSelectedDate: console.log,
+  //   },
+  //   onYearClick: ({ date }) => {
+  //     onChangeDatepicker({
+  //       dates: [date],
+  //       setDate,
+  //       onChange,
+  //       dayRef: inputDayRef,
+  //       monthRef: inputMonthRef,
+  //       yearRef: inputYearRef,
+  //     });
+  //     setIsOpenCalendar(false);
+  //   },
+  // });
 
   return (
     <PopoverPortal>
@@ -111,7 +111,7 @@ export function SingleYearPicker() {
               <ChevronRight />
             </Button>
           </header> */}
-          <main className="w-full h-44 ">
+          {/* <main className="w-full h-44 ">
             <div
               className={managerClassNames(
                 " transition-opacity duration-500 w-full"
@@ -140,7 +140,7 @@ export function SingleYearPicker() {
                 ))}
               </main>
             </div>
-          </main>
+          </main> */}
         </section>
       </PopoverContent>
     </PopoverPortal>

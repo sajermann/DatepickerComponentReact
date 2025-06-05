@@ -1,5 +1,5 @@
 import { isBefore, startOfDay } from 'date-fns';
-import { TDisabled } from '~/packages/DatepickerCalendar';
+import { TDisabled } from '../../types';
 
 export function isDisabledBefore({
   dateToVerify,

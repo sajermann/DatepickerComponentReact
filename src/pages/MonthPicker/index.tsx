@@ -8,30 +8,27 @@ import { Playground } from "./components/Playground";
 const TODO_LIST = [
   { checked: true, text: `Single - Normal` },
   { checked: true, text: `Single - Toggle` },
-  { checked: true, text: `Single - Initial Year` },
   { checked: true, text: `Single - Disabled Before` },
   { checked: true, text: `Single - Disabled After` },
-  { checked: true, text: `Single - Years Disableds` },
+  { checked: true, text: `Single - Months Disableds` },
 
   { checked: true, text: `Multi - Normal` },
-  { checked: true, text: `Multi - Initial Year` },
   { checked: true, text: `Multi - Disabled Before` },
   { checked: true, text: `Multi - Disabled After` },
-  { checked: true, text: `Multi - Years Disableds` },
+  { checked: true, text: `Multi - Months Disableds` },
 
   { checked: true, text: `Range - Normal` },
-  { checked: true, text: `Range - Disabled After First Disabled Years` },
-  { checked: true, text: `Range - Disabled Same Year` },
+  { checked: true, text: `Range - Disabled After First Disabled Months` },
+  { checked: true, text: `Range - Disabled Same Month` },
   { checked: true, text: `Range - Min Interval` },
   { checked: true, text: `Range - Max Interval` },
-  { checked: true, text: `Range - Initial Year` },
   { checked: true, text: `Range - Disabled Before` },
   { checked: true, text: `Range - Disabled After` },
-  { checked: true, text: `Range - Years Disableds` },
+  { checked: true, text: `Range - Months Disableds` },
 ];
 
 const COMPONENTS = [
-  // { e: <TodoList list={TODO_LIST} /> },
+  { e: <TodoList list={TODO_LIST} /> },
   { e: <Playground /> },
 ];
 

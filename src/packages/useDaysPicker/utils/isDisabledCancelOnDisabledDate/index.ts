@@ -1,5 +1,5 @@
 import { eachDayOfInterval, isAfter, isBefore } from 'date-fns';
-import { TDisabled, TRange, TWeek } from '~/packages/DatepickerCalendar';
+import { TDisabled, TRange, TWeek } from '../../types';
 
 export function isDisabledCancelOnDisabledDate({
   dateToVerify,

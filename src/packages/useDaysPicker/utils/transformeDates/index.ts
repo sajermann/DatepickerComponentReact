@@ -21,7 +21,7 @@ import {
   TMulti,
   TSelectedRangeWithHover,
   TSingle,
-} from '../../../../../types';
+} from '../../types';
 
 type TProps = {
   dateToVerify: Date;

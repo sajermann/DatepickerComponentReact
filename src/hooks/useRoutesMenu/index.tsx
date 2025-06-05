@@ -26,14 +26,6 @@ const DatepickerRDPage = lazy(() =>
   }))
 );
 
-const DatepickerCalendarPage = lazy(() =>
-  import("~/pages/DatepickerCalendar").then(
-    ({ DatepickerCalendarPage: DatepickerCalendar }) => ({
-      default: DatepickerCalendar,
-    })
-  )
-);
-
 const YearPickerPage = lazy(() =>
   import("~/pages/YearPicker").then(({ YearPickerPage: YearPicker }) => ({
     default: YearPicker,
@@ -43,6 +35,12 @@ const YearPickerPage = lazy(() =>
 const MonthPickerPage = lazy(() =>
   import("~/pages/MonthPicker").then(({ MonthPickerPage: MonthPicker }) => ({
     default: MonthPicker,
+  }))
+);
+
+const DayPickerPage = lazy(() =>
+  import("~/pages/DayPicker").then(({ DayPickerPage: DayPicker }) => ({
+    default: DayPicker,
   }))
 );
 
@@ -84,6 +82,13 @@ export function useRoutesMenu() {
           label: "Month Picker",
         },
         {
+          name: "Day Picker",
+          path: "/day-picker",
+          description: "Day Picker",
+          element: <DayPickerPage />,
+          label: "Day Picker",
+        },
+        {
           name: "Datepicker Mega",
           path: "/datepicker-mega",
           description: "Datepicker Mega",
@@ -98,13 +103,7 @@ export function useRoutesMenu() {
           element: <DatepickerRDPage />,
           label: "Datepicker RD",
         },
-        {
-          name: "Datepicker Calendar",
-          path: "/datepicker-calendar",
-          description: "Datepicker Calendar",
-          element: <DatepickerCalendarPage />,
-          label: "Datepicker Calendar",
-        },
+
         {
           name: "NotFound",
           path: "*",

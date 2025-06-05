@@ -1,5 +1,5 @@
 import { isWithinInterval } from 'date-fns';
-import { TRange } from '~/packages/DatepickerCalendar';
+import { TRange } from '../../types';
 
 export function isSelectedRange({
   dateToVerify,

@@ -1,6 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { TWeek, useDatePicker } from "~/packages/DatepickerCalendar";
 
 import { useTranslation } from "~/hooks/useTranslation";
 import { managerClassNames } from "~/utils/managerClassNames";
@@ -25,29 +24,29 @@ export function SingleMonthPicker() {
     minDate,
     maxDate,
   } = useDatepickerMega();
-  const { months, years } = useDatePicker({
-    disabled: {
-      dates: disabledDates,
-      after: maxDate,
-      before: minDate,
-      weeeks: disabledWeeks as TWeek[],
-    },
-    single: {
-      onSelectedDate: (date) => {
-        onChangeDatepicker({
-          dates: date ? [date] : [],
-          setDate,
-          onChange,
-          dayRef: inputDayRef,
-          monthRef: inputMonthRef,
-          yearRef: inputYearRef,
-        });
-        setIsOpenCalendar(false);
-      },
-      selectedDate: date.current.date,
-    },
-  });
-  const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
+  // const { months, years } = useDatePicker({
+  //   disabled: {
+  //     dates: disabledDates,
+  //     after: maxDate,
+  //     before: minDate,
+  //     weeeks: disabledWeeks as TWeek[],
+  //   },
+  //   single: {
+  //     onSelectedDate: (date) => {
+  //       onChangeDatepicker({
+  //         dates: date ? [date] : [],
+  //         setDate,
+  //         onChange,
+  //         dayRef: inputDayRef,
+  //         monthRef: inputMonthRef,
+  //         yearRef: inputYearRef,
+  //       });
+  //       setIsOpenCalendar(false);
+  //     },
+  //     selectedDate: date.current.date,
+  //   },
+  // });
+  // const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
 
   return (
     <PopoverPortal>

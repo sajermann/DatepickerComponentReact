@@ -1,6 +1,6 @@
-import { getDataAttributes } from "~/packages/DatepickerCalendar/utils";
 import { TYear } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
+import { getDataAttributes } from "../../utils";
 
 export function Years({ years }: { years: TYear[] }) {
   return (

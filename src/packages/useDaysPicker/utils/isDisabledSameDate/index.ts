@@ -1,5 +1,5 @@
 import { isSameDay } from 'date-fns';
-import { TSelectedRange } from '~/packages/DatepickerCalendar';
+import { TSelectedRange } from '../../types';
 
 export function isDisabledSameDate({
   dateToVerify,

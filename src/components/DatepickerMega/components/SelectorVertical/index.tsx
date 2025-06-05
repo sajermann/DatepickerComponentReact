@@ -1,13 +1,13 @@
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
-import { TMonth, TYear } from "~/packages/DatepickerCalendar";
+
 import { Button } from "../Button";
 
 const ITEMS_BEFORE_DEFAULT = 2;
 const ITEMS_AFTER_DEFAULT = 2;
 
 type TProps = {
-  data: TMonth[] | TYear[];
+  // data: TMonth[] | TYear[];
   itemsBefore?: number;
   itemsAfter?: number;
 };
@@ -15,69 +15,69 @@ type TProps = {
 export function SelectorVertical({
   itemsBefore = ITEMS_BEFORE_DEFAULT,
   itemsAfter = ITEMS_AFTER_DEFAULT,
+}: // data,
+TProps) {
+  // const currentIndexInternal = data.findIndex(
+  //   (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+  // );
+  // const elementRef = useRef<HTMLDivElement>(null);
 
-  data,
-}: TProps) {
-  const currentIndexInternal = data.findIndex(
-    (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
-  );
-  const elementRef = useRef<HTMLDivElement>(null);
+  // const onChangeInternal = (up?: boolean) => {
+  //   const indexToClick = up
+  //     ? currentIndexInternal - 1
+  //     : currentIndexInternal + 1;
+  //   const result = (indexToClick + data.length) % data.length;
+  //   data[result]?.onClick();
+  // };
 
-  const onChangeInternal = (up?: boolean) => {
-    const indexToClick = up
-      ? currentIndexInternal - 1
-      : currentIndexInternal + 1;
-    const result = (indexToClick + data.length) % data.length;
-    data[result]?.onClick();
-  };
+  // const getVisibleData = useMemo(() => {
+  //   const itemsBeforeInternal =
+  //     itemsBefore < 0 ? ITEMS_BEFORE_DEFAULT : itemsBefore;
+  //   const itemsAfterInternal =
+  //     itemsAfter < 0 ? ITEMS_AFTER_DEFAULT : itemsAfter;
+  //   const centralItem = data.find(
+  //     (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+  //   );
+  //   if (!centralItem) {
+  //     return [];
+  //   }
+  //   const centralItemIndex = data.findIndex(
+  //     (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
+  //   );
+  //   const visibleItemsList = [];
 
-  const getVisibleData = useMemo(() => {
-    const itemsBeforeInternal =
-      itemsBefore < 0 ? ITEMS_BEFORE_DEFAULT : itemsBefore;
-    const itemsAfterInternal =
-      itemsAfter < 0 ? ITEMS_AFTER_DEFAULT : itemsAfter;
-    const centralItem = data.find(
-      (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
-    );
-    if (!centralItem) {
-      return [];
-    }
-    const centralItemIndex = data.findIndex(
-      (item) => (item as TMonth).isMonthOfView || (item as TYear).isYearOfView
-    );
-    const visibleItemsList = [];
+  //   for (
+  //     let index = -itemsBeforeInternal;
+  //     index <= itemsAfterInternal;
+  //     index = index + 1
+  //   ) {
+  //     const idx = (centralItemIndex + index + data.length) % data.length;
+  //     visibleItemsList.push(data[idx]);
+  //   }
 
-    for (
-      let index = -itemsBeforeInternal;
-      index <= itemsAfterInternal;
-      index = index + 1
-    ) {
-      const idx = (centralItemIndex + index + data.length) % data.length;
-      visibleItemsList.push(data[idx]);
-    }
+  //   return visibleItemsList;
+  // }, [data, itemsBefore, itemsAfter]);
 
-    return visibleItemsList;
-  }, [data, itemsBefore, itemsAfter]);
+  // useEffect(() => {
+  //   const handleWheel = (e: WheelEvent) => {
+  //     if (elementRef?.current?.contains(e.target as Node)) {
+  //       e.preventDefault();
+  //       e.stopPropagation();
+  //       onChangeInternal(e.deltaY < 0);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const handleWheel = (e: WheelEvent) => {
-      if (elementRef?.current?.contains(e.target as Node)) {
-        e.preventDefault();
-        e.stopPropagation();
-        onChangeInternal(e.deltaY < 0);
-      }
-    };
+  //   document.addEventListener("wheel", handleWheel, { passive: false });
 
-    document.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      document.removeEventListener("wheel", handleWheel);
-    };
-  }, [currentIndexInternal, data]);
+  //   return () => {
+  //     document.removeEventListener("wheel", handleWheel);
+  //   };
+  // }, [currentIndexInternal, data]);
 
   return (
     <>
-      <Button
+      sduha
+      {/* <Button
         className="p-0 w-full h-8"
         iconButton="rounded"
         variant="option"
@@ -118,7 +118,7 @@ export function SelectorVertical({
         disabled={data[currentIndexInternal + 1]?.isDisabled}
       >
         <ChevronDownIcon />
-      </Button>
+      </Button> */}
     </>
   );
 }
