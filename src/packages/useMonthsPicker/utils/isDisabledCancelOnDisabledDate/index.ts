@@ -1,4 +1,4 @@
-import { TDisabled, TRange } from '../../types';
+import { TMonthsPickerDisabled, TMonthsPickerRange } from '../../types';
 
 export function isDisabledCancelOnDisabledDate({
   monthToVerify,
@@ -7,8 +7,8 @@ export function isDisabledCancelOnDisabledDate({
   disabledAfterFirstDisabledMonths,
 }: {
   monthToVerify: number;
-  disabled?: TDisabled;
-  selectedMonthByRange?: TRange;
+  disabled?: TMonthsPickerDisabled;
+  selectedMonthByRange?: TMonthsPickerRange['selectedMonth'];
   disabledAfterFirstDisabledMonths?: boolean;
 }) {
   if (!selectedMonthByRange || !selectedMonthByRange.from) {

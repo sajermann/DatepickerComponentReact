@@ -1,16 +1,16 @@
-import { CalendarIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { CalendarIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function Composition() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('COMPOSITION_PATTERN')} variant="h2">
+    <Section title={translate("COMPOSITION_PATTERN")} variant="h2">
       <div className="flex gap-2 flex-wrap">
-        <DatepickerMega.ContainerInput>
+        {/* <DatepickerMega.ContainerInput>
           <DatepickerMega.Label htmlFor="year-composition">
-            {translate('YYYY-MM-DD')}
+            {translate("YYYY-MM-DD")}
           </DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Year id="year-composition" />
@@ -23,10 +23,10 @@ export function Composition() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+        </DatepickerMega.ContainerInput> */}
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
-            {translate('MONTH_AND_YEAR')}
+            {translate("MONTH_AND_YEAR")}
           </DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Month />
@@ -39,7 +39,7 @@ export function Composition() {
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
         <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate('YEAR')}</DatepickerMega.Label>
+          <DatepickerMega.Label>{translate("YEAR")}</DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Year />
             <DatepickerMega.PickerTrigger>
@@ -48,9 +48,8 @@ export function Composition() {
             <DatepickerMega.SingleYearPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
-
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate('DATE_TIME')}</DatepickerMega.Label>
+        {/* <DatepickerMega.ContainerInput>
+          <DatepickerMega.Label>{translate("DATE_TIME")}</DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Day />
             <DatepickerMega.Divider>-</DatepickerMega.Divider>
@@ -66,7 +65,7 @@ export function Composition() {
             </DatepickerMega.PickerTrigger>
             <DatepickerMega.SingleDayPicker />
           </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+        </DatepickerMega.ContainerInput> */}
       </div>
     </Section>
   );

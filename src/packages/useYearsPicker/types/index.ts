@@ -1,44 +1,44 @@
 export type TUseYearsPickerProps = {
   year?: number | null;
   yearToShow?: number;
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  disabled?: TYearsPickerDisabled;
+  single?: TYearsPickerSingle;
+  multi?: TYearsPickerMulti;
+  range?: TYearsPickerRangeWithHover;
 };
 
 export type TTransformeYearsProps = {
   yearToVerify: number;
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  disabled?: TYearsPickerDisabled;
+  single?: TYearsPickerSingle;
+  multi?: TYearsPickerMulti;
+  range?: TYearsPickerRangeWithHover;
 };
 
-export type TDisabled = {
+export type TYearsPickerDisabled = {
   years?: number[];
   before?: number;
   after?: number;
 };
 
-export type TSingle = {
+export type TYearsPickerSingle = {
   selectedYear: number | null;
   onSelectedYear: (data: number | null) => void;
   toggle?: boolean;
 };
 
-export type TMulti = {
+export type TYearsPickerMulti = {
   selectedYears: number[];
   onSelectedYears: (data: number[]) => void;
 };
 
-export type TSelectOptions = {
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRange;
+export type TYearsPickerSelect = {
+  single?: TYearsPickerSingle;
+  multi?: TYearsPickerMulti;
+  range?: TYearsPickerRange;
 };
 
-export type TSelectedRange = {
+export type TYearsPickerRange = {
   selectedYear: { from: number | null; to: number | null };
   onSelectedYear: (data: { from: number | null; to: number | null }) => void;
   disabledAfterFirstDisabledYears?: boolean;
@@ -47,12 +47,12 @@ export type TSelectedRange = {
   minInterval?: number;
 };
 
-export type TSelectedRangeWithHover = TSelectedRange & {
+export type TYearsPickerRangeWithHover = TYearsPickerRange & {
   lastHoveredYear: number | null;
   setLastHoveredYear: (date: number | null) => void;
 };
 
-export type TYear = {
+export type TYearsPickerYear = {
   year: number;
   isSelected: boolean;
   isDisabled: boolean;
@@ -63,5 +63,3 @@ export type TYear = {
   onMouseEnter: () => void;
   onFocus: () => void;
 };
-
-export type TRange = { from: number | null; to: number | null };

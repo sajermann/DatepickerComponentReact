@@ -1,12 +1,12 @@
-import { CalendarIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { CalendarIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function Trigger() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('TRIGGER')} variant="h2">
+    <Section title={translate("TRIGGER")} variant="h2">
       <div className="flex gap-2 flex-wrap items-end">
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>Input</DatepickerMega.Label>
@@ -22,7 +22,7 @@ export function Trigger() {
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
         <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate('BY_ICON')}</DatepickerMega.Label>
+          <DatepickerMega.Label>{translate("BY_ICON")}</DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Day />
             <DatepickerMega.Divider />

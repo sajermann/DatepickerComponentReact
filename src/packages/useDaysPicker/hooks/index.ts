@@ -23,7 +23,7 @@ export function useDaysPicker({
   firstDateOfCurrentMonthOfView,
   endDate,
   weekStartsOn,
-  fixedWeeks,
+  fixedWeeks = true,
   selectOnlyVisibleMonth,
   disabled,
   single,

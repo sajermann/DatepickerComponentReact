@@ -1,9 +1,12 @@
-import { TRange } from '../../types';
+import { TMonthsPickerRange } from '../../types';
 
 export function isSelectedRange({
   monthToVerify,
   selectedMonthByRange,
-}: { monthToVerify: number; selectedMonthByRange?: TRange }) {
+}: {
+  monthToVerify: number;
+  selectedMonthByRange?: TMonthsPickerRange['selectedMonth'];
+}) {
   return (
     monthToVerify === selectedMonthByRange?.from ||
     monthToVerify === selectedMonthByRange?.to ||

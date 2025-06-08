@@ -1,16 +1,24 @@
 import { addDays, format, startOfWeek } from 'date-fns';
 import { TDate, TDisabled, TMulti, TWeek } from '../..';
-import { capitalize } from '../../utils';
-import { allDatesIsSelectedsByDayOfWeek, onHeaderClick } from './utils';
+import {
+  allDatesIsSelectedsByDayOfWeek,
+  capitalize,
+  onHeaderClick,
+} from './utils';
 
 type TProps = {
   weekStartsOn?: TWeek;
-  disabled?: TDisabled;
+  disabledWeks?: TDisabled['weeeks'];
   multi?: TMulti;
   weeks: TDate[][];
 };
 
-export function useHeaders({ weekStartsOn, disabled, multi, weeks }: TProps) {
+export function useHeaders({
+  weekStartsOn,
+  disabledWeks,
+  multi,
+  weeks,
+}: TProps) {
   const headers = Array.from({ length: 7 }, (_, index) => {
     const day = addDays(startOfWeek(new Date(), { weekStartsOn }), index);
     const dayName = capitalize(format(day, 'EEEE').slice(0, 3));
@@ -28,7 +36,7 @@ export function useHeaders({ weekStartsOn, disabled, multi, weeks }: TProps) {
           weeks,
           multi,
         }),
-      isDisabled: !!disabled?.weeeks?.includes(index as TWeek),
+      isDisabled: !!disabledWeks?.includes(index as TWeek),
     };
   });
 

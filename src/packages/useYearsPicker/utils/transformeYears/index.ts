@@ -12,7 +12,7 @@ import {
   isSelectedSingle,
 } from '..';
 
-import { TTransformeYearsProps, TYear } from '../../types';
+import { TTransformeYearsProps, TYearsPickerYear } from '../../types';
 import { onYearClick } from '../onYearClick';
 
 export function transformeYears({
@@ -21,7 +21,7 @@ export function transformeYears({
   single,
   multi,
   range,
-}: TTransformeYearsProps): TYear {
+}: TTransformeYearsProps): TYearsPickerYear {
   const isDisabled =
     isDisabledYears({ yearToVerify, disabled }) ||
     isDisabledBefore({ yearToVerify, disabled }) ||
@@ -59,7 +59,7 @@ export function transformeYears({
       selectedYearByRange: range?.selectedYear,
     });
   const year = yearToVerify;
-  const finalResult: TYear = {
+  const finalResult: TYearsPickerYear = {
     year,
     isThisYear: year === new Date().getFullYear(),
     isSelected,

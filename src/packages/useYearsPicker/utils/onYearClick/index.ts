@@ -1,21 +1,24 @@
-import { TMulti, TSelectedRangeWithHover, TSingle } from '../../types';
+import {
+  TYearsPickerMulti,
+  TYearsPickerRangeWithHover,
+  TYearsPickerSingle,
+} from '../../types';
 
 type TProps = {
   yearToVerify: number;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  single?: TYearsPickerSingle;
+  multi?: TYearsPickerMulti;
+  range?: TYearsPickerRangeWithHover;
 };
 
 export function onYearClick({ yearToVerify, single, multi, range }: TProps) {
   if (single) {
-    if (single.selectedYear === null || yearToVerify !== single.selectedYear) {
-      single.onSelectedYear(yearToVerify);
-      return;
-    }
     if (yearToVerify === single.selectedYear && single.toggle) {
       single.onSelectedYear(null);
+      return;
     }
+
+    single.onSelectedYear(yearToVerify);
   }
 
   if (multi) {

@@ -1,10 +1,12 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 
+import { format } from "date-fns";
 import { useTranslation } from "~/hooks/useTranslation";
+import { useDatePicker } from "~/packages/useDatepicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerMega } from "../../hooks";
-import { onChangeDatepicker } from "../../utils";
+import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 
@@ -24,35 +26,43 @@ export function SingleMonthPicker() {
     minDate,
     maxDate,
   } = useDatepickerMega();
-  // const { months, years } = useDatePicker({
-  //   disabled: {
-  //     dates: disabledDates,
-  //     after: maxDate,
-  //     before: minDate,
-  //     weeeks: disabledWeeks as TWeek[],
-  //   },
-  //   single: {
-  //     onSelectedDate: (date) => {
-  //       onChangeDatepicker({
-  //         dates: date ? [date] : [],
-  //         setDate,
-  //         onChange,
-  //         dayRef: inputDayRef,
-  //         monthRef: inputMonthRef,
-  //         yearRef: inputYearRef,
-  //       });
-  //       setIsOpenCalendar(false);
-  //     },
-  //     selectedDate: date.current.date,
-  //   },
-  // });
-  // const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
+  const {
+    disabledPrev,
+    handlePrevMonthOfView,
+    disabledNext,
+    handleNextMonthOfView,
+    months,
+    years,
+    firstDateOfCurrentMonthOfView,
+  } = useDatePicker({
+    disabled: {
+      dates: disabledDates,
+      after: maxDate,
+      before: minDate,
+      weeeks: disabledWeeks,
+    },
+    single: {
+      onSelectedDate: (date) => {
+        onChangeDatepicker({
+          dates: date ? [date] : [],
+          setDate,
+          onChange,
+          dayRef: inputDayRef,
+          monthRef: inputMonthRef,
+          yearRef: inputYearRef,
+        });
+        setIsOpenCalendar(false);
+      },
+      selectedDate: date.current.date,
+    },
+  });
+  const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
 
   return (
     <PopoverPortal>
       <PopoverContent onInteractOutside={() => setIsOpenCalendar(false)}>
         <PopoverArrow />
-        {/* <section
+        <section
           className={managerClassNames("flex flex-col min-w-48")}
           style={{
             width: rootRef.current?.getBoundingClientRect().width
@@ -68,7 +78,8 @@ export function SingleMonthPicker() {
               className={managerClassNames({
                 "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
-              {...previousYearsButton({ disabled: !isOpenSelectorYear })}
+              disabled={disabledPrev}
+              onClick={handlePrevMonthOfView}
             >
               <ChevronLeft />
             </Button>
@@ -77,9 +88,7 @@ export function SingleMonthPicker() {
               onClick={() => setIsOpenSelectorYear((prev) => !prev)}
               className="text-center text-sm flex-1 hover:opacity-70 transition-opacity duration-500"
             >
-              {calendars[0].month.charAt(0).toUpperCase() +
-                calendars[0].month.slice(1)}{" "}
-              {calendars[0].year}
+              {capitalize(format(firstDateOfCurrentMonthOfView, "MMM yyyy"))}
             </button>
             <Button
               iconButton="rounded"
@@ -88,12 +97,13 @@ export function SingleMonthPicker() {
               className={managerClassNames({
                 "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
-              {...nextYearsButton({ disabled: !isOpenSelectorYear })}
+              disabled={disabledNext}
+              onClick={handleNextMonthOfView}
             >
               <ChevronRight />
             </Button>
           </header>
-          <main className="w-full h-44 relative">
+          {/* <main className="w-full h-44 relative">
             <div
               className={managerClassNames(
                 "absolute transition-opacity duration-500 w-full",
@@ -173,8 +183,8 @@ export function SingleMonthPicker() {
                 ))}
               </main>
             </div>
-          </main>
-        </section> */}
+          </main> */}
+        </section>
       </PopoverContent>
     </PopoverPortal>
   );

@@ -1,70 +1,69 @@
 import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Fragment, useState } from "react";
+import { useDatePicker } from "~/packages/DayPicker";
+import { TWeek } from "~/packages/useDaysPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerMega } from "../../hooks";
-import { onChangeDatepicker } from "../../utils";
+import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 import { SelectorVertical } from "../SelectorVertical";
 
 export function SingleDayPicker() {
-  // const {
-  //   date,
-  //   setDate,
-  //   onChange,
-  //   inputDayRef,
-  //   inputMonthRef,
-  //   inputYearRef,
-  //   setIsOpenCalendar,
-  //   rootRef,
-  //   disabledDates,
-  //   disabledWeeks,
-  //   minDate,
-  //   maxDate,
-  // } = useDatepickerMega();
-  // const {
-  //   months,
-  //   weeks,
-  //   years,
-  //   handlePrevMonthOfView,
-  //   handleNextMonthOfView,
-  //   disabledNext,
-  //   disabledPrev,
-  //   headers,
-  //   firstDateOfCurrentMonthOfView,
-  // } = useDatePicker({
-  //   disabled: {
-  //     dates: disabledDates,
-  //     after: maxDate,
-  //     before: minDate,
-  //     weeeks: disabledWeeks as TWeek[],
-  //   },
-  //   single: {
-  //     onSelectedDate: (date) => {
-  //       onChangeDatepicker({
-  //         dates: date ? [date] : [],
-  //         setDate,
-  //         onChange,
-  //         dayRef: inputDayRef,
-  //         monthRef: inputMonthRef,
-  //         yearRef: inputYearRef,
-  //       });
-  //       setIsOpenCalendar(false);
-  //     },
-  //     selectedDate: date.current.date,
-  //   },
-  // });
+  const {
+    date,
+    setDate,
+    onChange,
+    inputDayRef,
+    inputMonthRef,
+    inputYearRef,
+    setIsOpenCalendar,
+    rootRef,
+    disabledDates,
+    disabledWeeks,
+    minDate,
+    maxDate,
+  } = useDatepickerMega();
+  const {
+    months,
+    weeks,
+    years,
+    handlePrevMonthOfView,
+    handleNextMonthOfView,
+    disabledNext,
+    disabledPrev,
+    headers,
+    firstDateOfCurrentMonthOfView,
+  } = useDatePicker({
+    disabled: {
+      dates: disabledDates,
+      after: maxDate,
+      before: minDate,
+      weeeks: disabledWeeks as TWeek[],
+    },
+    single: {
+      onSelectedDate: (date) => {
+        onChangeDatepicker({
+          dates: date ? [date] : [],
+          setDate,
+          onChange,
+          dayRef: inputDayRef,
+          monthRef: inputMonthRef,
+          yearRef: inputYearRef,
+        });
+        setIsOpenCalendar(false);
+      },
+      selectedDate: date.current.date,
+    },
+  });
 
   const [isOpenSelectorMonthYear, setIsOpenSelectorMonthYear] = useState(false);
-
   return (
     <PopoverPortal>
-      <PopoverContent
-      // onInteractOutside={() => setIsOpenCalendar(false)}
-      >
+      <PopoverContent onInteractOutside={() => setIsOpenCalendar(false)}>
         <PopoverArrow />
-        {/* <section
+        <section
           data-sajermann="bruno"
           className={managerClassNames("flex flex-col min-w-48")}
           style={{
@@ -117,10 +116,22 @@ export function SingleDayPicker() {
               )}
             >
               <div className="col-span-1 w-full">
-                <SelectorVertical data={months} />
+                <SelectorVertical
+                  data={months}
+                  currentIndex={months.findIndex(
+                    (item) =>
+                      firstDateOfCurrentMonthOfView?.getMonth() === item.month
+                  )}
+                />
               </div>
               <div className="col-span-1 w-full">
-                <SelectorVertical data={years} />
+                <SelectorVertical
+                  data={years}
+                  currentIndex={years.findIndex(
+                    (item) =>
+                      firstDateOfCurrentMonthOfView?.getFullYear() === item.year
+                  )}
+                />
               </div>
             </div>
             <div
@@ -169,7 +180,7 @@ export function SingleDayPicker() {
               </main>
             </div>
           </main>
-        </section> */}
+        </section>
       </PopoverContent>
     </PopoverPortal>
   );

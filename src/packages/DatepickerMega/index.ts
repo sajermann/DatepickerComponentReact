@@ -13,3 +13,4 @@ export * from './components/SingleYearPicker';
 export * from './components/SingleTimerPicker';
 export * from './components/ContainerInput';
 export * from './components/Label';
+export type * from './types';

@@ -1,8 +1,8 @@
-import { TDisabled } from '../../types';
+import { TMonthsPickerDisabled } from '../../types';
 
 export function isDisabledMonths({
   monthToVerify,
   disabled,
-}: { monthToVerify: number; disabled?: TDisabled }) {
+}: { monthToVerify: number; disabled?: TMonthsPickerDisabled }) {
   return !!disabled?.months?.some(y => y === monthToVerify);
 }

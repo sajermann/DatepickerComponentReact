@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { delay } from "~/utils/delay";
-import { TSelectedRange, useMonthsPicker } from "../useMonthsPicker";
+import { TMonthsPickerRange, useMonthsPicker } from "../useMonthsPicker";
 
 import { Months } from "./components/Months";
 import { useAddEventListener } from "./hooks/useAddEventListener";
@@ -9,7 +9,7 @@ type TMonthPickerProps = Omit<
   Parameters<typeof useMonthsPicker>[0],
   "range"
 > & {
-  range?: TSelectedRange;
+  range?: TMonthsPickerRange;
 };
 
 export function MonthPicker(props: TMonthPickerProps) {

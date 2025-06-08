@@ -1,8 +1,8 @@
-import { TYear } from "~/packages/useYearsPicker";
+import { TYearsPickerYear } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { getDataAttributes } from "../../utils";
 
-export function Years({ years }: { years: TYear[] }) {
+export function Years({ years }: { years: TYearsPickerYear[] }) {
   return (
     <div className="justify-items-center grid grid-cols-3 @container">
       {years.map((year) => (

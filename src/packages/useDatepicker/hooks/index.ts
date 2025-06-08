@@ -6,37 +6,23 @@ import {
   endOfYear,
   isAfter,
   isBefore,
+  isSameYear,
   startOfDay,
   startOfMonth,
   startOfYear,
   subMilliseconds,
+  subYears,
 } from 'date-fns';
 import { useMemo, useState } from 'react';
 import { useDaysPicker } from '~/packages/useDaysPicker';
 import { useMonthsPicker } from '~/packages/useMonthsPicker';
 import { useYearsPicker } from '~/packages/useYearsPicker';
-import {
-  TDisabled,
-  TMulti,
-  TSelectedRangeWithHover,
-  TSingle,
-  TViewMode,
-  TWeek,
-} from '../../types';
-import { useHeaders } from '../useHeaders';
+
+import { TUseDatePickerProps, TViewMode } from '..';
+import { useHeaders } from './useHeaders';
 
 const YEARS_TO_SHOW = 24;
 
-type TProps = {
-  date?: Date | null;
-  weekStartsOn?: TWeek;
-  fixedWeeks?: boolean;
-  selectOnlyVisibleMonth?: boolean;
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
-};
 export function useDatePicker({
   date,
   weekStartsOn,
@@ -46,7 +32,7 @@ export function useDatePicker({
   single,
   multi,
   range,
-}: TProps) {
+}: TUseDatePickerProps) {
   const [firstDateOfCurrentMonthOfView, setFirstDateOfCurrentMonthOfView] =
     useState(startOfMonth(date || new Date()));
   const [viewMode, setViewMode] = useState<TViewMode>('days');
@@ -66,9 +52,33 @@ export function useDatePicker({
     weekStartsOn,
   });
 
+  const getDisabledBeforeMonths = () => {
+    if (!disabled?.before) {
+      return undefined;
+    }
+    if (isSameYear(disabled.before, firstDateOfCurrentMonthOfView)) {
+      return disabled.before.getMonth();
+    }
+    if (firstDateOfCurrentMonthOfView.getTime() < disabled.before.getTime()) {
+      return 12;
+    }
+  };
+
+  const getDisabledAfterMonths = () => {
+    if (!disabled?.after) {
+      return undefined;
+    }
+    if (isSameYear(disabled.after, firstDateOfCurrentMonthOfView)) {
+      return disabled.after.getMonth();
+    }
+    if (firstDateOfCurrentMonthOfView.getTime() > disabled.after.getTime()) {
+      return -1;
+    }
+  };
+
   const { months } = useMonthsPicker({
     single: {
-      selectedMonth: startOfYear(firstDateOfCurrentMonthOfView).getFullYear(),
+      selectedMonth: firstDateOfCurrentMonthOfView.getMonth(),
       onSelectedMonth: month => {
         setFirstDateOfCurrentMonthOfView(prev => {
           const newDate = new Date(prev.getTime());
@@ -78,12 +88,17 @@ export function useDatePicker({
         setViewMode('days');
       },
     },
+    disabled: {
+      before: getDisabledBeforeMonths(),
+      after: getDisabledAfterMonths(),
+    },
   });
 
   const { years } = useYearsPicker({
-    year: startOfYear(firstDateOfCurrentMonthOfView).getFullYear(),
+    yearToShow: YEARS_TO_SHOW,
+    year: firstDateOfCurrentMonthOfView.getFullYear(),
     single: {
-      selectedYear: startOfYear(firstDateOfCurrentMonthOfView).getFullYear(),
+      selectedYear: firstDateOfCurrentMonthOfView.getFullYear(),
       onSelectedYear: year => {
         setFirstDateOfCurrentMonthOfView(prev => {
           const newDate = new Date(prev.getTime());
@@ -93,11 +108,16 @@ export function useDatePicker({
         setViewMode('months');
       },
     },
+    disabled: {
+      before: disabled?.before?.getFullYear(),
+      after: disabled?.after?.getFullYear(),
+      years: disabled?.dates?.map(date => date.getFullYear()),
+    },
   });
 
   const { headers } = useHeaders({
     weeks,
-    disabled,
+    disabledWeks: disabled?.weeeks,
     multi,
     weekStartsOn,
   });
@@ -142,63 +162,51 @@ export function useDatePicker({
   };
 
   const disabledPrev: boolean = useMemo(() => {
-    // if (viewMode === 'days') {
-    //   return !!(
-    //     firstDateOfView?.date &&
-    //     disabled?.before &&
-    //     isBefore(startOfDay(firstDateOfView.date), disabled.before)
-    //   );
-    // }
+    if (!firstDateOfView?.date || !disabled?.before) return false;
+    if (viewMode === 'days') {
+      return firstDateOfView.date.getTime() - 1 < disabled.before.getTime();
+    }
 
-    // if (viewMode === 'months') {
-    //   const dateToVerify = months.at(0)?.date;
-    //   return !!(
-    //     dateToVerify &&
-    //     disabled?.before &&
-    //     isBefore(
-    //       subMilliseconds(startOfMonth(dateToVerify), 1),
-    //       disabled.before,
-    //     )
-    //   );
-    // }
+    if (viewMode === 'months') {
+      const prevYear = subYears(firstDateOfCurrentMonthOfView, 1).getFullYear();
+      const disabledYear = disabled.before.getFullYear();
+      return prevYear < disabledYear;
+    }
 
-    // if (viewMode === 'years') {
-    //   const dateToVerify = years.at(0)?.date;
-    //   return !!(
-    //     dateToVerify &&
-    //     disabled?.before &&
-    //     isBefore(subMilliseconds(startOfYear(dateToVerify), 1), disabled.before)
-    //   );
-    // }
+    if (viewMode === 'years') {
+      const prevYearGroup = subYears(
+        firstDateOfView.date,
+        YEARS_TO_SHOW / 2 + 1,
+      ).getFullYear();
+      const disabledYear = disabled.before.getFullYear();
+      return prevYearGroup >= disabledYear;
+    }
     return false;
-  }, [months, years, disabled?.before, firstDateOfView?.date]);
+  }, [viewMode, disabled?.before, firstDateOfView?.date]);
 
   const disabledNext: boolean = useMemo(() => {
-    // if (viewMode === 'days') {
-    //   return !!(
-    //     lastDateOfView?.date &&
-    //     disabled?.after &&
-    //     isAfter(endOfDay(lastDateOfView.date), disabled.after)
-    //   );
-    // }
-    // if (viewMode === 'months') {
-    //   const dateToVerify = months.at(-1)?.date;
-    //   return !!(
-    //     dateToVerify &&
-    //     disabled?.after &&
-    //     isAfter(endOfMonth(dateToVerify), disabled.after)
-    //   );
-    // }
-    // if (viewMode === 'years') {
-    //   const dateToVerify = years.at(-1)?.date;
-    //   return !!(
-    //     dateToVerify &&
-    //     disabled?.after &&
-    //     isAfter(endOfYear(dateToVerify), disabled.after)
-    //   );
-    // }
+    if (!lastDateOfView?.date || !disabled?.after) return false;
+
+    if (viewMode === 'days') {
+      return lastDateOfView.date.getTime() + 1 > disabled.after.getTime();
+    }
+
+    if (viewMode === 'months') {
+      const nextYear = addYears(firstDateOfCurrentMonthOfView, 1).getFullYear();
+      const disabledYear = disabled.after.getFullYear();
+      return nextYear > disabledYear;
+    }
+
+    if (viewMode === 'years') {
+      const nextYearGroup = addYears(
+        lastDateOfView.date,
+        YEARS_TO_SHOW / 2 - 1,
+      ).getFullYear();
+      const disabledYear = disabled.after.getFullYear();
+      return nextYearGroup >= disabledYear;
+    }
     return false;
-  }, [months, years, disabled?.after, lastDateOfView?.date]);
+  }, [viewMode, disabled?.after, lastDateOfView?.date]);
 
   const memoizedValue = useMemo(
     () => ({

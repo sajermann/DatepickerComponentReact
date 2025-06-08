@@ -1,4 +1,4 @@
-import { TDisabled, TRange } from '../../types';
+import { TYearsPickerDisabled, TYearsPickerRange } from '../../types';
 
 export function isDisabledCancelOnDisabledDate({
   yearToVerify,
@@ -7,8 +7,8 @@ export function isDisabledCancelOnDisabledDate({
   disabledAfterFirstDisabledYears,
 }: {
   yearToVerify: number;
-  disabled?: TDisabled;
-  selectedYearByRange?: TRange;
+  disabled?: TYearsPickerDisabled;
+  selectedYearByRange?: TYearsPickerRange['selectedYear'];
   disabledAfterFirstDisabledYears?: boolean;
 }) {
   if (!selectedYearByRange || !selectedYearByRange.from) {

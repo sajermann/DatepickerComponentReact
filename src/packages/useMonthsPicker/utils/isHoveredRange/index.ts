@@ -1,4 +1,4 @@
-import { TRange } from '../../types';
+import { TMonthsPickerRange } from '../../types';
 
 export function isHoveredRange({
   monthToVerify,
@@ -6,7 +6,7 @@ export function isHoveredRange({
   lastHoveredMonth,
 }: {
   monthToVerify: number;
-  selectedMonthByRange?: TRange;
+  selectedMonthByRange?: TMonthsPickerRange['selectedMonth'];
   lastHoveredMonth?: number | null;
 }) {
   if (

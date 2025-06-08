@@ -1,6 +1,7 @@
 import { startOfDay } from "date-fns";
 import { ChangeEvent, useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
+import { Input, Params } from "~/components/Params";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import {
@@ -10,8 +11,6 @@ import {
 } from "~/packages/DayPicker";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { Params } from "../Params";
-import { Input } from "../Params/types";
 
 const OPTIONS_BOOLEAN = [
   { value: "null", label: "Null" },
@@ -24,7 +23,7 @@ type TPlaygroundParams = {
   selectOnlyVisibleMonth?: boolean;
   disabledDates?: Date[];
   date?: Date | null;
-  fixedWeeks: boolean;
+  fixedWeeks?: boolean;
   single?: {
     selectedDate: Date | null;
     toggle?: boolean;
@@ -54,7 +53,7 @@ export function Playground() {
 
   const [playgroundParams, setPlaygroundParams] = useState<TPlaygroundParams>({
     date: null,
-    fixedWeeks: true,
+
     single: {
       selectedDate: null,
     },
@@ -382,7 +381,7 @@ export function Playground() {
 
     return {} as TDayPickerProviderProps;
   }
-
+  console.log(playgroundParams.fixedWeeks);
   return (
     <Section title="Daypicker" variant="h2">
       <Section title="Playground" variant="h3">
@@ -392,7 +391,7 @@ export function Playground() {
       <Section
         title={translate("CALENDAR")}
         variant="h3"
-        className="p-4 resize h-[550px] w-full overflow-auto"
+        className="resize h-[550px] w-full overflow-auto"
       >
         {showCalendar && (
           <div className="border rounded h-full">

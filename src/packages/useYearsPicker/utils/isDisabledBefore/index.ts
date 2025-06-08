@@ -1,8 +1,12 @@
-import { TDisabled } from '../../types';
+import { TYearsPickerDisabled } from '../../types';
 
 export function isDisabledBefore({
   yearToVerify,
   disabled,
-}: { yearToVerify: number; disabled?: TDisabled }) {
-  return disabled?.before && disabled.before > yearToVerify;
+}: { yearToVerify: number; disabled?: TYearsPickerDisabled }) {
+  return (
+    disabled?.before !== undefined &&
+    disabled?.before !== null &&
+    disabled.before > yearToVerify
+  );
 }

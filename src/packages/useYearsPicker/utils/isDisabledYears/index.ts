@@ -1,8 +1,8 @@
-import { TDisabled } from '../../types';
+import { TYearsPickerDisabled } from '../../types';
 
 export function isDisabledYears({
   yearToVerify,
   disabled,
-}: { yearToVerify: number; disabled?: TDisabled }) {
+}: { yearToVerify: number; disabled?: TYearsPickerDisabled }) {
   return !!disabled?.years?.some(y => y === yearToVerify);
 }

@@ -1,11 +1,11 @@
-import { TSelectedRange } from '../../types';
+import { TYearsPickerRange } from '../../types';
 
 export function isDisabledByMaxInterval({
   yearToVerify,
   selectedYearByRange,
 }: {
   yearToVerify: number;
-  selectedYearByRange?: TSelectedRange;
+  selectedYearByRange?: TYearsPickerRange;
 }) {
   if (
     !selectedYearByRange?.maxInterval ||

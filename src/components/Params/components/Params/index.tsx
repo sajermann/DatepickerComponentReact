@@ -1,6 +1,6 @@
 import { Tooltip } from "~/components/Tooltip";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { Input } from "./types";
+import { Input } from "../..";
 
 function IncludeButton({ onInclude }: { onInclude?: () => void }) {
   if (!onInclude) return null;

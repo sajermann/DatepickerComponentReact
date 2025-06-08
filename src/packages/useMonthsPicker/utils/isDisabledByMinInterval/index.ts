@@ -1,11 +1,11 @@
-import { TSelectedRange } from '../../types';
+import { TMonthsPickerRange } from '../../types';
 
 export function isDisabledByMinInterval({
   monthToVerify,
   selectedMonthByRange,
 }: {
   monthToVerify: number;
-  selectedMonthByRange?: TSelectedRange;
+  selectedMonthByRange?: TMonthsPickerRange;
 }) {
   if (
     !selectedMonthByRange?.minInterval ||

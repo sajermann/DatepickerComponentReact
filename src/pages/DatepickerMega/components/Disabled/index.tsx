@@ -1,8 +1,8 @@
 import { addDays } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import * as DatepickerMega from "~/components/DatepickerMega";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function Disabled() {
   const { translate } = useTranslation();
@@ -72,17 +72,6 @@ export function Disabled() {
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
       </div>
-      <h3 className="text-sm italic font-bold">
-        * {translate("DISABLED_DATE_HAS_A_BUG")}{" "}
-        <a
-          href="https://github.com/rehookify/datepicker/issues/76"
-          target="_blank"
-          rel="noreferrer"
-          className="!text-blue-500 hover:opacity-40 transition-all duration-500 underline"
-        >
-          Github Issue
-        </a>
-      </h3>
     </Section>
   );
 }

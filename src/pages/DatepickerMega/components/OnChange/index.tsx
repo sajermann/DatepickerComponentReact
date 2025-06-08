@@ -1,10 +1,10 @@
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
-import * as DatepickerMega from "~/components/DatepickerMega";
-import { TDate } from "~/components/DatepickerMega/types";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
+import { TDate } from "~/packages/DatepickerMega/types";
 
 export function OnChange() {
   const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =

@@ -1,8 +1,8 @@
-import { TMonth } from "~/packages/useMonthsPicker";
+import { TMonthsPickerMonth } from "~/packages/useMonthsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { getDataAttributes } from "../../utils";
 
-export function Months({ months }: { months: TMonth[] }) {
+export function Months({ months }: { months: TMonthsPickerMonth[] }) {
   console.log({ months });
   return (
     <div className="justify-items-center grid grid-cols-12 @container/months">

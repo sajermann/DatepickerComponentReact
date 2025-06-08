@@ -8,9 +8,10 @@ import {
   useState,
 } from "react";
 import { useTranslation } from "~/hooks/useTranslation";
-import { TMonth } from "~/packages/useMonthsPicker";
-import { TYear } from "~/packages/useYearsPicker";
+import { TMonthsPickerMonth } from "~/packages/useMonthsPicker";
+import { TYearsPickerYear } from "~/packages/useYearsPicker";
 import { delay } from "~/utils/delay";
+import { useDatePicker } from "../../../useDatepicker";
 import en from "../../i18n/en.json";
 import ptBr from "../../i18n/pt-br.json";
 import {
@@ -24,7 +25,6 @@ import {
   TViewMode,
   TWeek,
 } from "../../types";
-import { useDatePicker } from "../useDatepicker";
 
 type DayPickerContextType = {
   single?: TSingle;
@@ -39,9 +39,9 @@ type DayPickerContextType = {
   disabledNext: boolean;
   viewMode: TViewMode;
   onToggleViewMode: () => void;
-  months: TMonth[];
+  months: TMonthsPickerMonth[];
   onClickArrow: (type: "next" | "prev") => void;
-  years: TYear[];
+  years: TYearsPickerYear[];
   firstDateOfCurrentMonthOfView: Date;
 };
 

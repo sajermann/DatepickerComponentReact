@@ -31,7 +31,7 @@ const TODO_LIST = [
 ];
 
 const COMPONENTS = [
-  // { e: <TodoList list={TODO_LIST} /> },
+  { e: <TodoList list={TODO_LIST} /> },
   { e: <Playground /> },
 ];
 
@@ -40,8 +40,8 @@ export function DayPickerPage() {
 
   return (
     <main className="h-full gap-2 flex flex-col" data-content="content-main">
-      <Section title="Month Picker" variant="h1">
-        {`${translate("IMPLEMENTS_COMPONENT")} Month Picker ${translate(
+      <Section title="Day Picker" variant="h1">
+        {`${translate("IMPLEMENTS_COMPONENT")} Day Picker ${translate(
           "WITHOUT_USING_LIB"
         )}`}
       </Section>

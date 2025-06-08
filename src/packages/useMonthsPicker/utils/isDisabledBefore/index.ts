@@ -1,8 +1,15 @@
-import { TDisabled } from '../../types';
+import { TMonthsPickerDisabled } from '../../types';
 
 export function isDisabledBefore({
   monthToVerify,
-  disabled,
-}: { monthToVerify: number; disabled?: TDisabled }) {
-  return disabled?.before && disabled.before > monthToVerify;
+  disabledBefore,
+}: {
+  monthToVerify: number;
+  disabledBefore?: TMonthsPickerDisabled['before'];
+}) {
+  return (
+    disabledBefore !== undefined &&
+    disabledBefore !== null &&
+    disabledBefore > monthToVerify
+  );
 }

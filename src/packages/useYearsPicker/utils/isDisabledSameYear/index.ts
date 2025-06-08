@@ -1,11 +1,11 @@
-import { TSelectedRange } from '../../types';
+import { TYearsPickerRange } from '../../types';
 
 export function isDisabledSameYear({
   yearToVerify,
   selectedDateByRange,
 }: {
   yearToVerify: number;
-  selectedDateByRange?: TSelectedRange;
+  selectedDateByRange?: TYearsPickerRange;
 }) {
   if (
     !selectedDateByRange ||

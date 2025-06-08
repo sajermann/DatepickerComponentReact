@@ -1,24 +1,23 @@
-import { TMulti, TSelectedRangeWithHover, TSingle } from '../../types';
+import {
+  TMonthsPickerMulti,
+  TMonthsPickerRangeWithHover,
+  TMonthsPickerSingle,
+} from '../../types';
 
 type TProps = {
   monthToVerify: number;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  single?: TMonthsPickerSingle;
+  multi?: TMonthsPickerMulti;
+  range?: TMonthsPickerRangeWithHover;
 };
 
 export function onMonthClick({ monthToVerify, single, multi, range }: TProps) {
   if (single) {
-    if (
-      single.selectedMonth === null ||
-      monthToVerify !== single.selectedMonth
-    ) {
-      single.onSelectedMonth(monthToVerify);
-      return;
-    }
     if (monthToVerify === single.selectedMonth && single.toggle) {
       single.onSelectedMonth(null);
+      return;
     }
+    single.onSelectedMonth(monthToVerify);
   }
 
   if (multi) {

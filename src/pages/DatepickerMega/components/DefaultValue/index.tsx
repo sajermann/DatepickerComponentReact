@@ -1,14 +1,14 @@
-import { CalendarIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { CalendarIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function DefaultValue() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DEFAULT_VALUES')} variant="h2">
+    <Section title={translate("DEFAULT_VALUES")} variant="h2">
       <DatepickerMega.ContainerInput>
-        <DatepickerMega.Label>{translate('DATE')}</DatepickerMega.Label>
+        <DatepickerMega.Label>{translate("DATE")}</DatepickerMega.Label>
         <DatepickerMega.Root>
           <DatepickerMega.Day defaultValue={new Date().getDate()} />
           <DatepickerMega.Divider />
@@ -26,7 +26,7 @@ export function DefaultValue() {
         </DatepickerMega.Root>
       </DatepickerMega.ContainerInput>
       <h3 className="text-sm italic font-bold">
-        * {translate('CALENDAR_CHANGES_INPUT_VALUE_BY_INPUT_REFERENCES')}
+        * {translate("CALENDAR_CHANGES_INPUT_VALUE_BY_INPUT_REFERENCES")}
       </h3>
     </Section>
   );

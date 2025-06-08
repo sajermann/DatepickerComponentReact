@@ -13,7 +13,7 @@ export const Years = memo(() => {
     <div className="justify-items-center grid grid-cols-3 @container">
       {years.map((year) => (
         <div
-          key={String(year)}
+          key={String(year.year)}
           {...getDataAttributes(year)}
           className={managerClassNames([
             "hover:bg-slate-500 rounded",

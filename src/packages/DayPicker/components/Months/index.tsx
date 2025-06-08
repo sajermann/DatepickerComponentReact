@@ -11,7 +11,7 @@ export const Months = memo(() => {
     <div className="justify-items-center grid grid-cols-12 @container/months">
       {months.map((month) => (
         <div
-          key={String(month)}
+          key={String(month.month)}
           {...getDataAttributes(month)}
           className={managerClassNames([
             "col-span-6 @xm/months:col-span-3",

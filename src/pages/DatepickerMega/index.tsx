@@ -40,7 +40,7 @@ const TODO_LIST = [
   { checked: true, text: `Time - Read Only` },
   { checked: true, text: `Time - Trigger` },
 ];
-
+// TODO: O calendario nao abre na data certa, ele até seleciona, mas abre no mes/ ano atual
 const COMPONENTS = [
   // { e: <TodoList list={TODO_LIST} /> },
   // { e: <OnChange /> },

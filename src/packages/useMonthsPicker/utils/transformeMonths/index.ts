@@ -14,7 +14,7 @@ import {
   isSelectedSingle,
   onMonthClick,
 } from '..';
-import { TMonth, TTransformeMonthsProps } from '../../types';
+import { TMonthsPickerMonth, TTransformeMonthsProps } from '../../types';
 const currentLanguage = i18next.language as 'en-US' | 'pt-BR';
 
 export function transformMonths({
@@ -23,11 +23,11 @@ export function transformMonths({
   single,
   multi,
   range,
-}: TTransformeMonthsProps): TMonth {
+}: TTransformeMonthsProps): TMonthsPickerMonth {
   const isDisabled =
     isDisabledMonths({ monthToVerify, disabled }) ||
-    isDisabledBefore({ monthToVerify, disabled }) ||
-    isDisabledAfter({ monthToVerify, disabled }) ||
+    isDisabledBefore({ monthToVerify, disabledBefore: disabled?.before }) ||
+    isDisabledAfter({ monthToVerify, disabledAfter: disabled?.after }) ||
     isDisabledCancelOnDisabledDate({
       monthToVerify,
       disabled,
@@ -63,7 +63,7 @@ export function transformMonths({
 
   const month = monthToVerify;
 
-  const finalResult: TMonth = {
+  const finalResult: TMonthsPickerMonth = {
     month,
     isJanuary: month === 0,
     isFebruary: month === 1,

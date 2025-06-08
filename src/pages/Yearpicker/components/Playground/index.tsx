@@ -1,18 +1,17 @@
 import { ChangeEvent, useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
+import { Input, Params } from "~/components/Params";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import { Yearpicker } from "~/packages/YearPicker";
 import {
-  TMulti,
-  TSelectedRange,
-  TSelectedRangeWithHover,
-  TSingle,
+  TYearsPickerMulti,
+  TYearsPickerRange,
+  TYearsPickerRangeWithHover,
+  TYearsPickerSingle,
 } from "~/packages/useYearsPicker";
 import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { Params } from "../Params";
-import { Input } from "../Params/types";
 
 const OPTIONS_BOOLEAN = [
   { value: "null", label: "Null" },
@@ -237,9 +236,9 @@ export function Playground() {
   ];
 
   function getParams():
-    | { single: TSingle }
-    | { multi: TMulti }
-    | { range: TSelectedRange } {
+    | { single: TYearsPickerSingle }
+    | { multi: TYearsPickerMulti }
+    | { range: TYearsPickerRange } {
     if (playgroundParams.single) {
       return {
         single: {
@@ -289,9 +288,9 @@ export function Playground() {
     }
 
     return {} as
-      | { single: TSingle }
-      | { multi: TMulti }
-      | { range: TSelectedRangeWithHover };
+      | { single: TYearsPickerSingle }
+      | { multi: TYearsPickerMulti }
+      | { range: TYearsPickerRangeWithHover };
   }
 
   return (
@@ -301,7 +300,7 @@ export function Playground() {
       <Section
         title={translate("CALENDAR")}
         variant="h3"
-        className="p-4 resize h-[550px] w-full overflow-auto"
+        className="resize h-[550px] w-full overflow-auto"
       >
         {showCalendar && (
           <div className="border rounded h-full">

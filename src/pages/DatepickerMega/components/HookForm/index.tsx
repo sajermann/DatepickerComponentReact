@@ -1,10 +1,10 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarIcon } from "lucide-react";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 const formSchema = z.object({
   date: z.date(),
@@ -26,8 +26,8 @@ export function HookForm() {
     <Section title="Hook Form" variant="h2">
       <div className="flex items-baseline gap-2">
         <form
-          onSubmit={handleSubmit(data =>
-            alert(`Success Submit: ${JSON.stringify(data)}`),
+          onSubmit={handleSubmit((data) =>
+            alert(`Success Submit: ${JSON.stringify(data)}`)
           )}
         >
           <Controller
@@ -38,9 +38,9 @@ export function HookForm() {
                 <DatepickerMega.Label
                   isError={errors.date?.message ? true : false}
                 >
-                  {translate('DATE')}
+                  {translate("DATE")}
                 </DatepickerMega.Label>
-                <DatepickerMega.Root onChange={e => onChange(e.date)}>
+                <DatepickerMega.Root onChange={(e) => onChange(e.date)}>
                   <DatepickerMega.Day />
                   <DatepickerMega.Divider />
                   <DatepickerMega.Month />
@@ -56,7 +56,7 @@ export function HookForm() {
           />
           {errors.date?.message && (
             <p className="text-sm text-red-500 italic mt-1">
-              {translate('INVALID_FIELD')}
+              {translate("INVALID_FIELD")}
             </p>
           )}
           <button

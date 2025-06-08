@@ -7,7 +7,7 @@ import {
 } from "date-fns";
 import { useCallback, useMemo, useState } from "react";
 import { delay } from "~/utils/delay";
-import { TSelectedRange, useYearsPicker } from "../useYearsPicker";
+import { TYearsPickerRange, useYearsPicker } from "../useYearsPicker";
 import { Selectors } from "./components/Selectors";
 import { Years } from "./components/Years";
 import { useAddEventListener } from "./hooks/useAddEventListener";
@@ -15,7 +15,7 @@ import { useAddEventListener } from "./hooks/useAddEventListener";
 const YEARS_TO_SHOW = 24;
 
 type TYearPickerProps = Omit<Parameters<typeof useYearsPicker>[0], "range"> & {
-  range?: TSelectedRange;
+  range?: TYearsPickerRange;
 };
 
 export function Yearpicker(props: TYearPickerProps) {

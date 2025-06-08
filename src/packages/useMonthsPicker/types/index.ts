@@ -1,42 +1,42 @@
 export type TUseMonthsPickerProps = {
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  disabled?: TMonthsPickerDisabled;
+  single?: TMonthsPickerSingle;
+  multi?: TMonthsPickerMulti;
+  range?: TMonthsPickerRangeWithHover;
 };
 
 export type TTransformeMonthsProps = {
   monthToVerify: number;
-  disabled?: TDisabled;
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRangeWithHover;
+  disabled?: TMonthsPickerDisabled;
+  single?: TMonthsPickerSingle;
+  multi?: TMonthsPickerMulti;
+  range?: TMonthsPickerRangeWithHover;
 };
 
-export type TDisabled = {
+export type TMonthsPickerDisabled = {
   months?: number[];
   before?: number;
   after?: number;
 };
 
-export type TSingle = {
+export type TMonthsPickerSingle = {
   selectedMonth: number | null;
   onSelectedMonth: (data: number | null) => void;
   toggle?: boolean;
 };
 
-export type TMulti = {
+export type TMonthsPickerMulti = {
   selectedMonths: number[];
   onSelectedMonths: (data: number[]) => void;
 };
 
 export type TSelectOptions = {
-  single?: TSingle;
-  multi?: TMulti;
-  range?: TSelectedRange;
+  single?: TMonthsPickerSingle;
+  multi?: TMonthsPickerMulti;
+  range?: TMonthsPickerRange;
 };
 
-export type TSelectedRange = {
+export type TMonthsPickerRange = {
   selectedMonth: { from: number | null; to: number | null };
   onSelectedMonth: (data: { from: number | null; to: number | null }) => void;
   disabledAfterFirstDisabledMonths?: boolean;
@@ -45,12 +45,12 @@ export type TSelectedRange = {
   minInterval?: number;
 };
 
-export type TSelectedRangeWithHover = TSelectedRange & {
+export type TMonthsPickerRangeWithHover = TMonthsPickerRange & {
   lastHoveredMonth: number | null;
   setLastHoveredMonth: (date: number | null) => void;
 };
 
-export type TMonth = {
+export type TMonthsPickerMonth = {
   month: number;
   isJanuary: boolean;
   isFebruary: boolean;
@@ -72,5 +72,3 @@ export type TMonth = {
   onMouseEnter: () => void;
   onFocus: () => void;
 };
-
-export type TRange = { from: number | null; to: number | null };
