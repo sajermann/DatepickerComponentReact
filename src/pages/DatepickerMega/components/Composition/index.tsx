@@ -1,10 +1,15 @@
 import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
+import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import * as DatepickerMega from "~/packages/DatepickerMega";
+import { TDate } from "~/packages/DatepickerMega";
 
 export function Composition() {
   const { translate } = useTranslation();
+  const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
+    useState<TDate | null>(null);
   return (
     <Section title={translate("COMPOSITION_PATTERN")} variant="h2">
       <div className="flex gap-2 flex-wrap">
@@ -28,7 +33,7 @@ export function Composition() {
           <DatepickerMega.Label>
             {translate("MONTH_AND_YEAR")}
           </DatepickerMega.Label>
-          <DatepickerMega.Root>
+          <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
             <DatepickerMega.Month />
             <DatepickerMega.Divider />
             <DatepickerMega.Year />
@@ -38,6 +43,7 @@ export function Composition() {
             <DatepickerMega.SingleMonthPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
+        <JsonViewer value={lastEventOnChangeRoot || {}} />
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>{translate("YEAR")}</DatepickerMega.Label>
           <DatepickerMega.Root>

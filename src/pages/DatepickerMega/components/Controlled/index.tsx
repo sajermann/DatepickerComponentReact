@@ -35,7 +35,8 @@ export function Controlled() {
             <DatepickerMega.PickerTrigger>
               <CalendarIcon />
             </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
+            {/* <DatepickerMega.SingleDayPicker /> */}
+            <DatepickerMega.SingleMonthPicker />
           </DatepickerMega.Root>
         </DatepickerMega.ContainerInput>
 

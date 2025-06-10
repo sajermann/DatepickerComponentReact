@@ -1,17 +1,17 @@
+import { addYears, format, subYears } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
-
-import { format } from "date-fns";
-import { useTranslation } from "~/hooks/useTranslation";
-import { useDatePicker } from "~/packages/useDatepicker";
+import { useEffect, useState } from "react";
+import { useMonthsPicker } from "~/packages/useMonthsPicker";
+import { useYearsPicker } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerMega } from "../../hooks";
 import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 
+const YEARS_TO_SHOW = 12;
+
 export function SingleMonthPicker() {
-  const { currentLanguage } = useTranslation();
   const {
     date,
     setDate,
@@ -21,41 +21,84 @@ export function SingleMonthPicker() {
     inputYearRef,
     setIsOpenCalendar,
     rootRef,
-    disabledDates,
-    disabledWeeks,
-    minDate,
-    maxDate,
   } = useDatepickerMega();
-  const {
-    disabledPrev,
-    handlePrevMonthOfView,
-    disabledNext,
-    handleNextMonthOfView,
-    months,
-    years,
-    firstDateOfCurrentMonthOfView,
-  } = useDatePicker({
-    disabled: {
-      dates: disabledDates,
-      after: maxDate,
-      before: minDate,
-      weeeks: disabledWeeks,
-    },
+  const [dateOfView, setDateOfView] = useState(date.current.date || new Date());
+
+  useEffect(() => {
+    if (date.current.date) {
+      setDateOfView(date.current.date);
+      return;
+    }
+    if (date.current.month !== null) {
+      const now = new Date();
+      now.setMonth(date.current.month);
+      if (date.current.year !== null) {
+        now.setFullYear(date.current.year);
+      }
+      setDateOfView(now);
+    }
+  }, [date.current]);
+
+  const { months } = useMonthsPicker({
     single: {
-      onSelectedDate: (date) => {
+      selectedMonth:
+        date.current.year !== null &&
+        date.current.year === dateOfView.getFullYear()
+          ? dateOfView?.getMonth()
+          : null,
+      onSelectedMonth: (month) => {
+        const dateFormated = dateOfView ? new Date(dateOfView) : new Date();
+        if (month !== undefined && month !== null) {
+          dateFormated.setMonth(month);
+        }
+        setDateOfView(dateFormated);
         onChangeDatepicker({
-          dates: date ? [date] : [],
+          dates: dateFormated ? [dateFormated] : [],
           setDate,
           onChange,
           dayRef: inputDayRef,
           monthRef: inputMonthRef,
           yearRef: inputYearRef,
         });
-        setIsOpenCalendar(false);
       },
-      selectedDate: date.current.date,
     },
   });
+
+  const { years } = useYearsPicker({
+    yearToShow: YEARS_TO_SHOW,
+    year: dateOfView?.getFullYear(),
+    single: {
+      selectedYear: dateOfView?.getFullYear() || null,
+      onSelectedYear: (year) => {
+        const dateFormated = date.current.date
+          ? new Date(date.current.date)
+          : new Date();
+        if (year !== undefined && year !== null) {
+          dateFormated.setFullYear(year);
+        }
+        setDateOfView(dateFormated);
+      },
+    },
+  });
+
+  const handleYearOfView = (type: "subYears" | "addYears") => {
+    const config = {
+      subYears: (date: Date | null) =>
+        subYears(date || new Date(), YEARS_TO_SHOW),
+      addYears: (date: Date | null) =>
+        addYears(date || new Date(), YEARS_TO_SHOW),
+    };
+
+    setDate((prev) => {
+      const result = config[type](prev.date || new Date());
+      setDateOfView(result);
+      return {
+        ...prev,
+        date: result,
+      };
+    });
+  };
+
   const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
 
   return (
@@ -78,8 +121,8 @@ export function SingleMonthPicker() {
               className={managerClassNames({
                 "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
-              disabled={disabledPrev}
-              onClick={handlePrevMonthOfView}
+              disabled={!isOpenSelectorYear}
+              onClick={() => handleYearOfView("subYears")}
             >
               <ChevronLeft />
             </Button>
@@ -88,7 +131,7 @@ export function SingleMonthPicker() {
               onClick={() => setIsOpenSelectorYear((prev) => !prev)}
               className="text-center text-sm flex-1 hover:opacity-70 transition-opacity duration-500"
             >
-              {capitalize(format(firstDateOfCurrentMonthOfView, "MMM yyyy"))}
+              {capitalize(format(dateOfView || new Date(), "MMM yyyy"))}
             </button>
             <Button
               iconButton="rounded"
@@ -97,13 +140,13 @@ export function SingleMonthPicker() {
               className={managerClassNames({
                 "!opacity-0 !cursor-default": !isOpenSelectorYear,
               })}
-              disabled={disabledNext}
-              onClick={handleNextMonthOfView}
+              disabled={!isOpenSelectorYear}
+              onClick={() => handleYearOfView("addYears")}
             >
               <ChevronRight />
             </Button>
           </header>
-          {/* <main className="w-full h-44 relative">
+          <main className="w-full h-44 relative">
             <div
               className={managerClassNames(
                 "absolute transition-opacity duration-500 w-full",
@@ -122,16 +165,15 @@ export function SingleMonthPicker() {
                       "h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs",
                       {
                         "bg-slate-700 text-white hover:bg-slate-700 opacity-100":
-                          y.selected,
-                        "border border-slate-500": y.now && !y.selected,
-                        "border border-dashed border-slate-500":
-                          y.active && !y.selected,
-                        "opacity-25 cursor-not-allowed": y.disabled,
+                          y.isSelected,
+                        // "border border-slate-500": y.now && !y.isSelected,
+                        // "border border-dashed border-slate-500":
+                        //   y.active && !y.isSelected,
+                        "opacity-25 cursor-not-allowed": y.isDisabled,
                       },
                     ])}
-                    {...yearButton(y)}
-                    onClick={(e) => {
-                      yearButton?.(y).onClick?.(e);
+                    onClick={() => {
+                      y.onClick?.();
                       setIsOpenSelectorYear(false);
                     }}
                   >
@@ -157,33 +199,24 @@ export function SingleMonthPicker() {
                       "h-6 flex justify-center items-center hover:bg-slate-300 rounded text-xs",
                       {
                         "bg-slate-700 text-white hover:bg-slate-700 opacity-100":
-                          m.selected,
-                        "border border-slate-500": m.now && !m.selected,
-                        "border border-dashed border-slate-500":
-                          m.active && !m.selected,
-                        "opacity-25 cursor-not-allowed": m.disabled,
+                          m.isSelected,
+                        // "border border-slate-500": m.now && !m.isSelected,
+                        // "border border-dashed border-slate-500":
+                        //   m.active && !m.isSelected,
+                        "opacity-25 cursor-not-allowed": m.isDisabled,
                       },
                     ])}
-                    {...monthButton(m)}
-                    onClick={(e) => {
-                      monthButton?.(m).onClick?.(e);
-                      onChangeDatepicker({
-                        dates: [m.$date],
-                        setDate,
-                        onChange,
-                        dayRef: inputDayRef,
-                        monthRef: inputMonthRef,
-                        yearRef: inputYearRef,
-                      });
+                    onClick={() => {
+                      m.onClick?.();
                       setIsOpenCalendar(false);
                     }}
                   >
-                    {m.month.charAt(0).toUpperCase() + m.month.slice(1)}
+                    {m.text}
                   </button>
                 ))}
               </main>
             </div>
-          </main> */}
+          </main>
         </section>
       </PopoverContent>
     </PopoverPortal>

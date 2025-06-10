@@ -25,6 +25,7 @@ export function SingleDayPicker() {
     minDate,
     maxDate,
   } = useDatepickerMega();
+
   const {
     months,
     weeks,
@@ -36,6 +37,7 @@ export function SingleDayPicker() {
     headers,
     firstDateOfCurrentMonthOfView,
   } = useDatePicker({
+    date: date.current.date,
     disabled: {
       dates: disabledDates,
       after: maxDate,

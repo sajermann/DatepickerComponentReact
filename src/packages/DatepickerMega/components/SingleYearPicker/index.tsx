@@ -1,16 +1,17 @@
-import { useDatePicker } from "@rehookify/datepicker";
+import { addYears, format, subYears } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
-import { useTranslation } from "~/hooks/useTranslation";
+import { useEffect, useState } from "react";
+import { useMonthsPicker } from "~/packages/useMonthsPicker";
 import { useYearsPicker } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatepickerMega } from "../../hooks";
-import { onChangeDatepicker } from "../../utils";
+import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 
+const YEARS_TO_SHOW = 12;
+
 export function SingleYearPicker() {
-  const { currentLanguage } = useTranslation();
   const {
     date,
     setDate,
@@ -20,63 +21,67 @@ export function SingleYearPicker() {
     inputYearRef,
     setIsOpenCalendar,
     rootRef,
-    disabledDates,
-    disabledWeeks,
-    minDate,
-    maxDate,
   } = useDatepickerMega();
-  // const {
-  //   data: { calendars, years },
-  //   propGetters: { yearButton, previousYearsButton, nextYearsButton },
-  // } = useDatePicker({
-  //   selectedDates: date?.current.date ? [date.current.date] : [],
-  //   onDatesChange: dates => {
-  //     onChangeDatepicker({
-  //       dates,
-  //       setDate,
-  //       onChange,
-  //       dayRef: inputDayRef,
-  //       monthRef: inputMonthRef,
-  //       yearRef: inputYearRef,
-  //     });
-  //     setIsOpenCalendar(false);
-  //   },
-  //   calendar: {
-  //     startDay: 0,
-  //     offsets: [-1, 1],
-  //   },
-  //   exclude: {
-  //     date: disabledDates,
-  //     day: disabledWeeks,
-  //   },
-  //   locale: {
-  //     locale: currentLanguage,
-  //   },
-  //   dates: {
-  //     minDate,
-  //     maxDate,
-  //   },
-  // });
+  const [dateOfView, setDateOfView] = useState(date.current.date || new Date());
 
-  // const { years } = useYearsPicker({
-  //   year: 2025,
-  //   yearToShow: 12,
-  //   single: {
-  //     selectedDate: date.current.date,
-  //     onSelectedDate: console.log,
-  //   },
-  //   onYearClick: ({ date }) => {
-  //     onChangeDatepicker({
-  //       dates: [date],
-  //       setDate,
-  //       onChange,
-  //       dayRef: inputDayRef,
-  //       monthRef: inputMonthRef,
-  //       yearRef: inputYearRef,
-  //     });
-  //     setIsOpenCalendar(false);
-  //   },
-  // });
+  useEffect(() => {
+    if (date.current.date) {
+      setDateOfView(date.current.date);
+      return;
+    }
+    if (date.current.month !== null) {
+      const now = new Date();
+      now.setMonth(date.current.month);
+      if (date.current.year !== null) {
+        now.setFullYear(date.current.year);
+      }
+      setDateOfView(now);
+    }
+  }, [date.current]);
+
+  const { years } = useYearsPicker({
+    yearToShow: YEARS_TO_SHOW,
+    year: dateOfView?.getFullYear(),
+    single: {
+      selectedYear: dateOfView?.getFullYear() || null,
+      onSelectedYear: (year) => {
+        const dateFormated = date.current.date
+          ? new Date(date.current.date)
+          : new Date();
+        if (year !== undefined && year !== null) {
+          dateFormated.setFullYear(year);
+        }
+        setDateOfView(dateFormated);
+
+        onChangeDatepicker({
+          dates: dateFormated ? [dateFormated] : [],
+          setDate,
+          onChange,
+          dayRef: inputDayRef,
+          monthRef: inputMonthRef,
+          yearRef: inputYearRef,
+        });
+      },
+    },
+  });
+
+  const handleYearOfView = (type: "subYears" | "addYears") => {
+    const config = {
+      subYears: (date: Date | null) =>
+        subYears(date || new Date(), YEARS_TO_SHOW),
+      addYears: (date: Date | null) =>
+        addYears(date || new Date(), YEARS_TO_SHOW),
+    };
+
+    setDate((prev) => {
+      const result = config[type](prev.date || new Date());
+      setDateOfView(result);
+      return {
+        ...prev,
+        date: result,
+      };
+    });
+  };
 
   return (
     <PopoverPortal>
@@ -90,34 +95,34 @@ export function SingleYearPicker() {
               : undefined,
           }}
         >
-          {/* <header className="flex items-center h-11">
+          <header className="flex items-center h-11">
             <Button
               iconButton="rounded"
               variant="option"
               colorStyle="mono"
-              {...previousYearsButton()}
+              onClick={() => handleYearOfView("subYears")}
             >
               <ChevronLeft />
             </Button>
             <div className="text-center text-sm flex-1">
-              {calendars[0].year}
+              {capitalize(format(dateOfView || new Date(), "MMM yyyy"))}
             </div>
             <Button
               iconButton="rounded"
               variant="option"
               colorStyle="mono"
-              {...nextYearsButton()}
+              onClick={() => handleYearOfView("addYears")}
             >
               <ChevronRight />
             </Button>
-          </header> */}
-          {/* <main className="w-full h-44 ">
+          </header>
+          <main className="w-full h-44 relative">
             <div
               className={managerClassNames(
-                " transition-opacity duration-500 w-full"
+                "absolute transition-opacity duration-500 w-full z-10"
               )}
             >
-              <main className="items-center grid grid-cols-3 gap-x-2 gap-y-6">
+              <main className=" items-center grid grid-cols-3 gap-x-2 gap-y-6">
                 {years.map((y) => (
                   <button
                     type="button"
@@ -127,20 +132,23 @@ export function SingleYearPicker() {
                       {
                         "bg-slate-700 text-white hover:bg-slate-700 opacity-100":
                           y.isSelected,
-                        "border border-slate-500": y.isToday && !y.isSelected,
-                        // "border border-dashed border-slate-500": !y.isSelected,
+                        // "border border-slate-500": y.now && !y.isSelected,
+                        // "border border-dashed border-slate-500":
+                        //   y.active && !y.isSelected,
                         "opacity-25 cursor-not-allowed": y.isDisabled,
                       },
                     ])}
-                    // {...yearButton(y)}
-                    onClick={y.onClick}
+                    onClick={() => {
+                      y.onClick?.();
+                      setIsOpenCalendar(false);
+                    }}
                   >
                     {y.year}
                   </button>
                 ))}
               </main>
             </div>
-          </main> */}
+          </main>
         </section>
       </PopoverContent>
     </PopoverPortal>

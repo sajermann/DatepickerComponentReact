@@ -1,19 +1,12 @@
 import {
   addMonths,
   addYears,
-  endOfDay,
   endOfMonth,
-  endOfYear,
-  isAfter,
-  isBefore,
   isSameYear,
-  startOfDay,
   startOfMonth,
-  startOfYear,
-  subMilliseconds,
   subYears,
 } from 'date-fns';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDaysPicker } from '~/packages/useDaysPicker';
 import { useMonthsPicker } from '~/packages/useMonthsPicker';
 import { useYearsPicker } from '~/packages/useYearsPicker';
@@ -35,6 +28,10 @@ export function useDatePicker({
 }: TUseDatePickerProps) {
   const [firstDateOfCurrentMonthOfView, setFirstDateOfCurrentMonthOfView] =
     useState(startOfMonth(date || new Date()));
+  useEffect(() => {
+    setFirstDateOfCurrentMonthOfView(startOfMonth(date || new Date()));
+  }, [date]);
+
   const [viewMode, setViewMode] = useState<TViewMode>('days');
   const lastDateOfCurrentMonthOfView = endOfMonth(
     firstDateOfCurrentMonthOfView,

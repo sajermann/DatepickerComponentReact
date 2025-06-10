@@ -1,4 +1,5 @@
 export type TUseMonthsPickerProps = {
+  month?: number;
   disabled?: TMonthsPickerDisabled;
   single?: TMonthsPickerSingle;
   multi?: TMonthsPickerMulti;
