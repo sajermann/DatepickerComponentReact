@@ -10,7 +10,7 @@ import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
 
 const YEARS_TO_SHOW = 12;
-
+//TODO: ano está com isSelected fixa mesmo quando muda o date of view
 export function SingleYearPicker() {
   const {
     date,
@@ -43,7 +43,7 @@ export function SingleYearPicker() {
     yearToShow: YEARS_TO_SHOW,
     year: dateOfView?.getFullYear(),
     single: {
-      selectedYear: dateOfView?.getFullYear() || null,
+      selectedYear: date.current.year,
       onSelectedYear: (year) => {
         const dateFormated = date.current.date
           ? new Date(date.current.date)

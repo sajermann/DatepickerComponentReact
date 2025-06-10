@@ -1,13 +1,13 @@
-import { addHours, startOfHour } from 'date-fns';
-import { TimerIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { addHours, startOfHour } from "date-fns";
+import { TimerIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function TimerDisabled() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DISABLED')} variant="h2">
+    <Section title={translate("DISABLED")} variant="h2">
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label>
@@ -32,7 +32,7 @@ export function TimerDisabled() {
 
         <DatepickerMega.ContainerInput>
           <DatepickerMega.Label htmlFor="year-composition">
-            {translate('DISABLED_1_FROM_NOW')} - {translate('AM_PM')}
+            {translate("DISABLED_1_FROM_NOW")} - {translate("AM_PM")}
           </DatepickerMega.Label>
           <DatepickerMega.Root
             intervalTime={60}
@@ -91,7 +91,7 @@ export function TimerDisabled() {
         </DatepickerMega.ContainerInput>
       </div>
       <p className="italic font-bold text-sm">
-        {translate('NOTE_DEFAULT_VALUES_INPUT_HOUR')}
+        {translate("NOTE_DEFAULT_VALUES_INPUT_HOUR")}
       </p>
     </Section>
   );

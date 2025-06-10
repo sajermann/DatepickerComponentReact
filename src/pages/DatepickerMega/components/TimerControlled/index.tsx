@@ -1,11 +1,11 @@
-import { TimerIcon } from 'lucide-react';
-import { useState } from 'react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { TDate } from '~/components/DatepickerMega/types';
-import { formatTwoNumbers } from '~/components/DatepickerMega/utils';
-import { JsonViewer } from '~/components/JsonViewer';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { TimerIcon } from "lucide-react";
+import { useState } from "react";
+import { JsonViewer } from "~/components/JsonViewer";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
+import { TDate } from "~/packages/DatepickerMega/types";
+import { formatTwoNumbers } from "~/packages/DatepickerMega/utils";
 
 export function TimerControlled() {
   const { translate } = useTranslation();
@@ -20,20 +20,20 @@ export function TimerControlled() {
     clockType: null,
   });
   return (
-    <Section title={translate('CONTROLLED')} variant="h2">
+    <Section title={translate("CONTROLLED")} variant="h2">
       <div className="flex items-baseline gap-2">
         <DatepickerMega.ContainerInput className="w-max">
-          <DatepickerMega.Label>{translate('24_HOURS')}</DatepickerMega.Label>
+          <DatepickerMega.Label>{translate("24_HOURS")}</DatepickerMega.Label>
           <DatepickerMega.Root
             onChange={setDate}
             defaultDate={date.date || undefined}
           >
             <DatepickerMega.Hour
-              value={String(date.hour === null ? '' : date.hour)}
+              value={String(date.hour === null ? "" : date.hour)}
             />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
             <DatepickerMega.Minute
-              value={String(date.minute === null ? '' : date.minute)}
+              value={String(date.minute === null ? "" : date.minute)}
             />
             <DatepickerMega.PickerTrigger>
               <TimerIcon />
@@ -45,7 +45,7 @@ export function TimerControlled() {
           <label htmlFor="native-timer" className="flex flex-col">
             Native Input
             <input
-              onChange={e => {
+              onChange={(e) => {
                 const { value } = e.target;
                 if (!value) {
                   setDate({
@@ -60,13 +60,13 @@ export function TimerControlled() {
                   });
                   return;
                 }
-                const [hour, minute] = value.split(':').map(Number);
+                const [hour, minute] = value.split(":").map(Number);
                 const dateComplete = new Date();
                 dateComplete.setHours(hour);
                 dateComplete.setMinutes(minute);
                 dateComplete.setSeconds(0);
                 dateComplete.setMilliseconds(0);
-                setDate(prev => ({
+                setDate((prev) => ({
                   ...prev,
                   date: dateComplete,
                   day: dateComplete.getDate(),
@@ -80,17 +80,19 @@ export function TimerControlled() {
               type="time"
               className="border bg-transparent ring-0 outline-none rounded h-11 p-2 dark:[color-scheme:dark]"
               id="native-timer"
-              value={`${formatTwoNumbers(String(date.date?.getHours()))}:${formatTwoNumbers(String(date.date?.getMinutes()))}`}
+              value={`${formatTwoNumbers(
+                String(date.date?.getHours())
+              )}:${formatTwoNumbers(String(date.date?.getMinutes()))}`}
             />
           </label>
         </div>
       </div>
       <div className="w-full">
-        <h1>{translate('THIS_IS_STATE')}</h1>
+        <h1>{translate("THIS_IS_STATE")}</h1>
         <JsonViewer value={date} />
       </div>
       <h3 className="text-sm italic font-bold">
-        * {translate('MEGA_DATE_PICKER_CAUTION')}
+        * {translate("MEGA_DATE_PICKER_CAUTION")}
       </h3>
     </Section>
   );

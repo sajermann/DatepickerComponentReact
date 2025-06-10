@@ -23,7 +23,7 @@ export function SingleMonthPicker() {
     rootRef,
   } = useDatepickerMega();
   const [dateOfView, setDateOfView] = useState(date.current.date || new Date());
-
+  const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
   useEffect(() => {
     if (date.current.date) {
       setDateOfView(date.current.date);
@@ -31,7 +31,8 @@ export function SingleMonthPicker() {
     }
     if (date.current.month !== null) {
       const now = new Date();
-      now.setMonth(date.current.month);
+      now.setMonth(date.current.month - 1);
+
       if (date.current.year !== null) {
         now.setFullYear(date.current.year);
       }
@@ -68,7 +69,7 @@ export function SingleMonthPicker() {
     yearToShow: YEARS_TO_SHOW,
     year: dateOfView?.getFullYear(),
     single: {
-      selectedYear: dateOfView?.getFullYear() || null,
+      selectedYear: date.current.year,
       onSelectedYear: (year) => {
         const dateFormated = date.current.date
           ? new Date(date.current.date)
@@ -82,11 +83,10 @@ export function SingleMonthPicker() {
   });
 
   const handleYearOfView = (type: "subYears" | "addYears") => {
+    const quantity = isOpenSelectorYear ? YEARS_TO_SHOW : 1;
     const config = {
-      subYears: (date: Date | null) =>
-        subYears(date || new Date(), YEARS_TO_SHOW),
-      addYears: (date: Date | null) =>
-        addYears(date || new Date(), YEARS_TO_SHOW),
+      subYears: (date: Date | null) => subYears(date || new Date(), quantity),
+      addYears: (date: Date | null) => addYears(date || new Date(), quantity),
     };
 
     setDate((prev) => {
@@ -98,8 +98,6 @@ export function SingleMonthPicker() {
       };
     });
   };
-
-  const [isOpenSelectorYear, setIsOpenSelectorYear] = useState(false);
 
   return (
     <PopoverPortal>
@@ -118,10 +116,6 @@ export function SingleMonthPicker() {
               iconButton="rounded"
               variant="option"
               colorStyle="mono"
-              className={managerClassNames({
-                "!opacity-0 !cursor-default": !isOpenSelectorYear,
-              })}
-              disabled={!isOpenSelectorYear}
               onClick={() => handleYearOfView("subYears")}
             >
               <ChevronLeft />
@@ -137,10 +131,6 @@ export function SingleMonthPicker() {
               iconButton="rounded"
               variant="option"
               colorStyle="mono"
-              className={managerClassNames({
-                "!opacity-0 !cursor-default": !isOpenSelectorYear,
-              })}
-              disabled={!isOpenSelectorYear}
               onClick={() => handleYearOfView("addYears")}
             >
               <ChevronRight />

@@ -23,12 +23,6 @@ export function useIsValidDate() {
     const isDisabled = disabledDates?.find(
       d => startOfDay(d).valueOf() === date.current.date?.valueOf(),
     );
-    console.log(
-      `isDisabledDate`,
-      date.current.date.valueOf(),
-      new Date(2025, 2, 12, 21, 0).valueOf(),
-      isDisabled,
-    );
     const isDisabledWeeks = disabledWeeks?.find(
       d => d === date.current.date?.getDay(),
     );

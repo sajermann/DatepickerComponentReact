@@ -1,12 +1,12 @@
-import { TimerIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { TimerIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 
 export function TimerReadOnly() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('READ_ONLY')} variant="h2">
+    <Section title={translate("READ_ONLY")} variant="h2">
       <DatepickerMega.ContainerInput>
         <DatepickerMega.Label>{translate(`TIME`)}</DatepickerMega.Label>
         <DatepickerMega.Root intervalTime={60}>

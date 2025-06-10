@@ -1,19 +1,19 @@
-import { TimerIcon } from 'lucide-react';
-import * as DatepickerMega from '~/components/DatepickerMega';
+import { TimerIcon } from "lucide-react";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerMega from "~/packages/DatepickerMega";
 import {
   convertHour24ToAmPm,
   formatTwoNumbers,
-} from '~/components/DatepickerMega/utils';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+} from "~/packages/DatepickerMega/utils";
 
 export function TimerDefaultValue() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('DEFAULT_VALUES')} variant="h2">
+    <Section title={translate("DEFAULT_VALUES")} variant="h2">
       <div className="flex gap-2 flex-wrap">
         <DatepickerMega.ContainerInput className="w-max">
-          <DatepickerMega.Label>{translate('24_HOURS')}</DatepickerMega.Label>
+          <DatepickerMega.Label>{translate("24_HOURS")}</DatepickerMega.Label>
           <DatepickerMega.Root>
             <DatepickerMega.Hour defaultValue={new Date().getHours()} />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
@@ -26,7 +26,7 @@ export function TimerDefaultValue() {
         </DatepickerMega.ContainerInput>
         <DatepickerMega.ContainerInput className="w-max">
           <DatepickerMega.Label htmlFor="year-composition">
-            {translate('AM_PM')}
+            {translate("AM_PM")}
           </DatepickerMega.Label>
           <DatepickerMega.Root onChange={console.log}>
             <DatepickerMega.Hour
@@ -34,13 +34,13 @@ export function TimerDefaultValue() {
                 convertHour24ToAmPm({
                   isAmPmMode: true,
                   hour24: new Date(new Date().setHours(14)).getHours(),
-                }).toString(),
+                }).toString()
               )}
             />
             <DatepickerMega.Divider> : </DatepickerMega.Divider>
             <DatepickerMega.Minute
               defaultValue={formatTwoNumbers(
-                new Date().getMinutes().toString(),
+                new Date().getMinutes().toString()
               )}
             />
             <DatepickerMega.AmPmToggle />
@@ -52,7 +52,7 @@ export function TimerDefaultValue() {
         </DatepickerMega.ContainerInput>
       </div>
       <p className="italic font-bold text-sm">
-        {translate('NOTE_DEFAULT_VALUES_INPUT_HOUR')}
+        {translate("NOTE_DEFAULT_VALUES_INPUT_HOUR")}
       </p>
     </Section>
   );
