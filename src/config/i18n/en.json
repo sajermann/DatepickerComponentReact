@@ -1,5 +1,6 @@
 {
   "translations": {
+    "NO_DATA": "No data",
     "PARAMS_EXHIBITION_REAL_TIME": "Params exhibition in real time",
     "DISABLED_DATES_TOOLTIP": "Add dates to disableds",
     "CALENDAR": "Calendar",

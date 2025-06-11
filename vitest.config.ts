@@ -11,9 +11,10 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/Config/Test/setup.ts',
+    setupFiles: './src/config/test/setup.ts',
     coverage: {
       reporter: ['text', 'lcov', 'html'],
+      exclude: ['**/types/**', '**/*.d.ts', '**.config.ts', '**/assets/**'],
     },
   },
 });

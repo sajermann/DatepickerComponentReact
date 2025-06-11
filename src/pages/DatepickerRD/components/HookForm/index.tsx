@@ -1,10 +1,9 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { CalendarIcon } from 'lucide-react';
-import { Controller, useForm } from 'react-hook-form';
-import { z } from 'zod';
-import * as DatepickerRD from '~/components/DatepickerRD';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerRD from "~/packages/DatepickerRD";
 
 const formSchema = z.object({
   date: z.date(),
@@ -25,8 +24,8 @@ export function HookForm() {
   return (
     <Section title="Hook Form" variant="h2">
       <form
-        onSubmit={handleSubmit(data =>
-          alert(`Success Submit: ${JSON.stringify(data)}`),
+        onSubmit={handleSubmit((data) =>
+          alert(`Success Submit: ${JSON.stringify(data)}`)
         )}
       >
         <Controller
@@ -38,19 +37,19 @@ export function HookForm() {
                 htmlFor="hook"
                 isError={errors.date?.message ? true : false}
               >
-                {translate('DATE')}
+                {translate("DATE")}
               </DatepickerRD.Label>
               <DatepickerRD.Datepicker
-                placeholder={translate('DD/MM/YYYY')}
+                placeholder={translate("DD/MM/YYYY")}
                 id="hook"
-                onChange={e => onChange(new Date(e.target.value))}
+                onChange={(e) => onChange(new Date(e.target.value))}
               />
             </DatepickerRD.ContainerInput>
           )}
         />
         {errors.date?.message && (
           <p className="text-sm text-red-500 italic mt-1">
-            {translate('INVALID_FIELD')}
+            {translate("INVALID_FIELD")}
           </p>
         )}
 

@@ -1,24 +1,24 @@
-import * as DatepickerRD from '~/components/DatepickerRD';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerRD from "~/packages/DatepickerRD";
 
 export function ComponentPattern() {
   const { translate } = useTranslation();
   return (
-    <Section title={translate('PICKER')} variant="h2">
+    <Section title={translate("PICKER")} variant="h2">
       <div className="flex gap-2">
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="Date1">
-            {translate('DATE')}
+            {translate("DATE")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
-            placeholder={translate('DD/MM/YYYY')}
+            placeholder={translate("DD/MM/YYYY")}
             id="Date1"
           />
         </DatepickerRD.ContainerInput>
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="DateFormat1">
-            {translate('MONTH')}
+            {translate("MONTH")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
             dateFormat="MM/yyyy"
@@ -29,7 +29,7 @@ export function ComponentPattern() {
         </DatepickerRD.ContainerInput>
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="DateFormat1">
-            {translate('YEAR')}
+            {translate("YEAR")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
             dateFormat="yyyy"

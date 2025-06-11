@@ -1,11 +1,20 @@
-import { HashRouter } from 'react-router';
-import { BreadcrumbsProvider } from '~/hooks/useBreadcrumbs';
-import { FontSizeProvider } from '~/hooks/useFontSize';
-import { Config } from './Config';
-import { Version } from './Version';
-import '~/config/i18n';
+import { HashRouter } from "react-router";
+import { BreadcrumbsProvider } from "~/hooks/useBreadcrumbs";
+import { FontSizeProvider } from "~/hooks/useFontSize";
+import { Config } from "./Config";
+import { Version } from "./Version";
+import "~/config/i18n";
 
-export function InjectorProviders({ children }: { children: React.ReactNode }) {
+export function InjectorProviders({
+  children,
+  forTesting,
+}: {
+  children: React.ReactNode;
+  forTesting?: boolean;
+}) {
+  if (forTesting) {
+    return <HashRouter>{children}</HashRouter>;
+  }
   return (
     <HashRouter>
       <BreadcrumbsProvider>

@@ -381,7 +381,7 @@ export function Playground() {
 
     return {} as TDayPickerProviderProps;
   }
-  console.log(playgroundParams.fixedWeeks);
+
   return (
     <Section title="Daypicker" variant="h2">
       <Section title="Playground" variant="h3">

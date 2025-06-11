@@ -1,17 +1,17 @@
-import { addDays, endOfDay, startOfDay, subDays } from 'date-fns';
-import * as DatepickerRD from '~/components/DatepickerRD';
-import { Section } from '~/components/Section';
-import { useTranslation } from '~/hooks/useTranslation';
+import { addDays, endOfDay, startOfDay, subDays } from "date-fns";
+import { Section } from "~/components/Section";
+import { useTranslation } from "~/hooks/useTranslation";
+import * as DatepickerRD from "~/packages/DatepickerRD";
 
 export function Disabled() {
   const { translate } = useTranslation();
 
   return (
-    <Section title={translate('DISABLED')} variant="h2">
+    <Section title={translate("DISABLED")} variant="h2">
       <div className="flex gap-2">
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="DateFormat1">
-            {translate('DISABLED_1_FROM_NOW')}
+            {translate("DISABLED_1_FROM_NOW")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
             dateFormat="yyyy"
@@ -27,7 +27,7 @@ export function Disabled() {
 
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="DateFormat1">
-            {translate('DISABLED_1_FROM_NOW')}
+            {translate("DISABLED_1_FROM_NOW")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
             dateFormat="MM/yyyy"
@@ -43,10 +43,10 @@ export function Disabled() {
 
         <DatepickerRD.ContainerInput>
           <DatepickerRD.Label htmlFor="Disabled">
-            {translate('YESTERDAY_AND_TOMORROW')}
+            {translate("YESTERDAY_AND_TOMORROW")}
           </DatepickerRD.Label>
           <DatepickerRD.Datepicker
-            placeholder={translate('DD/MM/YYYY')}
+            placeholder={translate("DD/MM/YYYY")}
             id="Disabled"
             excludeDateIntervals={[
               {

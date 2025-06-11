@@ -1,5 +1,6 @@
 {
   "translations": {
+    "NO_DATA": "Sem dados",
     "PARAMS_EXHIBITION_REAL_TIME": "Exibição dos parâmetros em tempo real",
     "DISABLED_DATES_TOOLTIP": "Adicione datas para ficarem desabilitadas",
     "CALENDAR": "Calendário",
