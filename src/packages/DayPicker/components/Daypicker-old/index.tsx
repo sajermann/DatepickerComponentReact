@@ -6,7 +6,7 @@ import { WeekDays } from "../WeekDays";
 import { Weeks } from "../Weeks";
 import { Years } from "../Years";
 
-export function Daypicker(
+export function DayPicker(
   props: DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>
 ) {
   return (
