@@ -6,10 +6,10 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { TDate } from '../../types';
+} from "react";
+import { TDate } from "../../types";
 
-type DatepickerMegaContextType = {
+type DatePickerMegaContextType = {
   date: RefObject<TDate>;
   setDate: (value: TDate | ((prevState: TDate) => TDate)) => void;
   inputDayRef: RefObject<HTMLInputElement | null>;
@@ -23,7 +23,7 @@ type DatepickerMegaContextType = {
   defaultDate?: Date;
   isOpenCalendar: boolean;
   setIsOpenCalendar: (
-    value: boolean | ((prevState: boolean) => boolean),
+    value: boolean | ((prevState: boolean) => boolean)
   ) => void;
   isAmPmMode?: boolean;
   setIsAmPmMode: (value: boolean | ((prevState: boolean) => boolean)) => void;
@@ -44,11 +44,11 @@ type DatepickerMegaContextType = {
   };
 };
 
-export const DatepickerMegaContext = createContext(
-  {} as DatepickerMegaContextType,
+export const DatePickerMegaContext = createContext(
+  {} as DatePickerMegaContextType
 );
 
-type TDatepickerMegaProviderProps = {
+type TDatePickerMegaProviderProps = {
   children: ReactNode;
   defaultDate?: Date;
   onChange?: (data: TDate) => void;
@@ -67,7 +67,7 @@ type TDatepickerMegaProviderProps = {
   };
 };
 
-export function DatepickerMegaProvider({
+export function DatePickerMegaProvider({
   children,
   defaultDate,
   onChange,
@@ -78,7 +78,7 @@ export function DatepickerMegaProvider({
   intervalTime,
   minTime,
   maxTime,
-}: TDatepickerMegaProviderProps) {
+}: TDatePickerMegaProviderProps) {
   const [isAmPmMode, setIsAmPmMode] = useState(false);
   const [isOpenCalendar, setIsOpenCalendar] = useState(false);
   const [hasTrigger, setHasTrigger] = useState(false);
@@ -90,7 +90,7 @@ export function DatepickerMegaProvider({
     minute: null,
     year: null,
     iso: null,
-    clockType: 'am',
+    clockType: "am",
   });
 
   const inputDayRef = useRef<HTMLInputElement>(null);
@@ -102,7 +102,7 @@ export function DatepickerMegaProvider({
   const rootRef = useRef<HTMLDivElement>(null);
 
   const setDate = (value: TDate | ((prevState: TDate) => TDate)) => {
-    if (typeof value === 'function') {
+    if (typeof value === "function") {
       const newState = value(date.current);
       date.current = newState;
     } else {
@@ -111,10 +111,10 @@ export function DatepickerMegaProvider({
   };
 
   useEffect(() => {
-    setDate(prev => {
+    setDate((prev) => {
       const hourNew =
         isAmPmMode && prev.hour && prev.hour > 12 ? prev.hour - 12 : prev.hour;
-      const clockType = prev.hour && prev.hour > 12 ? 'pm' : 'am';
+      const clockType = prev.hour && prev.hour > 12 ? "pm" : "am";
       const values: TDate = {
         ...prev,
         hour: hourNew,
@@ -134,7 +134,7 @@ export function DatepickerMegaProvider({
 
   useEffect(() => {
     if (defaultDate) {
-      setDate(prev => ({
+      setDate((prev) => ({
         ...prev,
         year: defaultDate.getFullYear() || null,
         month: defaultDate.getMonth() + 1 || null,
@@ -143,7 +143,7 @@ export function DatepickerMegaProvider({
         iso: defaultDate.toISOString() || null,
       }));
     } else {
-      setDate(prev => ({
+      setDate((prev) => ({
         ...prev,
         year: null,
         month: null,
@@ -154,7 +154,7 @@ export function DatepickerMegaProvider({
     }
   }, [defaultDate]);
 
-  const memoizedValue = useMemo<DatepickerMegaContextType>(
+  const memoizedValue = useMemo<DatePickerMegaContextType>(
     () => ({
       date,
       setDate,
@@ -193,12 +193,12 @@ export function DatepickerMegaProvider({
       intervalTime,
       minTime,
       maxTime,
-    ],
+    ]
   );
 
   return (
-    <DatepickerMegaContext.Provider value={memoizedValue}>
+    <DatePickerMegaContext.Provider value={memoizedValue}>
       {children}
-    </DatepickerMegaContext.Provider>
+    </DatePickerMegaContext.Provider>
   );
 }

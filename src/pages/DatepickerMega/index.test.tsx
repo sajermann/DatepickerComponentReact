@@ -1,18 +1,18 @@
 /**
  * @vitest-environment jsdom
  */
-import { render } from '@testing-library/react';
-import { describe, it } from 'vitest';
-import { InjectorProviders } from '~/components/InjectorProviders';
+import { render } from "@testing-library/react";
+import { describe, it } from "vitest";
+import { InjectorProviders } from "~/components/InjectorProviders";
 
-import { DatepickerMegaPage } from '.';
+import { DatePickerMegaPage } from ".";
 
-describe('Pages/DatepickerMegaPage', () => {
-  it(`must render DatepickerMegaPage`, async () => {
+describe("Pages/DatePickerMegaPage", () => {
+  it(`must render DatePickerMegaPage`, async () => {
     render(
       <InjectorProviders>
-        <DatepickerMegaPage />
-      </InjectorProviders>,
+        <DatePickerMegaPage />
+      </InjectorProviders>
     );
   });
 });

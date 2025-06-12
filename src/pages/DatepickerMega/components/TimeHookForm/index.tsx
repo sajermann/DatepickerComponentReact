@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 const formSchema = z.object({
   time: z.date(),
@@ -34,22 +34,22 @@ export function TimeHookForm() {
             control={control}
             name="time"
             render={({ field: { onChange } }) => (
-              <DatepickerMega.ContainerInput>
-                <DatepickerMega.Label
+              <DatePickerMega.ContainerInput>
+                <DatePickerMega.Label
                   isError={errors.time?.message ? true : false}
                 >
                   {translate("TIME")}
-                </DatepickerMega.Label>
-                <DatepickerMega.Root onChange={(e) => onChange(e.date)}>
-                  <DatepickerMega.Hour />
-                  <DatepickerMega.Divider>:</DatepickerMega.Divider>
-                  <DatepickerMega.Minute />
-                  <DatepickerMega.PickerTrigger>
+                </DatePickerMega.Label>
+                <DatePickerMega.Root onChange={(e) => onChange(e.date)}>
+                  <DatePickerMega.Hour />
+                  <DatePickerMega.Divider>:</DatePickerMega.Divider>
+                  <DatePickerMega.Minute />
+                  <DatePickerMega.PickerTrigger>
                     <TimerIcon />
-                  </DatepickerMega.PickerTrigger>
-                  <DatepickerMega.SingleTimerPicker />
-                </DatepickerMega.Root>
-              </DatepickerMega.ContainerInput>
+                  </DatePickerMega.PickerTrigger>
+                  <DatePickerMega.SingleTimerPicker />
+                </DatePickerMega.Root>
+              </DatePickerMega.ContainerInput>
             )}
           />
           {errors.time?.message && (

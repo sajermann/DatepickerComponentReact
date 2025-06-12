@@ -1,5 +1,6 @@
-import { addDays, isWithinInterval } from 'date-fns';
+import { addDays } from 'date-fns';
 import { TSelectedRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledByMinInterval({
   dateToVerify,
@@ -9,7 +10,7 @@ export function isDisabledByMinInterval({
   selectedDateByRange?: TSelectedRange;
 }) {
   if (
-    !selectedDateByRange?.minInterval ||
+    !isNumber(selectedDateByRange?.minInterval) ||
     !selectedDateByRange?.selectedDate.from
   ) {
     return false;
@@ -22,11 +23,11 @@ export function isDisabledByMinInterval({
     return false;
   }
 
-  return isWithinInterval(dateToVerify, {
-    start: selectedDateByRange.selectedDate.from,
-    end: addDays(
+  return (
+    dateToVerify.getTime() <
+    addDays(
       selectedDateByRange.selectedDate.from,
       selectedDateByRange.minInterval,
-    ),
-  });
+    ).getTime()
+  );
 }

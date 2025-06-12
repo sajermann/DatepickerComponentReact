@@ -4,7 +4,7 @@ import { Fragment, useState } from "react";
 import { useDatePicker } from "~/packages/DayPicker";
 import { TWeek } from "~/packages/useDaysPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerMega } from "../../hooks";
+import { useDatePickerMega } from "../../hooks";
 import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
@@ -24,7 +24,7 @@ export function SingleDayPicker() {
     disabledWeeks,
     minDate,
     maxDate,
-  } = useDatepickerMega();
+  } = useDatePickerMega();
 
   const {
     months,

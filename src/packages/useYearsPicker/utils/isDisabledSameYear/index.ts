@@ -1,20 +1,21 @@
 import { TYearsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledSameYear({
   yearToVerify,
-  selectedDateByRange,
+  selectedYearByRange,
 }: {
   yearToVerify: number;
-  selectedDateByRange?: TYearsPickerRange;
+  selectedYearByRange?: TYearsPickerRange;
 }) {
   if (
-    !selectedDateByRange ||
-    !selectedDateByRange?.disabledSameYear ||
-    !selectedDateByRange.selectedYear.from ||
-    (selectedDateByRange.selectedYear.from &&
-      selectedDateByRange.selectedYear.to)
+    !selectedYearByRange ||
+    !selectedYearByRange?.disabledSameYear ||
+    !isNumber(selectedYearByRange.selectedYear.from) ||
+    (isNumber(selectedYearByRange.selectedYear.from) &&
+      isNumber(selectedYearByRange.selectedYear.to))
   ) {
     return false;
   }
-  return yearToVerify === selectedDateByRange.selectedYear.from;
+  return yearToVerify === selectedYearByRange.selectedYear.from;
 }

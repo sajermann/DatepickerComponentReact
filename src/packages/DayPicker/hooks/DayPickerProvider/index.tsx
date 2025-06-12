@@ -11,7 +11,7 @@ import { useTranslation } from "~/hooks/useTranslation";
 import { TMonthsPickerMonth } from "~/packages/useMonthsPicker";
 import { TYearsPickerYear } from "~/packages/useYearsPicker";
 import { delay } from "~/utils/delay";
-import { useDatePicker } from "../../../useDatepicker";
+import { useDatePicker } from "../../../useDatePicker";
 import en from "../../i18n/en.json";
 import ptBr from "../../i18n/pt-br.json";
 import {

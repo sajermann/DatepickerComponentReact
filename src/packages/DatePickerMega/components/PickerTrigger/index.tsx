@@ -1,9 +1,9 @@
-import { tv } from 'tailwind-variants';
-import { useDatepickerMega } from '../../hooks';
-import { Slot } from '../Slot';
+import { tv } from "tailwind-variants";
+import { useDatePickerMega } from "../../hooks";
+import { Slot } from "../Slot";
 
 const button = tv({
-  base: 'ring-0 outline-none flex items-center justify-center h-8 p-1 hover:text-blue-500 transition-colors duration-500 cursor-pointer',
+  base: "ring-0 outline-none flex items-center justify-center h-8 p-1 hover:text-blue-500 transition-colors duration-500 cursor-pointer",
 });
 
 type RenderAsType<C extends React.ElementType> = {
@@ -11,22 +11,22 @@ type RenderAsType<C extends React.ElementType> = {
   as?: C;
 };
 
-type PickerTriggerProps<C extends React.ElementType = 'button'> = {
+type PickerTriggerProps<C extends React.ElementType = "button"> = {
   className?: string;
   onClick?: (e: React.MouseEvent<Element, MouseEvent>) => void;
 } & RenderAsType<C> &
-  Omit<React.ComponentPropsWithoutRef<C>, 'className' | 'onClick'>;
+  Omit<React.ComponentPropsWithoutRef<C>, "className" | "onClick">;
 
-export function PickerTrigger<C extends React.ElementType = 'button'>({
+export function PickerTrigger<C extends React.ElementType = "button">({
   asChild,
   as,
   className,
   onClick,
   ...props
 }: PickerTriggerProps<C>) {
-  const { setIsOpenCalendar } = useDatepickerMega({ hasTrigger: true });
+  const { setIsOpenCalendar } = useDatePickerMega({ hasTrigger: true });
 
-  const Component = asChild ? Slot : as || 'button';
+  const Component = asChild ? Slot : as || "button";
 
   const handleClick = (e: React.MouseEvent<Element, MouseEvent>) => {
     onClick?.(e);
@@ -35,7 +35,7 @@ export function PickerTrigger<C extends React.ElementType = 'button'>({
 
   return (
     <Component
-      type={Component === 'button' ? 'button' : undefined}
+      type={Component === "button" ? "button" : undefined}
       aria-label="trigger:calendar"
       className={button({ class: className })}
       onClick={handleClick}

@@ -1,13 +1,13 @@
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { useDatePickerCalendar } from "../../hooks/useDatePickerCalendar";
 import { capitalize, getDataAttributes } from "../../utils";
 
 const commonClassNames =
   "font-bold text-center w-full h-full flex items-center justify-center";
 
 export const WeekDays = memo(() => {
-  const { multi, single, headers, viewMode } = useDatepickerCalendar();
+  const { multi, single, headers, viewMode } = useDatePickerCalendar();
 
   if (viewMode !== "days") return null;
 

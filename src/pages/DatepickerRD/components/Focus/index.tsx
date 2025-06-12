@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerRD from "~/packages/DatepickerRD";
+import * as DatePickerRD from "~/packages/DatePickerRD";
 
 export function Focus() {
   const { translate } = useTranslation();
@@ -10,14 +10,14 @@ export function Focus() {
   return (
     <Section title={`Focus - ${translate("UNDER_CONSTRUCTION")}`} variant="h2">
       <div className="flex gap-2 items-end">
-        <DatepickerRD.ContainerInput>
-          <DatepickerRD.Label htmlFor="focus">Ref - Focus</DatepickerRD.Label>
-          <DatepickerRD.Datepicker
+        <DatePickerRD.ContainerInput>
+          <DatePickerRD.Label htmlFor="focus">Ref - Focus</DatePickerRD.Label>
+          <DatePickerRD.Datepicker
             ref={ref}
             placeholder={translate("DD/MM/YYYY")}
             id="focus"
           />
-        </DatepickerRD.ContainerInput>
+        </DatePickerRD.ContainerInput>
 
         <button
           className="border rounded p-1.5 hover:opacity-70 transition-all duration-500"

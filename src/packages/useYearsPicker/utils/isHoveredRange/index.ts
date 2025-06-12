@@ -1,4 +1,5 @@
 import { TYearsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isHoveredRange({
   yearToVerify,
@@ -10,9 +11,10 @@ export function isHoveredRange({
   lastHoveredYear?: number | null;
 }) {
   if (
-    (selectedYearByRange?.from && selectedYearByRange?.to) ||
-    !lastHoveredYear ||
-    !selectedYearByRange?.from
+    (isNumber(selectedYearByRange?.from) &&
+      isNumber(selectedYearByRange?.to)) ||
+    !isNumber(lastHoveredYear) ||
+    !isNumber(selectedYearByRange?.from)
   ) {
     return false;
   }

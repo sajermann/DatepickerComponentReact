@@ -1,5 +1,5 @@
 import { isValid, startOfDay } from 'date-fns';
-import { useDatepickerMega } from '..';
+import { useDatePickerMega } from '..';
 
 export function useIsValidDate() {
   const {
@@ -10,7 +10,7 @@ export function useIsValidDate() {
     maxDate,
     minTime,
     maxTime,
-  } = useDatepickerMega();
+  } = useDatePickerMega();
 
   const isValidDate = (dateToVerify: Date | null) => {
     if (!dateToVerify || !isValid(dateToVerify)) return false;

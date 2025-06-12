@@ -1,11 +1,11 @@
 import { format } from "date-fns";
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { useDatePickerCalendar } from "../../hooks/useDatePickerCalendar";
 import { getDataAttributes } from "../../utils/getDataAttributes";
 
 export const Years = memo(() => {
-  const { years, viewMode } = useDatepickerCalendar();
+  const { years, viewMode } = useDatePickerCalendar();
 
   if (viewMode !== "years") return null;
 

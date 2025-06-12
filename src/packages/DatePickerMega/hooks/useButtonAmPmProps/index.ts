@@ -1,9 +1,9 @@
-import { useDatepickerMega, useIsValidDate } from '..';
+import { useDatePickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 
 export function useButtonAmPmProps() {
   const { inputAmPmRef, inputHourRef, inputMinuteRef, setDate, onChange } =
-    useDatepickerMega();
+    useDatePickerMega();
   const { isDisabledTime } = useIsValidDate();
 
   const onClick = () => {

@@ -1,4 +1,5 @@
 import { TMonthsPickerDisabled, TMonthsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledCancelOnDisabledDate({
   monthToVerify,
@@ -11,13 +12,13 @@ export function isDisabledCancelOnDisabledDate({
   selectedMonthByRange?: TMonthsPickerRange['selectedMonth'];
   disabledAfterFirstDisabledMonths?: boolean;
 }) {
-  if (!selectedMonthByRange || !selectedMonthByRange.from) {
+  if (!selectedMonthByRange || !isNumber(selectedMonthByRange.from)) {
     return false;
   }
 
   if (
-    selectedMonthByRange.from &&
-    !selectedMonthByRange.to &&
+    isNumber(selectedMonthByRange.from) &&
+    !isNumber(selectedMonthByRange.to) &&
     monthToVerify < selectedMonthByRange.from
   ) {
     return true;
@@ -36,12 +37,14 @@ export function isDisabledCancelOnDisabledDate({
 
   const disabledDatesAfterDateToVerify =
     sortabledMonths?.filter(
-      item => selectedMonthByRange?.from && item > selectedMonthByRange.from,
+      item =>
+        isNumber(selectedMonthByRange?.from) &&
+        item > selectedMonthByRange.from,
     ) || [];
 
   if (
-    selectedMonthByRange.from &&
-    !selectedMonthByRange.to &&
+    isNumber(selectedMonthByRange.from) &&
+    !isNumber(selectedMonthByRange.to) &&
     disabledAfterFirstDisabledMonths &&
     sortabledMonths &&
     sortabledMonths.length &&

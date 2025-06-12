@@ -3,7 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerRD from "~/packages/DatepickerRD";
+import * as DatePickerRD from "~/packages/DatePickerRD";
 
 const formSchema = z.object({
   date: z.date(),
@@ -32,19 +32,19 @@ export function HookForm() {
           control={control}
           name="date"
           render={({ field: { onChange } }) => (
-            <DatepickerRD.ContainerInput>
-              <DatepickerRD.Label
+            <DatePickerRD.ContainerInput>
+              <DatePickerRD.Label
                 htmlFor="hook"
                 isError={errors.date?.message ? true : false}
               >
                 {translate("DATE")}
-              </DatepickerRD.Label>
-              <DatepickerRD.Datepicker
+              </DatePickerRD.Label>
+              <DatePickerRD.Datepicker
                 placeholder={translate("DD/MM/YYYY")}
                 id="hook"
                 onChange={(e) => onChange(new Date(e.target.value))}
               />
-            </DatepickerRD.ContainerInput>
+            </DatePickerRD.ContainerInput>
           )}
         />
         {errors.date?.message && (

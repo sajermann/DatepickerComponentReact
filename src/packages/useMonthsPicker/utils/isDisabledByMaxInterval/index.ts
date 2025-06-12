@@ -1,22 +1,26 @@
 import { TMonthsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledByMaxInterval({
   monthToVerify,
   selectedMonthByRange,
 }: {
   monthToVerify: number;
-  selectedMonthByRange?: TMonthsPickerRange;
+  selectedMonthByRange?: Pick<
+    TMonthsPickerRange,
+    'maxInterval' | 'selectedMonth'
+  >;
 }) {
   if (
-    !selectedMonthByRange?.maxInterval ||
-    !selectedMonthByRange?.selectedMonth.from
+    !isNumber(selectedMonthByRange?.maxInterval) ||
+    !isNumber(selectedMonthByRange?.selectedMonth.from)
   ) {
     return false;
   }
 
   if (
-    selectedMonthByRange?.selectedMonth.from &&
-    selectedMonthByRange?.selectedMonth.to
+    isNumber(selectedMonthByRange?.selectedMonth.from) &&
+    isNumber(selectedMonthByRange?.selectedMonth.to)
   ) {
     return false;
   }

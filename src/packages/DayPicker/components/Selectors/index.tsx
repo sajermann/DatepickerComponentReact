@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { useDatePickerCalendar } from "../../hooks/useDatePickerCalendar";
 import { capitalize } from "../../utils";
 import { Button } from "../Button";
 
@@ -15,7 +15,7 @@ export const Selectors = memo(() => {
     viewMode,
     onClickArrow,
     years,
-  } = useDatepickerCalendar();
+  } = useDatePickerCalendar();
 
   const TEXT = {
     days: capitalize(format(firstDateOfCurrentMonthOfView, "MMM yyyy")),

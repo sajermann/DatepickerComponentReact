@@ -4,7 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 const formSchema = z.object({
   date: z.date(),
@@ -34,24 +34,24 @@ export function HookForm() {
             control={control}
             name="date"
             render={({ field: { onChange } }) => (
-              <DatepickerMega.ContainerInput>
-                <DatepickerMega.Label
+              <DatePickerMega.ContainerInput>
+                <DatePickerMega.Label
                   isError={errors.date?.message ? true : false}
                 >
                   {translate("DATE")}
-                </DatepickerMega.Label>
-                <DatepickerMega.Root onChange={(e) => onChange(e.date)}>
-                  <DatepickerMega.Day />
-                  <DatepickerMega.Divider />
-                  <DatepickerMega.Month />
-                  <DatepickerMega.Divider />
-                  <DatepickerMega.Year />
-                  <DatepickerMega.PickerTrigger>
+                </DatePickerMega.Label>
+                <DatePickerMega.Root onChange={(e) => onChange(e.date)}>
+                  <DatePickerMega.Day />
+                  <DatePickerMega.Divider />
+                  <DatePickerMega.Month />
+                  <DatePickerMega.Divider />
+                  <DatePickerMega.Year />
+                  <DatePickerMega.PickerTrigger>
                     <CalendarIcon />
-                  </DatepickerMega.PickerTrigger>
-                  <DatepickerMega.SingleDayPicker />
-                </DatepickerMega.Root>
-              </DatepickerMega.ContainerInput>
+                  </DatePickerMega.PickerTrigger>
+                  <DatePickerMega.SingleDayPicker />
+                </DatePickerMega.Root>
+              </DatePickerMega.ContainerInput>
             )}
           />
           {errors.date?.message && (

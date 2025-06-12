@@ -2,7 +2,7 @@ import { startOfDay } from "date-fns";
 import { useState } from "react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerRD from "~/packages/DatepickerRD";
+import * as DatePickerRD from "~/packages/DatePickerRD";
 
 export function Controlled() {
   const { translate } = useTranslation();
@@ -10,17 +10,17 @@ export function Controlled() {
   return (
     <Section title={translate("CONTROLLED")} variant="h2">
       <div className="flex items-baseline gap-2">
-        <DatepickerRD.ContainerInput>
-          <DatepickerRD.Label htmlFor="Date2">
+        <DatePickerRD.ContainerInput>
+          <DatePickerRD.Label htmlFor="Date2">
             {translate("DATE")}
-          </DatepickerRD.Label>
-          <DatepickerRD.Datepicker
+          </DatePickerRD.Label>
+          <DatePickerRD.Datepicker
             placeholder={translate("DD/MM/YYYY")}
             id="Date2"
             value={date}
             onChange={(e) => setDate(e.target.value)}
           />
-        </DatepickerRD.ContainerInput>
+        </DatePickerRD.ContainerInput>
 
         <div className="flex">
           <label htmlFor="native" className="flex flex-col">

@@ -60,7 +60,7 @@ const COMPONENTS = [
   { e: <TimerTrigger /> },
 ];
 
-export function DatepickerMegaPage() {
+export function DatePickerMegaPage() {
   const { translate } = useTranslation();
 
   return (

@@ -1,14 +1,14 @@
 import { formatTwoNumbers } from '..';
 import { TChangeDatepicker } from '../../types';
 
-export const onChangeDatepicker = ({
+export function onChangeDatepicker({
   dates,
   onChange,
   setDate,
   dayRef,
   monthRef,
   yearRef,
-}: TChangeDatepicker) => {
+}: TChangeDatepicker) {
   setDate(prev => {
     const newValues = {
       ...prev,
@@ -35,4 +35,4 @@ export const onChangeDatepicker = ({
 
     return newValues;
   });
-};
+}

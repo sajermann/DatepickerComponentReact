@@ -1,4 +1,5 @@
 import { TMonthsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledSameMonth({
   monthToVerify,
@@ -10,9 +11,9 @@ export function isDisabledSameMonth({
   if (
     !selectedMonthByRange ||
     !selectedMonthByRange?.disabledSameMonth ||
-    !selectedMonthByRange.selectedMonth.from ||
-    (selectedMonthByRange.selectedMonth.from &&
-      selectedMonthByRange.selectedMonth.to)
+    !isNumber(selectedMonthByRange.selectedMonth.from) ||
+    (isNumber(selectedMonthByRange.selectedMonth.from) &&
+      isNumber(selectedMonthByRange.selectedMonth.to))
   ) {
     return false;
   }

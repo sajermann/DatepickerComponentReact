@@ -1,30 +1,30 @@
 import { CalendarIcon } from "lucide-react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 export function DefaultValue() {
   const { translate } = useTranslation();
   return (
     <Section title={translate("DEFAULT_VALUES")} variant="h2">
-      <DatepickerMega.ContainerInput>
-        <DatepickerMega.Label>{translate("DATE")}</DatepickerMega.Label>
-        <DatepickerMega.Root>
-          <DatepickerMega.Day defaultValue={new Date().getDate()} />
-          <DatepickerMega.Divider />
-          <DatepickerMega.Month defaultValue={new Date().getMonth() + 1} />
-          <DatepickerMega.Divider />
-          <DatepickerMega.Year defaultValue={new Date().getFullYear()} />
-          <DatepickerMega.Divider> - </DatepickerMega.Divider>
-          <DatepickerMega.Hour defaultValue={new Date().getHours()} />
-          <DatepickerMega.Divider> : </DatepickerMega.Divider>
-          <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
-          <DatepickerMega.PickerTrigger>
+      <DatePickerMega.ContainerInput>
+        <DatePickerMega.Label>{translate("DATE")}</DatePickerMega.Label>
+        <DatePickerMega.Root>
+          <DatePickerMega.Day defaultValue={new Date().getDate()} />
+          <DatePickerMega.Divider />
+          <DatePickerMega.Month defaultValue={new Date().getMonth() + 1} />
+          <DatePickerMega.Divider />
+          <DatePickerMega.Year defaultValue={new Date().getFullYear()} />
+          <DatePickerMega.Divider> - </DatePickerMega.Divider>
+          <DatePickerMega.Hour defaultValue={new Date().getHours()} />
+          <DatePickerMega.Divider> : </DatePickerMega.Divider>
+          <DatePickerMega.Minute defaultValue={new Date().getMinutes()} />
+          <DatePickerMega.PickerTrigger>
             <CalendarIcon />
-          </DatepickerMega.PickerTrigger>
-          <DatepickerMega.SingleDayPicker />
-        </DatepickerMega.Root>
-      </DatepickerMega.ContainerInput>
+          </DatePickerMega.PickerTrigger>
+          <DatePickerMega.SingleDayPicker />
+        </DatePickerMega.Root>
+      </DatePickerMega.ContainerInput>
       <h3 className="text-sm italic font-bold">
         * {translate("CALENDAR_CHANGES_INPUT_VALUE_BY_INPUT_REFERENCES")}
       </h3>

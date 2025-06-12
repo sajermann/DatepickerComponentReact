@@ -1,4 +1,5 @@
 import { TYearsPickerDisabled, TYearsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledCancelOnDisabledDate({
   yearToVerify,
@@ -11,13 +12,13 @@ export function isDisabledCancelOnDisabledDate({
   selectedYearByRange?: TYearsPickerRange['selectedYear'];
   disabledAfterFirstDisabledYears?: boolean;
 }) {
-  if (!selectedYearByRange || !selectedYearByRange.from) {
+  if (!selectedYearByRange || !isNumber(selectedYearByRange.from)) {
     return false;
   }
 
   if (
-    selectedYearByRange.from &&
-    !selectedYearByRange.to &&
+    isNumber(selectedYearByRange.from) &&
+    !isNumber(selectedYearByRange.to) &&
     yearToVerify < selectedYearByRange.from
   ) {
     return true;
@@ -40,8 +41,8 @@ export function isDisabledCancelOnDisabledDate({
     ) || [];
 
   if (
-    selectedYearByRange.from &&
-    !selectedYearByRange.to &&
+    isNumber(selectedYearByRange.from) &&
+    !isNumber(selectedYearByRange.to) &&
     disabledAfterFirstDisabledYears &&
     sortabledYears &&
     sortabledYears.length &&

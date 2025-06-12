@@ -1,12 +1,9 @@
 import { TYearsPickerDisabled } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledAfter({
   yearToVerify,
   disabled,
 }: { yearToVerify: number; disabled?: TYearsPickerDisabled }) {
-  return (
-    disabled?.after !== undefined &&
-    disabled?.after !== null &&
-    disabled.after < yearToVerify
-  );
+  return isNumber(disabled?.after) && disabled.after < yearToVerify;
 }

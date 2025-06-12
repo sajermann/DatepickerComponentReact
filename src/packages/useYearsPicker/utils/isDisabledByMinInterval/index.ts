@@ -1,4 +1,5 @@
 import { TYearsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledByMinInterval({
   yearToVerify,
@@ -8,21 +9,21 @@ export function isDisabledByMinInterval({
   selectedYearByRange?: TYearsPickerRange;
 }) {
   if (
-    !selectedYearByRange?.minInterval ||
-    !selectedYearByRange?.selectedYear.from
+    !isNumber(selectedYearByRange?.minInterval) ||
+    !isNumber(selectedYearByRange?.selectedYear.from)
   ) {
     return false;
   }
 
   if (
-    selectedYearByRange?.selectedYear.from &&
-    selectedYearByRange?.selectedYear.to
+    isNumber(selectedYearByRange?.selectedYear.from) &&
+    isNumber(selectedYearByRange?.selectedYear.to)
   ) {
     return false;
   }
 
   return (
-    yearToVerify >
+    yearToVerify <
     selectedYearByRange.selectedYear.from + selectedYearByRange.minInterval
   );
 }

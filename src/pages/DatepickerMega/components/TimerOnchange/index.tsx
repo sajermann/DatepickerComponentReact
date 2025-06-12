@@ -3,8 +3,8 @@ import { useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
-import { TDate } from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
+import { TDate } from "~/packages/DatePickerMega";
 
 export function TimerOnchange() {
   const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
@@ -14,36 +14,36 @@ export function TimerOnchange() {
     <Section title={translate("TIME")} variant="h1">
       <Section title={translate("EVENT_ONCHANGE_ROOT")} variant="h2">
         <div className="flex gap-2 flex-wrap">
-          <DatepickerMega.ContainerInput className="w-max">
-            <DatepickerMega.Label>{translate("24_HOURS")}</DatepickerMega.Label>
-            <DatepickerMega.Root
+          <DatePickerMega.ContainerInput className="w-max">
+            <DatePickerMega.Label>{translate("24_HOURS")}</DatePickerMega.Label>
+            <DatePickerMega.Root
               intervalTime={15}
               onChange={setLastEventOnChangeRoot}
             >
-              <DatepickerMega.Hour />
-              <DatepickerMega.Divider> : </DatepickerMega.Divider>
-              <DatepickerMega.Minute />
-              <DatepickerMega.PickerTrigger>
+              <DatePickerMega.Hour />
+              <DatePickerMega.Divider> : </DatePickerMega.Divider>
+              <DatePickerMega.Minute />
+              <DatePickerMega.PickerTrigger>
                 <TimerIcon />
-              </DatepickerMega.PickerTrigger>
-              <DatepickerMega.SingleTimerPicker />
-            </DatepickerMega.Root>
-          </DatepickerMega.ContainerInput>
-          <DatepickerMega.ContainerInput className="w-max">
-            <DatepickerMega.Label htmlFor="year-composition">
+              </DatePickerMega.PickerTrigger>
+              <DatePickerMega.SingleTimerPicker />
+            </DatePickerMega.Root>
+          </DatePickerMega.ContainerInput>
+          <DatePickerMega.ContainerInput className="w-max">
+            <DatePickerMega.Label htmlFor="year-composition">
               {translate("AM_PM")}
-            </DatepickerMega.Label>
-            <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
-              <DatepickerMega.Hour />
-              <DatepickerMega.Divider> : </DatepickerMega.Divider>
-              <DatepickerMega.Minute />
-              <DatepickerMega.AmPmToggle />
-              <DatepickerMega.PickerTrigger>
+            </DatePickerMega.Label>
+            <DatePickerMega.Root onChange={setLastEventOnChangeRoot}>
+              <DatePickerMega.Hour />
+              <DatePickerMega.Divider> : </DatePickerMega.Divider>
+              <DatePickerMega.Minute />
+              <DatePickerMega.AmPmToggle />
+              <DatePickerMega.PickerTrigger>
                 <TimerIcon />
-              </DatepickerMega.PickerTrigger>
-              <DatepickerMega.SingleTimerPicker />
-            </DatepickerMega.Root>
-          </DatepickerMega.ContainerInput>
+              </DatePickerMega.PickerTrigger>
+              <DatePickerMega.SingleTimerPicker />
+            </DatePickerMega.Root>
+          </DatePickerMega.ContainerInput>
           <div className="w-full">
             <h1>{translate("LAST_EVENT_ONCHANGE_IS_NOT_STATE")}</h1>
             <JsonViewer value={lastEventOnChangeRoot || {}} />

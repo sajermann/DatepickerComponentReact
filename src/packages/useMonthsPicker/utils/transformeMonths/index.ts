@@ -15,6 +15,7 @@ import {
   onMonthClick,
 } from '..';
 import { TMonthsPickerMonth, TTransformeMonthsProps } from '../../types';
+import { isNumber } from '../isNumber';
 const currentLanguage = i18next.language as 'en-US' | 'pt-BR';
 
 export function transformMonths({
@@ -91,13 +92,19 @@ export function transformMonths({
       onMonthClick?.({ monthToVerify, single, multi, range });
     },
     onMouseEnter: () => {
-      if (!range?.selectedMonth.from || range?.selectedMonth.to) {
+      if (
+        !isNumber(range?.selectedMonth.from) ||
+        isNumber(range?.selectedMonth.to)
+      ) {
         return;
       }
       range.setLastHoveredMonth(month);
     },
     onFocus: () => {
-      if (!range?.selectedMonth.from || range?.selectedMonth.to) {
+      if (
+        !isNumber(range?.selectedMonth.from) ||
+        isNumber(range?.selectedMonth.to)
+      ) {
         return;
       }
       range.setLastHoveredMonth(month + 1);

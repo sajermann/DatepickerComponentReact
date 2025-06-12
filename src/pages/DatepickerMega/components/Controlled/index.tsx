@@ -3,8 +3,8 @@ import { useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
-import { TDate } from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
+import { TDate } from "~/packages/DatePickerMega";
 
 export function Controlled() {
   const { translate } = useTranslation();
@@ -21,24 +21,24 @@ export function Controlled() {
   return (
     <Section title={translate("CONTROLLED")} variant="h2">
       <div className="flex items-baseline gap-2">
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate("DATE")}</DatepickerMega.Label>
-          <DatepickerMega.Root
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate("DATE")}</DatePickerMega.Label>
+          <DatePickerMega.Root
             onChange={setDate}
             defaultDate={date.date || undefined}
           >
-            <DatepickerMega.Day value={String(date.day || "")} />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Month value={String(date.month || "")} />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Year value={String(date.year || "")} />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.Day value={String(date.day || "")} />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Month value={String(date.month || "")} />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Year value={String(date.year || "")} />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            {/* <DatepickerMega.SingleDayPicker /> */}
-            <DatepickerMega.SingleMonthPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            {/* <DatePickerMega.SingleDayPicker /> */}
+            <DatePickerMega.SingleMonthPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
 
         <div className="flex">
           <label htmlFor="native" className="flex flex-col">

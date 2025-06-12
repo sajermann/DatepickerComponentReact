@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { DayPickerContext } from '../DayPickerProvider';
 
-export function useDatepickerCalendar(props?: { hasTrigger?: boolean }) {
+export function useDatePickerCalendar(props?: { hasTrigger?: boolean }) {
   const { ...rest } = useContext(DayPickerContext);
 
   // useEffect(() => {

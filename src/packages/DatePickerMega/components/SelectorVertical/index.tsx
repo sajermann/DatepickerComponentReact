@@ -1,7 +1,7 @@
 import { ChevronDownIcon, ChevronUpIcon } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
 
-import { TMonthsPickerMonth, TYearsPickerYear } from "~/packages/useDatepicker";
+import { TMonthsPickerMonth, TYearsPickerYear } from "~/packages/useDatePicker";
 import { Button } from "../Button";
 
 const ITEMS_BEFORE_DEFAULT = 2;

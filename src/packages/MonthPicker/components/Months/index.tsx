@@ -21,6 +21,7 @@ export function Months({ months }: { months: TMonthsPickerMonth[] }) {
             { "opacity-25 !cursor-not-allowed": month.isDisabled },
             // { "border rounded border-slate-500": month.isThisMonth },
             { "opacity-50": month.isSelected && month.isDisabled },
+            { "bg-slate-500": month.isHoveredRange },
           ])}
         >
           <button

@@ -34,7 +34,7 @@ export function transformeYears({
     }) ||
     isDisabledSameYear({
       yearToVerify,
-      selectedDateByRange: range,
+      selectedYearByRange: range,
     }) ||
     isDisabledByMinInterval({
       yearToVerify,

@@ -22,6 +22,7 @@ export default defineConfig({
         '**/assets/**',
         'src/index.tsx',
       ],
+      reportOnFailure: true,
     },
   },
 });

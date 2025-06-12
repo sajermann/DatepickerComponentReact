@@ -2,93 +2,93 @@ import { addHours, startOfHour } from "date-fns";
 import { TimerIcon } from "lucide-react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 export function TimerDisabled() {
   const { translate } = useTranslation();
   return (
     <Section title={translate("DISABLED")} variant="h2">
       <div className="flex gap-2 flex-wrap">
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>
             {translate(`DISABLED_1_FROM_NOW`)}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root
+          </DatePickerMega.Label>
+          <DatePickerMega.Root
             intervalTime={10}
             disabledDates={[
               startOfHour(addHours(new Date(), -1)),
               startOfHour(addHours(new Date(), 1)),
             ]}
           >
-            <DatepickerMega.Hour />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.Hour />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
 
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label htmlFor="year-composition">
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label htmlFor="year-composition">
             {translate("DISABLED_1_FROM_NOW")} - {translate("AM_PM")}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root
+          </DatePickerMega.Label>
+          <DatePickerMega.Root
             intervalTime={60}
             disabledDates={[
               startOfHour(addHours(new Date(), -1)),
               startOfHour(addHours(new Date(), 1)),
             ]}
           >
-            <DatepickerMega.Hour />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
-            <DatepickerMega.AmPmToggle />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.Hour />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute />
+            <DatePickerMega.AmPmToggle />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
 
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate(`MIN_HOUR`)}</DatepickerMega.Label>
-          <DatepickerMega.Root
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate(`MIN_HOUR`)}</DatePickerMega.Label>
+          <DatePickerMega.Root
             intervalTime={60}
             minTime={{
               h: 8,
               m: 0,
             }}
           >
-            <DatepickerMega.Hour />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.Hour />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
 
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate(`MAX_HOUR`)}</DatepickerMega.Label>
-          <DatepickerMega.Root
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate(`MAX_HOUR`)}</DatePickerMega.Label>
+          <DatePickerMega.Root
             intervalTime={60}
             maxTime={{
               h: 17,
               m: 0,
             }}
           >
-            <DatepickerMega.Hour />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.Hour />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
       </div>
       <p className="italic font-bold text-sm">
         {translate("NOTE_DEFAULT_VALUES_INPUT_HOUR")}

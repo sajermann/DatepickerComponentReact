@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { tv } from "tailwind-variants";
-import { useDatepickerMega } from "../../hooks";
+import { useDatePickerMega } from "../../hooks";
 import { Popover, PopoverAnchor } from "../Popover";
 
 const rootContainer = tv({
@@ -33,7 +33,7 @@ const rootContainer = tv({
 });
 
 function WithoutPopover({ children }: { children: ReactNode }) {
-  const { rootRef } = useDatepickerMega();
+  const { rootRef } = useDatePickerMega();
   const { inputPropsInternal } = rootContainer({
     color: "primary",
   });
@@ -45,7 +45,7 @@ function WithoutPopover({ children }: { children: ReactNode }) {
 }
 
 export function Container({ children }: { children: ReactNode }) {
-  const { isOpenCalendar } = useDatepickerMega();
+  const { isOpenCalendar } = useDatePickerMega();
 
   // TODO: Não está dando tempo do picker trigger ativar o hasTrigger, ai o estoura erro do radix pelo trigger não estar dentro do popover do radix
   // Então por enquando é melhor deixar o popover em tudo mesmo que não tenha o trigger

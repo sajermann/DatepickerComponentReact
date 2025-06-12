@@ -1,16 +1,16 @@
 import { useContext, useEffect } from 'react';
-import { DatepickerMegaContext } from '../DatepickerMegaProvider';
+import { DatePickerMegaContext } from '../DatePickerMegaProvider';
 
-export function useDatepickerMega(props?: { hasTrigger?: boolean }) {
-	const { setHasTrigger, ...rest } = useContext(DatepickerMegaContext);
+export function useDatePickerMega(props?: { hasTrigger?: boolean }) {
+  const { setHasTrigger, ...rest } = useContext(DatePickerMegaContext);
 
-	useEffect(() => {
-		if (props?.hasTrigger) {
-			setHasTrigger(props.hasTrigger);
-		}
-	}, [props]);
+  useEffect(() => {
+    if (props?.hasTrigger) {
+      setHasTrigger(props.hasTrigger);
+    }
+  }, [props]);
 
-	return {
-		...rest,
-	};
+  return {
+    ...rest,
+  };
 }

@@ -1,4 +1,5 @@
 import { TMonthsPickerRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledByMinInterval({
   monthToVerify,
@@ -8,21 +9,21 @@ export function isDisabledByMinInterval({
   selectedMonthByRange?: TMonthsPickerRange;
 }) {
   if (
-    !selectedMonthByRange?.minInterval ||
-    !selectedMonthByRange?.selectedMonth.from
+    !isNumber(selectedMonthByRange?.minInterval) ||
+    !isNumber(selectedMonthByRange?.selectedMonth.from)
   ) {
     return false;
   }
 
   if (
-    selectedMonthByRange?.selectedMonth.from &&
-    selectedMonthByRange?.selectedMonth.to
+    isNumber(selectedMonthByRange?.selectedMonth.from) &&
+    isNumber(selectedMonthByRange?.selectedMonth.to)
   ) {
     return false;
   }
 
   return (
-    monthToVerify >
+    monthToVerify <
     selectedMonthByRange.selectedMonth.from + selectedMonthByRange.minInterval
   );
 }

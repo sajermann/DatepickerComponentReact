@@ -1,7 +1,7 @@
 import { addDays, endOfDay, startOfDay, subDays } from "date-fns";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerRD from "~/packages/DatepickerRD";
+import * as DatePickerRD from "~/packages/DatePickerRD";
 
 export function Disabled() {
   const { translate } = useTranslation();
@@ -9,11 +9,11 @@ export function Disabled() {
   return (
     <Section title={translate("DISABLED")} variant="h2">
       <div className="flex gap-2">
-        <DatepickerRD.ContainerInput>
-          <DatepickerRD.Label htmlFor="DateFormat1">
+        <DatePickerRD.ContainerInput>
+          <DatePickerRD.Label htmlFor="DateFormat1">
             {translate("DISABLED_1_FROM_NOW")}
-          </DatepickerRD.Label>
-          <DatepickerRD.Datepicker
+          </DatePickerRD.Label>
+          <DatePickerRD.Datepicker
             dateFormat="yyyy"
             placeholder="yyyy"
             id="DateFormat1"
@@ -23,13 +23,13 @@ export function Disabled() {
               addDays(startOfDay(new Date()), 365),
             ]}
           />
-        </DatepickerRD.ContainerInput>
+        </DatePickerRD.ContainerInput>
 
-        <DatepickerRD.ContainerInput>
-          <DatepickerRD.Label htmlFor="DateFormat1">
+        <DatePickerRD.ContainerInput>
+          <DatePickerRD.Label htmlFor="DateFormat1">
             {translate("DISABLED_1_FROM_NOW")}
-          </DatepickerRD.Label>
-          <DatepickerRD.Datepicker
+          </DatePickerRD.Label>
+          <DatePickerRD.Datepicker
             dateFormat="MM/yyyy"
             placeholder="mm-yyyy"
             id="DateFormat1"
@@ -39,13 +39,13 @@ export function Disabled() {
               addDays(startOfDay(new Date()), 30),
             ]}
           />
-        </DatepickerRD.ContainerInput>
+        </DatePickerRD.ContainerInput>
 
-        <DatepickerRD.ContainerInput>
-          <DatepickerRD.Label htmlFor="Disabled">
+        <DatePickerRD.ContainerInput>
+          <DatePickerRD.Label htmlFor="Disabled">
             {translate("YESTERDAY_AND_TOMORROW")}
-          </DatepickerRD.Label>
-          <DatepickerRD.Datepicker
+          </DatePickerRD.Label>
+          <DatePickerRD.Datepicker
             placeholder={translate("DD/MM/YYYY")}
             id="Disabled"
             excludeDateIntervals={[
@@ -59,7 +59,7 @@ export function Disabled() {
               },
             ]}
           />
-        </DatepickerRD.ContainerInput>
+        </DatePickerRD.ContainerInput>
       </div>
     </Section>
   );

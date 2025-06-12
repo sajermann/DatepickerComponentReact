@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useMonthsPicker } from "~/packages/useMonthsPicker";
 import { useYearsPicker } from "~/packages/useYearsPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerMega } from "../../hooks";
+import { useDatePickerMega } from "../../hooks";
 import { capitalize, onChangeDatepicker } from "../../utils";
 import { Button } from "../Button";
 import { PopoverArrow, PopoverContent, PopoverPortal } from "../Popover";
@@ -21,7 +21,7 @@ export function SingleYearPicker() {
     inputYearRef,
     setIsOpenCalendar,
     rootRef,
-  } = useDatepickerMega();
+  } = useDatePickerMega();
   const [dateOfView, setDateOfView] = useState(date.current.date || new Date());
 
   useEffect(() => {

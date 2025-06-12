@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { managerClassNames } from "~/utils/managerClassNames";
-import { useDatepickerCalendar } from "../../hooks/useDatepickerCalendar";
+import { useDatePickerCalendar } from "../../hooks/useDatePickerCalendar";
 import { getDataAttributes } from "../../utils/getDataAttributes";
 
 export const Weeks = memo(() => {
-  const { weeks, viewMode } = useDatepickerCalendar();
+  const { weeks, viewMode } = useDatePickerCalendar();
 
   if (viewMode !== "days") return null;
 

@@ -1,5 +1,6 @@
-import { addDays, isAfter } from 'date-fns';
+import { addDays } from 'date-fns';
 import { TSelectedRange } from '../../types';
+import { isNumber } from '../isNumber';
 
 export function isDisabledByMaxInterval({
   dateToVerify,
@@ -9,7 +10,7 @@ export function isDisabledByMaxInterval({
   selectedDateByRange?: TSelectedRange;
 }) {
   if (
-    !selectedDateByRange?.maxInterval ||
+    !isNumber(selectedDateByRange?.maxInterval) ||
     !selectedDateByRange?.selectedDate.from
   ) {
     return false;
@@ -22,11 +23,11 @@ export function isDisabledByMaxInterval({
     return false;
   }
 
-  return isAfter(
-    dateToVerify,
+  return (
+    dateToVerify.getTime() >
     addDays(
       selectedDateByRange.selectedDate.from,
       selectedDateByRange.maxInterval,
-    ),
+    ).getTime()
   );
 }

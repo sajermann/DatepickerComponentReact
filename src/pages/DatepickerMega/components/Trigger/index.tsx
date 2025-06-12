@@ -1,40 +1,40 @@
 import { CalendarIcon } from "lucide-react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 export function Trigger() {
   const { translate } = useTranslation();
   return (
     <Section title={translate("TRIGGER")} variant="h2">
       <div className="flex gap-2 flex-wrap items-end">
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>Input</DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.PickerTrigger className="cursor-pointer">
-              <DatepickerMega.Day readOnly className="cursor-pointer" />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Month readOnly className="cursor-pointer" />
-              <DatepickerMega.Divider />
-              <DatepickerMega.Year readOnly className="cursor-pointer" />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate("BY_ICON")}</DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Day />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Month />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Year />
-            <DatepickerMega.PickerTrigger>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>Input</DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.PickerTrigger className="cursor-pointer">
+              <DatePickerMega.Day readOnly className="cursor-pointer" />
+              <DatePickerMega.Divider />
+              <DatePickerMega.Month readOnly className="cursor-pointer" />
+              <DatePickerMega.Divider />
+              <DatePickerMega.Year readOnly className="cursor-pointer" />
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleDayPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate("BY_ICON")}</DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Day />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Month />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Year />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleDayPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
       </div>
     </Section>
   );

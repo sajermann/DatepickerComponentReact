@@ -3,6 +3,7 @@ import {
   TMonthsPickerRangeWithHover,
   TMonthsPickerSingle,
 } from '../../types';
+import { isNumber } from '../isNumber';
 
 type TProps = {
   monthToVerify: number;
@@ -24,7 +25,7 @@ export function onMonthClick({ monthToVerify, single, multi, range }: TProps) {
     const monthSelectedLocated = multi?.selectedMonths.find(
       item => item === monthToVerify,
     );
-    if (!monthSelectedLocated) {
+    if (!isNumber(monthSelectedLocated)) {
       multi?.onSelectedMonths([...multi.selectedMonths, monthToVerify]);
     } else {
       multi?.onSelectedMonths(
@@ -39,20 +40,24 @@ export function onMonthClick({ monthToVerify, single, multi, range }: TProps) {
       to: null,
     };
 
-    if (range.selectedMonth.from && range.selectedMonth.to) {
+    if (
+      typeof range.selectedMonth.from === 'number' &&
+      typeof range.selectedMonth.to === 'number'
+    ) {
       range.setLastHoveredMonth(null);
       finalRangeMonth = { from: monthToVerify, to: null };
     } else if (
-      range.selectedMonth.from &&
+      typeof range.selectedMonth.from === 'number' &&
       monthToVerify < range.selectedMonth.from
     ) {
       finalRangeMonth = { from: monthToVerify, to: range.selectedMonth.from };
-    } else if (!range.selectedMonth.from) {
+    } else if (typeof range.selectedMonth.from !== 'number') {
       finalRangeMonth = { ...range.selectedMonth, from: monthToVerify };
-    } else if (range.selectedMonth.from && !range.selectedMonth.to) {
+    } else if (
+      typeof range.selectedMonth.from === 'number' &&
+      typeof range.selectedMonth.to !== 'number'
+    ) {
       finalRangeMonth = { ...range.selectedMonth, to: monthToVerify };
-    } else {
-      finalRangeMonth = { from: null, to: null };
     }
 
     range.onSelectedMonth(finalRangeMonth);

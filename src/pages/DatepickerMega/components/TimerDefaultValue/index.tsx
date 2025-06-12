@@ -1,35 +1,35 @@
 import { TimerIcon } from "lucide-react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 import {
   convertHour24ToAmPm,
   formatTwoNumbers,
-} from "~/packages/DatepickerMega/utils";
+} from "~/packages/DatePickerMega/utils";
 
 export function TimerDefaultValue() {
   const { translate } = useTranslation();
   return (
     <Section title={translate("DEFAULT_VALUES")} variant="h2">
       <div className="flex gap-2 flex-wrap">
-        <DatepickerMega.ContainerInput className="w-max">
-          <DatepickerMega.Label>{translate("24_HOURS")}</DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Hour defaultValue={new Date().getHours()} />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute defaultValue={new Date().getMinutes()} />
-            <DatepickerMega.PickerTrigger>
+        <DatePickerMega.ContainerInput className="w-max">
+          <DatePickerMega.Label>{translate("24_HOURS")}</DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Hour defaultValue={new Date().getHours()} />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute defaultValue={new Date().getMinutes()} />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput className="w-max">
-          <DatepickerMega.Label htmlFor="year-composition">
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
+        <DatePickerMega.ContainerInput className="w-max">
+          <DatePickerMega.Label htmlFor="year-composition">
             {translate("AM_PM")}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root onChange={console.log}>
-            <DatepickerMega.Hour
+          </DatePickerMega.Label>
+          <DatePickerMega.Root onChange={console.log}>
+            <DatePickerMega.Hour
               defaultValue={formatTwoNumbers(
                 convertHour24ToAmPm({
                   isAmPmMode: true,
@@ -37,19 +37,19 @@ export function TimerDefaultValue() {
                 }).toString()
               )}
             />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute
               defaultValue={formatTwoNumbers(
                 new Date().getMinutes().toString()
               )}
             />
-            <DatepickerMega.AmPmToggle />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.AmPmToggle />
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
       </div>
       <p className="italic font-bold text-sm">
         {translate("NOTE_DEFAULT_VALUES_INPUT_HOUR")}

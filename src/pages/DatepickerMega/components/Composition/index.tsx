@@ -1,71 +1,71 @@
 import { CalendarIcon } from "lucide-react";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
+import * as DatePickerMega from "~/packages/DatePickerMega";
 
 export function Composition() {
   const { translate } = useTranslation();
   return (
     <Section title={translate("COMPOSITION_PATTERN")} variant="h2">
       <div className="flex gap-2 flex-wrap">
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label htmlFor="year-composition">
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label htmlFor="year-composition">
             {translate("YYYY-MM-DD")}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Year id="year-composition" />
-            <DatepickerMega.Divider>-</DatepickerMega.Divider>
-            <DatepickerMega.Month />
-            <DatepickerMega.Divider>-</DatepickerMega.Divider>
-            <DatepickerMega.Day />
-            <DatepickerMega.PickerTrigger>
+          </DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Year id="year-composition" />
+            <DatePickerMega.Divider>-</DatePickerMega.Divider>
+            <DatePickerMega.Month />
+            <DatePickerMega.Divider>-</DatePickerMega.Divider>
+            <DatePickerMega.Day />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleDayPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>
             {translate("MONTH_AND_YEAR")}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Month />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Year />
-            <DatepickerMega.PickerTrigger>
+          </DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Month />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Year />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleMonthPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate("YEAR")}</DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Year />
-            <DatepickerMega.PickerTrigger>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleMonthPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate("YEAR")}</DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Year />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleYearPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label>{translate("DATE_TIME")}</DatepickerMega.Label>
-          <DatepickerMega.Root>
-            <DatepickerMega.Day />
-            <DatepickerMega.Divider>-</DatepickerMega.Divider>
-            <DatepickerMega.Month />
-            <DatepickerMega.Divider>-</DatepickerMega.Divider>
-            <DatepickerMega.Year />
-            <DatepickerMega.Divider> - </DatepickerMega.Divider>
-            <DatepickerMega.Hour />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute />
-            <DatepickerMega.PickerTrigger>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleYearPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label>{translate("DATE_TIME")}</DatePickerMega.Label>
+          <DatePickerMega.Root>
+            <DatePickerMega.Day />
+            <DatePickerMega.Divider>-</DatePickerMega.Divider>
+            <DatePickerMega.Month />
+            <DatePickerMega.Divider>-</DatePickerMega.Divider>
+            <DatePickerMega.Year />
+            <DatePickerMega.Divider> - </DatePickerMega.Divider>
+            <DatePickerMega.Hour />
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleDayPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
       </div>
     </Section>
   );

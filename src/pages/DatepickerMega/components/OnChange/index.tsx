@@ -3,8 +3,8 @@ import { useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
-import { TDate } from "~/packages/DatepickerMega/types";
+import * as DatePickerMega from "~/packages/DatePickerMega";
+import { TDate } from "~/packages/DatePickerMega/types";
 
 export function OnChange() {
   const [lastEventOnChangeRoot, setLastEventOnChangeRoot] =
@@ -13,22 +13,22 @@ export function OnChange() {
   return (
     <Section title={translate("DATE")} variant="h1">
       <Section title={translate("EVENT_ONCHANGE_ROOT")} variant="h2">
-        <DatepickerMega.ContainerInput>
-          <DatepickerMega.Label htmlFor="date">
+        <DatePickerMega.ContainerInput>
+          <DatePickerMega.Label htmlFor="date">
             {translate("DATE")}
-          </DatepickerMega.Label>
-          <DatepickerMega.Root onChange={setLastEventOnChangeRoot}>
-            <DatepickerMega.Day id="date" />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Month />
-            <DatepickerMega.Divider />
-            <DatepickerMega.Year />
-            <DatepickerMega.PickerTrigger>
+          </DatePickerMega.Label>
+          <DatePickerMega.Root onChange={setLastEventOnChangeRoot}>
+            <DatePickerMega.Day id="date" />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Month />
+            <DatePickerMega.Divider />
+            <DatePickerMega.Year />
+            <DatePickerMega.PickerTrigger>
               <CalendarIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleDayPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleDayPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
         <div className="w-full">
           <h1>{translate("LAST_EVENT_ONCHANGE_IS_NOT_STATE")}</h1>
           <JsonViewer value={lastEventOnChangeRoot || {}} />

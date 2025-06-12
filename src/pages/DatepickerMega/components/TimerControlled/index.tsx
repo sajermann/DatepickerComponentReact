@@ -3,9 +3,9 @@ import { useState } from "react";
 import { JsonViewer } from "~/components/JsonViewer";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
-import * as DatepickerMega from "~/packages/DatepickerMega";
-import { TDate } from "~/packages/DatepickerMega/types";
-import { formatTwoNumbers } from "~/packages/DatepickerMega/utils";
+import * as DatePickerMega from "~/packages/DatePickerMega";
+import { TDate } from "~/packages/DatePickerMega/types";
+import { formatTwoNumbers } from "~/packages/DatePickerMega/utils";
 
 export function TimerControlled() {
   const { translate } = useTranslation();
@@ -22,25 +22,25 @@ export function TimerControlled() {
   return (
     <Section title={translate("CONTROLLED")} variant="h2">
       <div className="flex items-baseline gap-2">
-        <DatepickerMega.ContainerInput className="w-max">
-          <DatepickerMega.Label>{translate("24_HOURS")}</DatepickerMega.Label>
-          <DatepickerMega.Root
+        <DatePickerMega.ContainerInput className="w-max">
+          <DatePickerMega.Label>{translate("24_HOURS")}</DatePickerMega.Label>
+          <DatePickerMega.Root
             onChange={setDate}
             defaultDate={date.date || undefined}
           >
-            <DatepickerMega.Hour
+            <DatePickerMega.Hour
               value={String(date.hour === null ? "" : date.hour)}
             />
-            <DatepickerMega.Divider> : </DatepickerMega.Divider>
-            <DatepickerMega.Minute
+            <DatePickerMega.Divider> : </DatePickerMega.Divider>
+            <DatePickerMega.Minute
               value={String(date.minute === null ? "" : date.minute)}
             />
-            <DatepickerMega.PickerTrigger>
+            <DatePickerMega.PickerTrigger>
               <TimerIcon />
-            </DatepickerMega.PickerTrigger>
-            <DatepickerMega.SingleTimerPicker />
-          </DatepickerMega.Root>
-        </DatepickerMega.ContainerInput>
+            </DatePickerMega.PickerTrigger>
+            <DatePickerMega.SingleTimerPicker />
+          </DatePickerMega.Root>
+        </DatePickerMega.ContainerInput>
         <div className="flex ">
           <label htmlFor="native-timer" className="flex flex-col">
             Native Input

@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
-import { DatepickerMegaProvider } from '../../hooks';
-import { TDate } from '../../types';
-import { Container } from '../Container';
+import { ReactNode } from "react";
+import { DatePickerMegaProvider } from "../../hooks";
+import { TDate } from "../../types";
+import { Container } from "../Container";
 
 type TProps = {
   defaultDate?: Date;
@@ -35,7 +35,7 @@ export function Root({
   maxTime,
 }: TProps) {
   return (
-    <DatepickerMegaProvider
+    <DatePickerMegaProvider
       defaultDate={defaultDate}
       onChange={onChange}
       disabledDates={disabledDates}
@@ -47,6 +47,6 @@ export function Root({
       maxTime={maxTime}
     >
       <Container>{children}</Container>
-    </DatepickerMegaProvider>
+    </DatePickerMegaProvider>
   );
 }

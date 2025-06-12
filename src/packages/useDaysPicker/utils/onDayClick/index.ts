@@ -60,8 +60,6 @@ export function onDayClick({
       finalRangeDate = { ...range.selectedDate, from: dateToVerify };
     } else if (range.selectedDate.from && !range.selectedDate.to) {
       finalRangeDate = { ...range.selectedDate, to: dateToVerify };
-    } else {
-      finalRangeDate = { from: null, to: null };
     }
 
     range.onSelectedDate(finalRangeDate);
