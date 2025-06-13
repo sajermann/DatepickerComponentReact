@@ -8,6 +8,7 @@ export function useButtonAmPmProps() {
 
   const onClick = () => {
     setDate(prev => {
+      console.log(`prev aqui`, { prev });
       if (prev.date) {
         if (prev.clockType === 'pm') {
           prev.date.setHours(prev.date.getHours() - 12);

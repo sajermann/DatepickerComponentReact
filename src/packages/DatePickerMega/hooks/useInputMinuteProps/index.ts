@@ -1,5 +1,5 @@
 import { isValid } from 'date-fns';
-import { ChangeEvent, FocusEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useDatePickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 import { focusNextInput, formatTwoNumbers } from '../../utils';
@@ -10,9 +10,10 @@ export function useInputMinuteProps() {
     useDatePickerMega();
   const { isDisabledTime } = useIsValidDate();
 
-  const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
+  const onBlur = () => {
     if (isDisabledTime()) {
       if (inputMinuteRef?.current?.value) {
+        console.log(isDisabledTime(), inputMinuteRef, date);
         inputMinuteRef.current.value = '';
         focusFirstInput({
           currentInput: inputMinuteRef.current,
@@ -41,7 +42,6 @@ export function useInputMinuteProps() {
       return;
     }
 
-    // Parte do codigo beta, precisa de mais testes
     if (inputMinuteRef?.current) {
       inputMinuteRef.current.value = formatTwoNumbers(
         inputMinuteRef.current.value,
@@ -101,7 +101,6 @@ export function useInputMinuteProps() {
         if (valueTemp.length > 1 && inputMinuteRef?.current) {
           focusNextInput({
             currentInput: inputMinuteRef.current,
-            date: t,
           });
         }
         return t;
@@ -138,7 +137,6 @@ export function useInputMinuteProps() {
       if (valueTemp.length > 1 && inputMinuteRef?.current) {
         focusNextInput({
           currentInput: inputMinuteRef.current,
-          date: newValues,
         });
       }
 

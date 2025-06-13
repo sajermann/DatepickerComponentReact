@@ -1,6 +1,7 @@
 export * from './adjustDay';
 export * from './convertHour24ToAmPm';
 export * from './focusNextInput';
+export * from './focusFirstInput';
 export * from './formatTwoNumbers';
 export * from './onChangeDatepicker';
 export * from './onChangeTimepicker';

@@ -21,12 +21,12 @@ export function SelectorVertical({
   currentIndex,
 }: TSelectorVerticalProps) {
   const elementRef = useRef<HTMLDivElement>(null);
-
   const currentItem = data[currentIndex];
 
   const onChangeInternal = (up?: boolean) => {
     const indexToClick = up ? currentIndex - 1 : currentIndex + 1;
     const result = (indexToClick + data.length) % data.length;
+    console.log(data[result]);
     data[result]?.onClick();
   };
 
@@ -56,6 +56,7 @@ export function SelectorVertical({
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
+      console.log(`batata`, { e });
       if (elementRef?.current?.contains(e.target as Node)) {
         e.preventDefault();
         e.stopPropagation();
@@ -84,7 +85,11 @@ export function SelectorVertical({
         <ChevronUpIcon />
       </Button>
 
-      <div ref={elementRef} className="flex flex-col gap-2">
+      <div
+        data-testid="batata"
+        ref={elementRef}
+        className="flex flex-col gap-2"
+      >
         {getVisibleData.map((item) => (
           <Button
             key={item.text}

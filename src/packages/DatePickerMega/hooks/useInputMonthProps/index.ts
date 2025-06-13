@@ -1,5 +1,5 @@
 import { isValid, parse } from 'date-fns';
-import { ChangeEvent, FocusEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useDatePickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 import { adjustDay, focusNextInput, formatTwoNumbers } from '../../utils';
@@ -10,10 +10,8 @@ export function useInputMonthProps() {
     useDatePickerMega();
   const { isDisabledDate } = useIsValidDate();
 
-  const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
-    const { value } = event.target;
-
-    if (inputMonthRef?.current && value === '0') {
+  const onBlur = () => {
+    if (inputMonthRef?.current?.value === '0') {
       inputMonthRef.current.value = '';
       setDate(prev => {
         const newValues: TDate = {

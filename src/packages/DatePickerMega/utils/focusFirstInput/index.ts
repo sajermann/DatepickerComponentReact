@@ -1,11 +1,11 @@
 import { TDate } from '../../types';
 
-type TFocusNextInput = {
+type TFocusFirstInput = {
   currentInput: HTMLInputElement;
   date: TDate;
 };
 
-export const focusFirstInput = ({ currentInput, date }: TFocusNextInput) => {
+export const focusFirstInput = ({ currentInput, date }: TFocusFirstInput) => {
   if (!date.day && !date.month && !date.year) {
     return;
   }

@@ -1,18 +1,16 @@
 import { isValid, lastDayOfMonth, parse } from 'date-fns';
-import { ChangeEvent, FocusEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useDatePickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
-import { focusNextInput, formatTwoNumbers } from '../../utils';
-import { focusFirstInput } from '../../utils/focusFirstInput';
+import { focusFirstInput, focusNextInput, formatTwoNumbers } from '../../utils';
 
 export function useInputDayProps() {
   const { inputDayRef, inputMonthRef, inputYearRef, date, setDate, onChange } =
     useDatePickerMega();
   const { isDisabledDate } = useIsValidDate();
 
-  const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
-    const { value } = event.target;
-    if (inputDayRef?.current && value === '0') {
+  const onBlur = () => {
+    if (inputDayRef?.current?.value === '0') {
       inputDayRef.current.value = '';
       setDate(prev => {
         const newValues: TDate = {
@@ -59,7 +57,6 @@ export function useInputDayProps() {
       return;
     }
 
-    // Parte do codigo beta, precisa de mais testes
     if (inputDayRef?.current) {
       inputDayRef.current.value = formatTwoNumbers(inputDayRef.current.value);
     }
@@ -125,7 +122,6 @@ export function useInputDayProps() {
     if (valueTemp.length > 1 && inputDayRef?.current) {
       focusNextInput({
         currentInput: inputDayRef.current,
-        date: date.current,
       });
     }
   };

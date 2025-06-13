@@ -1,15 +1,8 @@
-import { TDate } from '../../types';
-
 type TFocusNextInput = {
   currentInput: HTMLInputElement;
-  date: TDate;
 };
 
-export const focusNextInput = ({ currentInput, date }: TFocusNextInput) => {
-  //Comentando para imputs de horas
-  // if (!date.day && !date.month && !date.year) {
-  //   return;
-  // }
+export const focusNextInput = ({ currentInput }: TFocusNextInput) => {
   if (!currentInput.parentElement) {
     return;
   }

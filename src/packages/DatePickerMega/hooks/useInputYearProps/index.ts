@@ -1,5 +1,5 @@
 import { isValid, parse } from 'date-fns';
-import { ChangeEvent, FocusEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useDatePickerMega, useIsValidDate } from '..';
 import { TDate } from '../../types';
 import { adjustDay, focusNextInput } from '../../utils';
@@ -10,10 +10,8 @@ export function useInputYearProps() {
     useDatePickerMega();
   const { isDisabledDate } = useIsValidDate();
 
-  const onBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
-    const { value } = event.target;
-
-    if (inputYearRef?.current && value === '0') {
+  const onBlur = () => {
+    if (inputYearRef?.current?.value === '0') {
       inputYearRef.current.value = '';
       setDate(prev => {
         const newValues: TDate = {
@@ -111,7 +109,6 @@ export function useInputYearProps() {
       adjustDay({ date: date.current, dayRef: inputDayRef, setDate, onChange });
       focusNextInput({
         currentInput: inputYearRef.current,
-        date: date.current,
       });
     }
   };
