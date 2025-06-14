@@ -19,7 +19,7 @@ export function useIsValidDate() {
   };
 
   const isDisabledDate = () => {
-    if (!date.current.date) return false;
+    if (!date?.current?.date) return false;
     const isDisabled = disabledDates?.find(
       d => startOfDay(d).valueOf() === date.current.date?.valueOf(),
     );
@@ -32,7 +32,7 @@ export function useIsValidDate() {
     const isMaxDate =
       maxDate && date.current.date?.valueOf() > startOfDay(maxDate).valueOf();
 
-    return (
+    return !!(
       isDisabled !== undefined ||
       isDisabledWeeks !== undefined ||
       isMinDate ||
@@ -41,6 +41,7 @@ export function useIsValidDate() {
   };
 
   const isDisabledTime = () => {
+    console.log({ date });
     if (!date.current.date) return false;
     const isDisabled = disabledDates?.find(
       d => d.valueOf() === date.current.date?.valueOf(),

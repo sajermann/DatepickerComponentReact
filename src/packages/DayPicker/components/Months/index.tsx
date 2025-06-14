@@ -7,6 +7,7 @@ export const Months = memo(() => {
   const { months, viewMode } = useDatePickerCalendar();
 
   if (viewMode !== "months") return null;
+
   return (
     <div className="justify-items-center grid grid-cols-12 @container/months">
       {months.map((month) => (
