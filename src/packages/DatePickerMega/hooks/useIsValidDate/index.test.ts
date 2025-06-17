@@ -70,7 +70,29 @@ describe('packages/DatePickerMega/hooks/useIsValidDate', async () => {
     expect(result).toBe(true);
   });
 
+  it('must return true on is disabled time when date current date is disabled time', async () => {
+    const date = new Date(2025, 5, 2);
+    date.setHours(6);
+    vi.spyOn(forMock, 'useDatePickerMega').mockReturnValue({
+      date: { current: { date } },
+      minTime: {
+        h: 1,
+        m: 0,
+      },
+      maxTime: {
+        h: 5,
+        m: 0,
+      },
+    } as any);
+    const { isDisabledTime } = useIsValidDate();
+    const result = isDisabledTime();
+    expect(result).toBe(true);
+  });
+
   it('must return false on is disabled time when date current date is trash', async () => {
+    vi.spyOn(forMock, 'useDatePickerMega').mockReturnValue({
+      date: { current: { date: null } },
+    } as any);
     const { isDisabledTime } = useIsValidDate();
     const result = isDisabledTime();
     expect(result).toBe(false);

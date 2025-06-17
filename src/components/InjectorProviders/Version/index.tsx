@@ -9,7 +9,7 @@ const TOTAL_COMMITS = import.meta.env.VITE_TOTAL_COMMITS;
 const MODE = import.meta.env.VITE_MODE;
 
 export function Version() {
-  if (MODE === 'production') {
+  if (MODE === "production") {
     console.table({
       DEPLOY_TIME,
       COMMIT_HASH,

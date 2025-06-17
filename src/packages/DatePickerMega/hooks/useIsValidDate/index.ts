@@ -41,7 +41,6 @@ export function useIsValidDate() {
   };
 
   const isDisabledTime = () => {
-    console.log({ date });
     if (!date.current.date) return false;
     const isDisabled = disabledDates?.find(
       d => d.valueOf() === date.current.date?.valueOf(),
