@@ -47,7 +47,6 @@ export const onChangeYear = ({
     if (valueTemp.length > 3 && yearRef?.current) {
       focusNextInput({
         currentInput: yearRef.current,
-        date: newValues,
       });
       adjustDay({ date: newValues, dayRef, setDate, onChange });
     }

@@ -115,7 +115,6 @@ export function useInputMonthProps() {
       adjustDay({ date: date.current, dayRef: inputDayRef, setDate, onChange });
       focusNextInput({
         currentInput: inputMonthRef.current,
-        date: date.current,
       });
     }
   };
