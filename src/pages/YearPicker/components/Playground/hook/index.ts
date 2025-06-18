@@ -7,13 +7,14 @@ export function usePlayGround() {
   const { translate } = useTranslation();
   const [showCalendar, setShowCalendar] = useState(true);
   const [neccessaryReload, setIsNecessaryReload] = useState(false);
-  const [monthDisabledToInclude, setMonthDisabledToInclude] = useState<
+  const [yearDisabledToInclude, setYearDisabledToInclude] = useState<
     number | null
   >(null);
 
   const [playgroundParams, setPlaygroundParams] = useState<TPlaygroundParams>({
+    year: null,
     single: {
-      selectedMonth: null,
+      selectedYear: null,
     },
   });
 
@@ -22,16 +23,17 @@ export function usePlayGround() {
     setShowCalendar,
     neccessaryReload,
     setIsNecessaryReload,
-    monthDisabledToInclude,
-    setMonthDisabledToInclude,
+    yearDisabledToInclude,
+    setYearDisabledToInclude,
     playgroundParams,
     setPlaygroundParams,
     inputs: getInputs({
-      monthDisabledToInclude,
+      yearDisabledToInclude,
       playgroundParams,
-      setMonthDisabledToInclude,
+      setYearDisabledToInclude,
       setPlaygroundParams,
       translate,
+      setIsNecessaryReload,
     }),
     params: { ...getParams({ playgroundParams, setPlaygroundParams }) },
     onReloadAction: () =>

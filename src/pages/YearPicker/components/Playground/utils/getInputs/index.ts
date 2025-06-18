@@ -12,15 +12,17 @@ const OPTIONS_BOOLEAN = [
 export function getInputs({
   playgroundParams,
   setPlaygroundParams,
-  monthDisabledToInclude,
-  setMonthDisabledToInclude,
+  yearDisabledToInclude,
+  setYearDisabledToInclude,
   translate,
+  setIsNecessaryReload,
 }: {
   playgroundParams: TPlaygroundParams;
   setPlaygroundParams: Dispatch<SetStateAction<TPlaygroundParams>>;
-  monthDisabledToInclude: number | null;
-  setMonthDisabledToInclude: Dispatch<SetStateAction<number | null>>;
+  yearDisabledToInclude: number | null;
+  setYearDisabledToInclude: Dispatch<SetStateAction<number | null>>;
   translate: (data: string) => string;
+  setIsNecessaryReload: (data: boolean) => void;
 }): Input[] {
   return [
     {
@@ -36,7 +38,7 @@ export function getInputs({
               : value === 'multi'
                 ? []
                 : { from: null, to: null },
-          prop: value === 'multi' ? 'selectedMonths' : 'selectedMonth',
+          prop: value === 'multi' ? 'selectedYears' : 'selectedYear',
           setPlaygroundParams,
         });
       },
@@ -62,12 +64,12 @@ export function getInputs({
     },
     {
       type: 'select',
-      label: 'Disabled After First Disabled Months',
+      label: 'Disabled After First Disabled Years',
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
         onChangeInputByType({
           type: 'range',
           value: target.value === 'null' ? null : target.value === 'true',
-          prop: 'disabledAfterFirstDisabledMonths',
+          prop: 'disabledAfterFirstDisabledYears',
           setPlaygroundParams,
         }),
       options: OPTIONS_BOOLEAN,
@@ -75,12 +77,12 @@ export function getInputs({
     },
     {
       type: 'select',
-      label: 'Disabled Same Month',
+      label: 'Disabled Same Year',
       onChange: ({ target }: ChangeEvent<HTMLSelectElement>) =>
         onChangeInputByType({
           type: 'range',
           value: target.value === 'null' ? null : target.value === 'true',
-          prop: 'disabledSameMonth',
+          prop: 'disabledSameYear',
           setPlaygroundParams,
         }),
       options: OPTIONS_BOOLEAN,
@@ -112,7 +114,19 @@ export function getInputs({
     },
     {
       type: 'input-number',
-      label: 'Month Disabled Before',
+      label: 'Year',
+      onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
+        onChangeInputProp({
+          value: target.value ? Number(target.value) : null,
+          prop: 'year',
+          setPlaygroundParams,
+        });
+        setIsNecessaryReload(true);
+      },
+    },
+    {
+      type: 'input-number',
+      label: 'Year Disabled Before',
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
         onChangeInputProp({
           value: Number(target.value),
@@ -123,7 +137,7 @@ export function getInputs({
     },
     {
       type: 'input-number',
-      label: 'Month Disabled After',
+      label: 'Year Disabled After',
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
         onChangeInputProp({
           value: Number(target.value),
@@ -134,24 +148,24 @@ export function getInputs({
     },
     {
       type: 'input-number',
-      label: 'Months Disabled',
+      label: 'Years Disabled',
       onChange: ({ target }: ChangeEvent<HTMLInputElement>) => {
-        setMonthDisabledToInclude(Number(target.value));
+        setYearDisabledToInclude(Number(target.value));
       },
       onInclude: () => {
-        if (!monthDisabledToInclude) {
+        if (!yearDisabledToInclude) {
           return;
         }
         setPlaygroundParams(prev => {
           return {
             ...prev,
-            disabledMonths: !prev.disabledMonths
-              ? [monthDisabledToInclude]
-              : [...prev.disabledMonths, monthDisabledToInclude],
+            disabledYears: !prev.disabledYears
+              ? [yearDisabledToInclude]
+              : [...prev.disabledYears, yearDisabledToInclude],
           };
         });
 
-        setMonthDisabledToInclude(null);
+        setYearDisabledToInclude(null);
       },
       tooltip: translate('DISABLED_DATES_TOOLTIP'),
     },

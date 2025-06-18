@@ -1,3 +1,4 @@
+import { addDays } from 'date-fns';
 /**
  * @vitest-environment jsdom
  */
@@ -6,11 +7,10 @@ import { getInputs } from '.';
 import { TPlaygroundParams } from '../../types';
 import * as utils from '../../utils';
 
-// Mocks para funções externas
-
-describe('pages/MonthPicker/components/Playground/utils/getInputs', () => {
+describe('pages/DayPicker/components/Playground/utils/getInputs', () => {
   const setPlaygroundParams = vi.fn();
-  const setMonthDisabledToInclude = vi.fn();
+  const setDateDisabledToInclude = vi.fn();
+  const setIsNecessaryReload = vi.fn();
   const translate = vi.fn(str => `translated:${str}`);
 
   beforeEach(() => {
@@ -19,129 +19,134 @@ describe('pages/MonthPicker/components/Playground/utils/getInputs', () => {
   });
 
   it('returns an array of inputs with correct types and labels', () => {
-    const playgroundParams: TPlaygroundParams = {};
+    const playgroundParams = {} as TPlaygroundParams;
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
     expect(Array.isArray(result)).toBe(true);
     expect(result[0].type).toBe('select');
     expect(result[0].label).toBe('Mode');
   });
 
-  it('hides Toggle, Disabled After First Disabled Months, Disabled Same Month, Min/Max Interval when not in correct mode', () => {
-    const playgroundParams: TPlaygroundParams = {};
+  it('hides Toggle, Disabled After First Disabled Dates, Disabled Same Date, Min/Max Interval when not in correct mode', () => {
+    const playgroundParams = {} as TPlaygroundParams;
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
     // Toggle only visible if single
     expect(result.find(i => i.label === 'Toggle')?.hide).toBe(true);
     // Range options only visible if range
     expect(
-      result.find(i => i.label === 'Disabled After First Disabled Months')
-        ?.hide,
+      result.find(i => i.label === 'Disabled After First Disabled Dates')?.hide,
     ).toBe(true);
-    expect(result.find(i => i.label === 'Disabled Same Month')?.hide).toBe(
-      true,
-    );
+    expect(result.find(i => i.label === 'Disabled Same Date')?.hide).toBe(true);
     expect(result.find(i => i.label === 'Min Interval')?.hide).toBe(true);
     expect(result.find(i => i.label === 'Max Interval')?.hide).toBe(true);
   });
 
   it('shows Toggle when playgroundParams.single is present', () => {
     const playgroundParams: TPlaygroundParams = {
-      single: { selectedMonth: null, toggle: true },
+      single: { selectedDate: null, toggle: true },
+      disabledWeeks: [],
     };
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
     expect(result.find(i => i.label === 'Toggle')?.hide).toBe(false);
   });
 
   it('shows range options when playgroundParams.range is present', () => {
     const playgroundParams: TPlaygroundParams = {
-      range: { selectedMonth: { from: 1, to: 2 } },
+      range: { selectedDate: { from: new Date(), to: addDays(new Date(), 1) } },
+      disabledWeeks: [],
     };
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
     expect(
-      result.find(i => i.label === 'Disabled After First Disabled Months')
-        ?.hide,
+      result.find(i => i.label === 'Disabled After First Disabled Dates')?.hide,
     ).toBe(false);
-    expect(result.find(i => i.label === 'Disabled Same Month')?.hide).toBe(
+    expect(result.find(i => i.label === 'Disabled Same Date')?.hide).toBe(
       false,
     );
     expect(result.find(i => i.label === 'Min Interval')?.hide).toBe(false);
     expect(result.find(i => i.label === 'Max Interval')?.hide).toBe(false);
   });
 
-  it('calls setMonthDisabledToInclude and setPlaygroundParams on onInclude', () => {
-    const playgroundParams: TPlaygroundParams = {};
+  it('calls setDateDisabledToInclude and setPlaygroundParams on onInclude', () => {
+    const playgroundParams = {} as TPlaygroundParams;
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: 5,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: new Date(),
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
-    const monthsDisabledInput: any = result.find(
-      i => i.label === 'Months Disabled',
+    const yearsDisabledInput: any = result.find(
+      i => i.label === 'Dates Disabled',
     );
-    expect(monthsDisabledInput).toBeDefined();
+    expect(yearsDisabledInput).toBeDefined();
 
     // Call onInclude
-    monthsDisabledInput?.onInclude?.();
+    yearsDisabledInput?.onInclude?.();
     expect(setPlaygroundParams).toHaveBeenCalled();
-    expect(setMonthDisabledToInclude).toHaveBeenCalledWith(null);
+    expect(setDateDisabledToInclude).toHaveBeenCalledWith(null);
   });
 
-  it('does not call setPlaygroundParams or setMonthDisabledToInclude if monthDisabledToInclude is null', () => {
-    const playgroundParams: TPlaygroundParams = {};
+  it('does not call setPlaygroundParams or setDateDisabledToInclude if yearDisabledToInclude is null', () => {
+    const playgroundParams = {} as TPlaygroundParams;
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
-    const monthsDisabledInput: any = result.find(
-      i => i.label === 'Months Disabled',
+    const yearsDisabledInput: any = result.find(
+      i => i.label === 'Dates Disabled',
     );
-    expect(monthsDisabledInput).toBeDefined();
+    expect(yearsDisabledInput).toBeDefined();
 
     // Call onInclude
-    monthsDisabledInput?.onInclude?.();
+    yearsDisabledInput?.onInclude?.();
     expect(setPlaygroundParams).not.toHaveBeenCalled();
-    expect(setMonthDisabledToInclude).not.toHaveBeenCalled();
+    expect(setDateDisabledToInclude).not.toHaveBeenCalled();
   });
 
-  it('sets tooltip on Months Disabled input', () => {
-    const playgroundParams: TPlaygroundParams = {};
+  it('sets tooltip on Dates Disabled input', () => {
+    const playgroundParams = {} as TPlaygroundParams;
     const result = getInputs({
       playgroundParams,
       setPlaygroundParams,
-      monthDisabledToInclude: null,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude: null,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
-    const monthsDisabledInput = result.find(i => i.label === 'Months Disabled');
-    expect(monthsDisabledInput?.tooltip).toBe(
+    const yearsDisabledInput = result.find(i => i.label === 'Dates Disabled');
+    expect(yearsDisabledInput?.tooltip).toBe(
       'translated:DISABLED_DATES_TOOLTIP',
     );
   });
@@ -157,24 +162,25 @@ describe('pages/MonthPicker/components/Playground/utils/getInputs', () => {
     );
 
     const spySetPlaygroundParams = vi.fn();
-    const setMonthDisabledToInclude = vi.fn();
+    const setDateDisabledToInclude = vi.fn();
     const translate = vi.fn(str => `translated:${str}`);
 
     // PlaygroundParams para mostrar todos os campos
     const playgroundParams: any = {
       single: { toggle: true },
-      range: { selectedMonth: { from: 1, to: 2 } },
+      range: { selectedDate: { from: new Date(), to: addDays(new Date(), 1) } },
     };
 
-    // monthDisabledToInclude para ativar o onInclude
-    const monthDisabledToInclude = 5;
+    // yearDisabledToInclude para ativar o onInclude
+    const dateDisabledToInclude = new Date();
 
     const inputs = getInputs({
       playgroundParams,
       setPlaygroundParams: spySetPlaygroundParams,
-      monthDisabledToInclude,
-      setMonthDisabledToInclude,
+      dateDisabledToInclude,
+      setDateDisabledToInclude,
       translate,
+      setIsNecessaryReload,
     });
 
     // Simula todos os onChange
@@ -189,20 +195,19 @@ describe('pages/MonthPicker/components/Playground/utils/getInputs', () => {
       }
     }
 
-    // Simula onInclude do último input (Months Disabled)
-    const monthsDisabledInput: any = inputs.find(
-      i => i.label === 'Months Disabled',
+    // Simula onInclude do último input (Dates Disabled)
+    const datesDisabledInput: any = inputs.find(
+      i => i.label === 'Dates Disabled',
     );
-    monthsDisabledInput?.onInclude?.();
+    datesDisabledInput?.onInclude?.();
 
     // Verifica se todos os mocks foram chamados
     expect(spyOnChangeInputByType).toHaveBeenCalled();
     expect(spyOnChangeInputProp).toHaveBeenCalled();
-    expect(setMonthDisabledToInclude).toHaveBeenCalledWith(Number('true')); // chamado pelo onChange
     expect(spySetPlaygroundParams).toHaveBeenCalled(); // chamado pelo onInclude
 
     // Verifica se o tooltip do último input foi traduzido
-    expect(monthsDisabledInput?.tooltip).toBe(
+    expect(datesDisabledInput?.tooltip).toBe(
       'translated:DISABLED_DATES_TOOLTIP',
     );
   });

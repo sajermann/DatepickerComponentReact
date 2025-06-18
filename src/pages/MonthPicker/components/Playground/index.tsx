@@ -3,23 +3,19 @@ import { Params } from "~/components/Params";
 import { Section } from "~/components/Section";
 import { useTranslation } from "~/hooks/useTranslation";
 import { MonthPicker } from "~/packages/MonthPicker";
-import { delay } from "~/utils/delay";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { usePlayGround } from "./hook";
-import { getParams } from "./utils";
 
 export function Playground() {
   const { translate } = useTranslation();
   const {
     showCalendar,
-    setShowCalendar,
     neccessaryReload,
-    setIsNecessaryReload,
     playgroundParams,
-    setPlaygroundParams,
+    params,
     inputs,
+    onReloadAction,
   } = usePlayGround();
-  console.log({ neccessaryReload });
   return (
     <Section title="Playground" variant="h2">
       <Params inputs={inputs} />
@@ -37,7 +33,7 @@ export function Playground() {
                 before: playgroundParams.disabledBefore,
                 months: playgroundParams.disabledMonths,
               }}
-              {...getParams({ playgroundParams, setPlaygroundParams })}
+              {...params}
             />
           </div>
         )}
@@ -52,12 +48,7 @@ export function Playground() {
             "focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-neutral-900",
             "disabled:opacity-50 disabled:cursor-not-allowed",
           ])}
-          onClick={async () => {
-            setShowCalendar(false);
-            await delay(1);
-            setShowCalendar(true);
-            setIsNecessaryReload(false);
-          }}
+          onClick={onReloadAction}
         >
           {translate("RELOAD")}
         </button>

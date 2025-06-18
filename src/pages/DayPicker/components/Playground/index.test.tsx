@@ -8,7 +8,7 @@ import * as utils from "./hook";
 import { InjectorProviders } from "~/components/InjectorProviders";
 import { Playground } from ".";
 
-describe("pages/MonthPicker/components/Playground", () => {
+describe("Pages/DayPicker/components/Playground", () => {
   it(`must render component`, async () => {
     const spy = vi.fn();
     vi.spyOn(utils, "usePlayGround").mockImplementation(
