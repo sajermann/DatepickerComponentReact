@@ -1,27 +1,53 @@
-import { lazy, useMemo } from 'react';
-import { useLocation } from 'react-router';
+import { lazy, useMemo } from "react";
+import { useLocation } from "react-router";
 
 import {
   _getMenus,
   _sortCustomName,
   _sortCustomOrder,
   getTriRoutes,
-} from '~/hooks/useRoutesMenu/utils';
-import { useTranslation } from '~/hooks/useTranslation';
-import { Home } from '~/pages/Home';
-import { TRoutesMenu } from '~/types/TRoutesMenu';
-import { TTriRoutes } from './types';
+} from "~/hooks/useRoutesMenu/utils";
+import { useTranslation } from "~/hooks/useTranslation";
+import { Home } from "~/pages/Home";
+import { TRoutesMenu } from "~/types/TRoutesMenu";
+import { TTriRoutes } from "./types";
 
-const DatepickerPage = lazy(() =>
-  import('~/pages/Datepicker').then(({ DatepickerPage: Datepicker }) => ({
-    default: Datepicker,
-  })),
+const DatePickerPage = lazy(() =>
+  import("~/pages/DatePickerMega").then(
+    ({ DatePickerMegaPage: DatePickerMega }) => ({
+      default: DatePickerMega,
+    })
+  )
+);
+
+const DatePickerRDPage = lazy(() =>
+  import("~/pages/DatePickerRD").then(({ DatePickerRDPage: DatePickerRD }) => ({
+    default: DatePickerRD,
+  }))
+);
+
+const YearPickerPage = lazy(() =>
+  import("~/pages/YearPicker").then(({ YearPickerPage: YearPicker }) => ({
+    default: YearPicker,
+  }))
+);
+
+const MonthPickerPage = lazy(() =>
+  import("~/pages/MonthPicker").then(({ MonthPickerPage: MonthPicker }) => ({
+    default: MonthPicker,
+  }))
+);
+
+const DayPickerPage = lazy(() =>
+  import("~/pages/DayPicker").then(({ DayPickerPage: DayPicker }) => ({
+    default: DayPicker,
+  }))
 );
 
 const NotFoundPage = lazy(() =>
-  import('~/pages/NotFound').then(({ NotFoundPage: NotFound }) => ({
+  import("~/pages/NotFound").then(({ NotFoundPage: NotFound }) => ({
     default: NotFound,
-  })),
+  }))
 );
 
 export function useRoutesMenu() {
@@ -31,10 +57,10 @@ export function useRoutesMenu() {
     (): TRoutesMenu[] =>
       [
         {
-          name: 'Home',
-          path: '/',
+          name: "Home",
+          path: "/",
           element: <Home />,
-          label: 'Home',
+          label: "Home",
           hide: {
             home: true,
             otherComponents: true,
@@ -42,17 +68,47 @@ export function useRoutesMenu() {
           order: 0,
         },
         {
-          name: 'Datepicker Mega',
-          path: '/datepicker-mega',
-          description: 'Datepicker Mega',
-          element: <DatepickerPage />,
-          label: 'Datepicker Mega',
+          name: "Year Picker",
+          path: "/year-picker",
+          description: "Year Picker",
+          element: <YearPickerPage />,
+          label: "Year Picker",
         },
         {
-          name: 'NotFound',
-          path: '*',
+          name: "Month Picker",
+          path: "/month-picker",
+          description: "Month Picker",
+          element: <MonthPickerPage />,
+          label: "Month Picker",
+        },
+        {
+          name: "Day Picker",
+          path: "/day-picker",
+          description: "Day Picker",
+          element: <DayPickerPage />,
+          label: "Day Picker",
+        },
+        {
+          name: "Datepicker Mega",
+          path: "/datepicker-mega",
+          description: "Datepicker Mega",
+          element: <DatePickerPage />,
+          label: "Datepicker Mega",
+          order: 1,
+        },
+        {
+          name: "Datepicker RD",
+          path: "/datepicker-rd",
+          description: "Datepicker RD",
+          element: <DatePickerRDPage />,
+          label: "Datepicker RD",
+        },
+
+        {
+          name: "NotFound",
+          path: "*",
           element: <NotFoundPage />,
-          label: translate('NOT_FOUND'),
+          label: translate("NOT_FOUND"),
           hide: {
             home: true,
             otherComponents: true,
@@ -61,12 +117,12 @@ export function useRoutesMenu() {
       ]
         .sort(_sortCustomName)
         .sort(_sortCustomOrder),
-    [currentLanguage],
+    [currentLanguage]
   );
 
   const triRoutes: TTriRoutes = useMemo(
     () => getTriRoutes(globalRoutes, location.pathname),
-    [currentLanguage, location.pathname],
+    [currentLanguage, location.pathname]
   );
 
   return {

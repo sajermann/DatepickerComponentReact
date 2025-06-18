@@ -13,6 +13,15 @@
   --breakpoint-3xl: 1536px;
   --breakpoint-4xl: 1980px;
 
+  --container-xm: 400px;
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1366px;
+  --container-3xl: 1536px;
+  --container-4xl: 1980px;
+
   --color-brand-300: #996dff;
   --color-brand-500: #8257e6;
 
@@ -39,12 +48,17 @@
   --color-warning-500: #fff3cd;
   --color-warning-600: #664d03;
 
+  --color-white: #fff;
+  --color-black: #000;
+
   --color-dark-400: #18181b;
   --color-dark-500: #09090b;
   --color-dark-600: #1f2937;
   --color-dark-700: #0f1926;
 
   --color-odd-500: #f2f2f2;
+
+  --width-inherit: inherit;
 
   @keyframes enter {
     0% {

@@ -1,5 +1,10 @@
 import { DetailedHTMLProps, HTMLAttributes, memo } from 'react';
+import { tv } from 'tailwind-variants';
 import { managerClassNames } from '~/utils/managerClassNames';
+
+const section = tv({
+  base: ['flex flex-col gap-2 w-full'],
+});
 
 interface CustomHeadingProps {
   title: string;
@@ -7,9 +12,9 @@ interface CustomHeadingProps {
 }
 
 const variantClassMap: Record<CustomHeadingProps['variant'], string> = {
-  h1: 'text-3xl',
-  h2: 'text-2xl',
-  h3: 'text-xl',
+  h1: 'text-3xl w-fit',
+  h2: 'text-2xl w-fit',
+  h3: 'text-xl w-fit',
 };
 
 const CustomHeading = memo(({ title, variant }: CustomHeadingProps) => {
@@ -30,13 +35,14 @@ type Props = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & {
 export const Section = memo(
   ({ children, className, title, variant }: Props) => (
     <section
-      className={managerClassNames([
-        'flex flex-col gap-2 w-fit',
-        { [className as string]: className },
-      ])}
+      className={section({ className })}
+      // className={managerClassNames([
+      //   'flex flex-col gap-2 w-full',
+      //   { [className as string]: className },
+      // ])}
     >
       {title && variant && <CustomHeading title={title} variant={variant} />}
-      {children}
+      {children && children}
     </section>
   ),
 );
