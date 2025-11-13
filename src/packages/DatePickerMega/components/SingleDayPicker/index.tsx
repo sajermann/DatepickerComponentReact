@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Fragment, useState } from "react";
-import { useDatePicker } from "~/packages/DayPicker";
+import { useDatePicker } from "~/packages/useDatePicker";
 import { TWeek } from "~/packages/useDaysPicker";
 import { managerClassNames } from "~/utils/managerClassNames";
 import { useDatePickerMega } from "../../hooks";
