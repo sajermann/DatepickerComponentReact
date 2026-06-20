@@ -38,7 +38,7 @@ export function Yearpicker(props: TYearPickerProps) {
       props.disabled?.before &&
       isBefore(
         subMilliseconds(startOfYear(yearToVerify), 1),
-        props.disabled.before
+        props.disabled.before,
       )
     );
   }, [years, props.disabled?.before, props?.year]);
@@ -72,7 +72,7 @@ export function Yearpicker(props: TYearPickerProps) {
         props.range.onSelectedYear({ from: null, to: null });
       }
     },
-    [props.range, lastHoveredYear]
+    [props.range, lastHoveredYear],
   );
 
   useAddEventListener({ fn: handleKeyDown, type: "keydown" });
