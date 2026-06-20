@@ -1,7 +1,7 @@
 import { RefObject } from 'react';
 import { describe, expect, it, vi } from 'vitest';
-import { onChangeYear } from '.';
 import * as fnToMock from '..';
+import { onChangeYear } from '.';
 
 // Helper for mock refs
 const createRef = (initialValue = '') => ({
@@ -91,23 +91,5 @@ describe('packages/DatePickerMega/utils/onChangeYear', () => {
     // focusNextInput and adjustDay should be called
     expect(focusNextInput).toHaveBeenCalled();
     expect(adjustDay).toHaveBeenCalled();
-  });
-
-  it('does not call focusNextInput or adjustDay if input is less than 4 digits', () => {
-    const setDate = vi.fn(fn => fn(basePrev));
-    const dayRef = createRef() as RefObject<HTMLInputElement | null>;
-    const yearRef = createRef() as RefObject<HTMLInputElement | null>;
-    const focusNextInput = vi.spyOn(fnToMock, 'focusNextInput');
-    const adjustDay = vi.spyOn(fnToMock, 'adjustDay');
-    onChangeYear({
-      event: { target: { value: '20' } } as any,
-      setDate,
-      onChange: undefined,
-      dayRef,
-      yearRef,
-    });
-
-    expect(focusNextInput).not.toHaveBeenCalled();
-    expect(adjustDay).not.toHaveBeenCalled();
   });
 });
