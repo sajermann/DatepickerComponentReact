@@ -1,0 +1,7 @@
+{
+  "name": "datepicker-component-react",
+  "updateContentCommand": "npm install",
+  "postAttachCommand": "npm start",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "forwardPorts": [3000]
+}
