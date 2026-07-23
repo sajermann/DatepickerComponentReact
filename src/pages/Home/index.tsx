@@ -23,19 +23,6 @@ export function Home() {
             <img src="./github.png" alt="github" className="w-4.5" />
             Github
           </a>
-          <a
-            href="https://codesandbox.io/p/github/sajermann/DatepickerComponentReact/develop"
-            target="_blank"
-            rel="noreferrer"
-            className="bg-black rounded-sm p-2 flex gap-2 h-7 items-center text-sm font-bold text-white!"
-          >
-            <img
-              src="./codesandbox.webp"
-              alt="codesandbox"
-              className="w-4 invert"
-            />
-            Codesandbox
-          </a>
         </div>
       </div>
       <CenterContent />
