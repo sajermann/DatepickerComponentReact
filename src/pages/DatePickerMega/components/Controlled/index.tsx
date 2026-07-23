@@ -1,10 +1,10 @@
-import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
-import { JsonViewer } from "~/components/JsonViewer";
-import { Section } from "~/components/Section";
-import { useTranslation } from "~/hooks/useTranslation";
-import * as DatePickerMega from "~/packages/DatePickerMega";
-import { TDate } from "~/packages/DatePickerMega";
+import { CalendarIcon } from 'lucide-react';
+import { useState } from 'react';
+import { JsonViewer } from '~/components/JsonViewer';
+import { Section } from '~/components/Section';
+import { useTranslation } from '~/hooks/useTranslation';
+import * as DatePickerMega from '~/packages/DatePickerMega';
+import { TDate } from '~/packages/DatePickerMega';
 
 export function Controlled() {
   const { translate } = useTranslation();
@@ -19,24 +19,24 @@ export function Controlled() {
     clockType: null,
   });
   return (
-    <Section title={translate("CONTROLLED")} variant="h2">
+    <Section title={translate('CONTROLLED')} variant="h2">
       <div className="flex items-baseline gap-2">
         <DatePickerMega.ContainerInput>
-          <DatePickerMega.Label>{translate("DATE")}</DatePickerMega.Label>
+          <DatePickerMega.Label>{translate('DATE')}</DatePickerMega.Label>
           <DatePickerMega.Root
             onChange={setDate}
             defaultDate={date.date || undefined}
           >
-            <DatePickerMega.Day value={String(date.day || "")} />
+            <DatePickerMega.Day value={String(date.day || '')} />
             <DatePickerMega.Divider />
-            <DatePickerMega.Month value={String(date.month || "")} />
+            <DatePickerMega.Month value={String(date.month || '')} />
             <DatePickerMega.Divider />
-            <DatePickerMega.Year value={String(date.year || "")} />
+            <DatePickerMega.Year value={String(date.year || '')} />
             <DatePickerMega.PickerTrigger>
               <CalendarIcon />
             </DatePickerMega.PickerTrigger>
             {/* <DatePickerMega.SingleDayPicker /> */}
-            <DatePickerMega.SingleMonthPicker />
+            <DatePickerMega.SingleDayPicker />
           </DatePickerMega.Root>
         </DatePickerMega.ContainerInput>
 
@@ -44,7 +44,7 @@ export function Controlled() {
           <label htmlFor="native" className="flex flex-col">
             Native Input
             <input
-              onChange={(e) => {
+              onChange={e => {
                 const { value } = e.target;
                 if (!value) {
                   setDate({
@@ -59,10 +59,10 @@ export function Controlled() {
                   });
                   return;
                 }
-                const [year, month, day] = value.split("-").map(Number);
+                const [year, month, day] = value.split('-').map(Number);
                 const dateComplete = new Date(year, month - 1, day);
 
-                setDate((prev) => ({
+                setDate(prev => ({
                   ...prev,
                   date: dateComplete,
                   day: dateComplete.getDate(),
@@ -72,7 +72,7 @@ export function Controlled() {
                 }));
               }}
               type="date"
-              className="border bg-transparent ring-0 outline-none rounded h-11 p-2 dark:[color-scheme:dark]"
+              className="border bg-transparent ring-0 outline-none rounded h-11 p-2 dark:scheme-dark"
               id="native"
               value={date.iso?.substring(0, 10)}
             />
@@ -80,11 +80,11 @@ export function Controlled() {
         </div>
       </div>
       <div className="w-full">
-        <h1>{translate("THIS_IS_STATE")}</h1>
+        <h1>{translate('THIS_IS_STATE')}</h1>
         <JsonViewer value={date} />
       </div>
       <h3 className="text-sm italic font-bold">
-        * {translate("MEGA_DATE_PICKER_CAUTION")}
+        * {translate('MEGA_DATE_PICKER_CAUTION')}
       </h3>
     </Section>
   );
