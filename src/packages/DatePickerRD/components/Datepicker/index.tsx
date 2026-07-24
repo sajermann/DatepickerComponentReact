@@ -1,21 +1,22 @@
-import { enUS, ptBR } from "date-fns/locale";
-import { ChangeEvent, useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import { useTranslation } from "~/hooks/useTranslation";
-import { IDatepickerProps } from "../../types";
-import { Input } from "../Input";
+import { enUS, ptBR } from 'date-fns/locale';
+import { ChangeEvent, useEffect, useState } from 'react';
+import DatePicker from 'react-datepicker';
+import { useTranslation } from '~/hooks/useTranslation';
+import { IDatepickerProps } from '../../types';
+import { Input } from '../Input';
 
-import "./index.css";
+import './index.css';
+
 // import 'react-datepicker/dist/react-datepicker.css';
 
 const LANGUAGE_OPTION = {
-  "pt-BR": ptBR,
+  'pt-BR': ptBR,
   en: enUS,
 };
 
 export function Datepicker({
   customDefaultValue,
-  dateFormat = "dd/MM/yyyy",
+  dateFormat = 'dd/MM/yyyy',
   showMonthYearPicker,
   showYearPicker,
   excludeDateIntervals,
@@ -25,14 +26,14 @@ export function Datepicker({
   ...rest
 }: IDatepickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(
-    customDefaultValue || null
+    customDefaultValue || null,
   );
   const { currentLanguage } = useTranslation();
 
   function onChangeInternal(date: Date | null) {
     setStartDate(date);
 
-    const dataVerify = date ? date.toISOString() : "";
+    const dataVerify = date ? date.toISOString() : '';
 
     if (rest.onChange) {
       const t = {
@@ -46,7 +47,7 @@ export function Datepicker({
   }
 
   useEffect(() => {
-    if (rest.value === "" || rest.value === undefined) {
+    if (rest.value === '' || rest.value === undefined) {
       setStartDate(null);
     } else {
       setStartDate(new Date(rest.value as string));
@@ -67,7 +68,7 @@ export function Datepicker({
       fixedHeight
       selected={startDate}
       onChange={onChangeInternal}
-      locale={LANGUAGE_OPTION[currentLanguage as "pt-BR" | "en"]}
+      locale={LANGUAGE_OPTION[currentLanguage as 'pt-BR' | 'en']}
       dateFormat={dateFormat}
       closeOnScroll
       shouldCloseOnSelect
@@ -89,7 +90,7 @@ export function Datepicker({
       // withPortal
       popperModifiers={[
         {
-          name: "myModifier",
+          name: 'myModifier',
           fn(state) {
             // Do something with the state
             if (state.x < 0) {
