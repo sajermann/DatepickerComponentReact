@@ -23,11 +23,17 @@
   top: 6px;
   width: 9px;
 }
+.react-datepicker__navigation-icon::before {
+  border-color: #000;
+}
+html.dark .react-datepicker__navigation-icon::before {
+  border-color: #fff !important;
+}
 .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle,
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
   margin-left: -4px;
   position: absolute;
-  @apply fill-white dark:fill-black border-0 outline-0
+  @apply fill-white dark:fill-black border-0 outline-0;
 }
 .react-datepicker-popper[data-placement^="top"]
   .react-datepicker__triangle::before,
@@ -53,6 +59,18 @@
   .react-datepicker__triangle::before {
   border-bottom-color: #aeaeae;
   @apply dark:border-b-dark-700;
+}
+
+.react-datepicker__sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
 }
 
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle {
@@ -242,11 +260,10 @@
 .react-datepicker__navigation--years-upcoming {
   top: -4px;
 }
+
 .react-datepicker__navigation:hover {
-  @apply transition-all duration-500;
-  @apply bg-black border border-black focus:ring-black text-white dark:bg-white dark:border-white dark:focus:ring-white dark:text-black;
-  @apply bg-transparent border-0 ring-0 focus:ring-0 hover:opacity-50
-}
+  @apply transition-opacity duration-500 opacity-50;
+ }
 
 .react-datepicker__navigation-icon {
   position: relative;
@@ -464,13 +481,15 @@
 
 .react-datepicker__day-names {
   margin-bottom: -8px;
+  display: flex;
+  justify-content: center;
 }
 
 .react-datepicker__day-name,
 .react-datepicker__day,
 .react-datepicker__time-name {
   margin: 0.166rem;
-  @apply hover:bg-slate-600 text-xs w-6 h-6 leading-6 text-center inline-block; 
+  @apply text-xs w-6 h-6 leading-6 text-center inline-block; 
 }
 .react-datepicker__day:not(.react-datepicker__day--outside-month),
 .react-datepicker__day-name {
