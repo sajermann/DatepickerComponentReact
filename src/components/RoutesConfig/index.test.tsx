@@ -4,16 +4,17 @@
 import { render } from '@testing-library/react';
 import * as useLocationMock from 'react-router';
 import { describe, expect, it, vi } from 'vitest';
-import { RoutesConfig } from '.';
 import { InjectorProviders } from '../InjectorProviders';
+import { RoutesConfig } from '.';
+
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual<any>('react-router');
+  return {
+    ...mod,
+  };
+});
 
 describe('Components/RoutesConfig', () => {
-  vi.mock('react-router', async () => {
-    const mod = await vi.importActual<any>('react-router');
-    return {
-      ...mod,
-    };
-  });
   it(`should render component`, async () => {
     vi.spyOn(useLocationMock, 'useLocation').mockImplementation(
       () =>
@@ -26,6 +27,6 @@ describe('Components/RoutesConfig', () => {
         <RoutesConfig />
       </InjectorProviders>,
     );
-    expect(getByText(/Welcome/g)).toBeTruthy();
+    expect(getByText(/Welcome/)).toBeTruthy();
   });
 });

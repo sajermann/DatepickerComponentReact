@@ -4,8 +4,8 @@ import { useLocation } from 'react-router';
 import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import _Breadcrumbs from './Breadcumbs';
 import { IsLoading } from './IsLoading';
-import { _MountRoutes } from './MountRoutes';
-import { _Sidebar } from './Sidebar';
+import { MountRoutes } from './MountRoutes';
+import { Sidebar } from './Sidebar';
 
 export function RoutesConfig() {
   const { globalRoutes } = useRoutesMenu();
@@ -16,10 +16,10 @@ export function RoutesConfig() {
       <div className="w-full flex flex-col h-full gap-2 flex-1">
         <Suspense key={location.key} fallback={<IsLoading />}>
           <_Breadcrumbs />
-          <_MountRoutes routes={globalRoutes} />
+          <MountRoutes routes={globalRoutes} />
         </Suspense>
       </div>
-      <_Sidebar />
+      <Sidebar />
     </div>
   );
 }

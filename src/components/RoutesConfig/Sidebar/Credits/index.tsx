@@ -2,7 +2,7 @@ import { Icons } from '~/components/Icons';
 
 export function Credits() {
   return (
-    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2 overflow-hidden">
       <p>🛠 by Bruno Sajermann</p>
       <div className="flex gap-2 items-center justify-center">
         <a

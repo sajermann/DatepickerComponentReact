@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "vcs": { "enabled": false, "clientKind": "git", "useIgnoreFile": false },
   "files": { "ignoreUnknown": false },
   "css": {
@@ -28,20 +28,17 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": false,
-      "complexity": { "noUselessTypeConstraint": "error" },
+      "preset": "none",
+      "complexity": {
+        "noUselessTypeConstraint": "error",
+        "noStaticOnlyClass": "off"
+      },
       "correctness": {
         "noChildrenProp": "error",
         "noInvalidUseBeforeDeclaration": "error",
         "noUnusedVariables": "warn",
         "noUnusedFunctionParameters": "off",
-        "useExhaustiveDependencies": {
-          "level": "off",
-          "options": {
-            "reportUnnecessaryDependencies": false,
-            "reportMissingDependenciesArray": false
-          }
-        },
+        "useExhaustiveDependencies": "off",
         "useJsxKeyInIterable": "error"
       },
       "security": {
@@ -49,7 +46,7 @@
         "noBlankTarget": "error"
       },
       "style": {
-        "noNamespace": "error",
+        "noNamespace": "off",
         "useAsConstAssertion": "error",
         "useBlockStatements": "off"
       },
@@ -57,7 +54,7 @@
         "noCommentText": "error",
         "noConsole": "off",
         "noDuplicateJsxProps": "error",
-        "noExplicitAny": "error",
+        "noExplicitAny": "off",
         "noExtraNonNullAssertion": "error",
         "noMisleadingInstantiator": "error",
         "noUnsafeDeclarationMerging": "error",

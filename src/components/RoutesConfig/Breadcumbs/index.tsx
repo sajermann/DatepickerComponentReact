@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router';
 import { useBreadcrumbs } from '~/hooks/useBreadcrumbs';
 
-export default function _Breadcrumbs() {
+export default function Breadcrumbs() {
   const { breadcrumbs } = useBreadcrumbs();
   const location = useLocation();
 
@@ -10,11 +10,11 @@ export default function _Breadcrumbs() {
   }
 
   return (
-    <div className="flex gap-1 !text-primary-500">
+    <div className="flex gap-1 text-primary-500!">
       {breadcrumbs.map((item, index) =>
         item.link && breadcrumbs[index + 1] ? (
           <ol key={`${item.link}-${breadcrumbs[index + 1]}`}>
-            <Link to={item.link} className="hover:underline !text-primary-500">
+            <Link to={item.link} className="hover:underline text-primary-500!">
               {item.label}
             </Link>
             {breadcrumbs[index + 1].label && ' / '}

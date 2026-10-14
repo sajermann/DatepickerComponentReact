@@ -1,5 +1,11 @@
 {
   "translations": {
+    "OPEN_FILE": "Open File",
+    "OPEN_TEST": "Open Test",
+    "COPIED_TO_CLIPBOARD": "Copied to clipboard!",
+    "DEV_TOOLS": "Dev Tools",
+    "OPEN_TABLE_DEV_TOOLS": "Open Table Dev Tools",
+    "CLOSE_TABLE_DEV_TOOLS": "Close Table Dev Tools",
     "RELOAD": "Reload",
     "NO_DATA": "No data",
     "PARAMS_EXHIBITION_REAL_TIME": "Params exhibition in real time",
