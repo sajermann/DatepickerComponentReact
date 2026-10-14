@@ -4,7 +4,11 @@ import { describe, expect, it } from 'vitest';
 import { Filter } from './index';
 
 function TestWrapper() {
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<{
+    checked: boolean;
+    unchecked: boolean;
+    text: string | null;
+  }>({
     checked: false,
     unchecked: true,
     text: null,

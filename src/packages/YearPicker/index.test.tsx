@@ -36,8 +36,8 @@ describe('packages/YearPicker', () => {
       <Yearpicker
         year={2025}
         disabled={{
-          before: new Date(2020, 0, 1),
-          after: new Date(2040, 11, 31),
+          before: 2020,
+          after: 2040,
         }}
         range={{
           selectedYear: { from: 2022, to: null },
