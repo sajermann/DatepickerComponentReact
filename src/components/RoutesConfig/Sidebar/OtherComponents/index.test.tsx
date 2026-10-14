@@ -8,8 +8,9 @@ import { useRoutesMenu } from '~/hooks/useRoutesMenu';
 import { TRoutesMenu } from '~/types/TRoutesMenu';
 import { OtherComponents } from '.';
 
+vi.mock('~/hooks/useRoutesMenu');
+
 describe('Components/Sidebar/OtherComponents', () => {
-  vi.mock('~/hooks/useRoutesMenu');
   it(`should render prev and next`, async () => {
     const prev = {
       name: 'Home',

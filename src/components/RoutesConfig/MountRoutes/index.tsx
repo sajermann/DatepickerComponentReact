@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router';
 import { Fragment } from 'react/jsx-runtime';
-import { TRoutesMenu } from '~/types/TRoutesMenu';
+import { Route, Routes } from 'react-router';
+import type { TRoutesMenu } from '~/types/TRoutesMenu';
 import ErrorBoundary from '../ErrorBoundary';
 
-export function _MountRoutes({ routes }: { routes: TRoutesMenu[] }) {
+export function MountRoutes({ routes }: { routes: TRoutesMenu[] }) {
   return (
     <Routes>
       {routes.map(route => (
@@ -14,7 +14,7 @@ export function _MountRoutes({ routes }: { routes: TRoutesMenu[] }) {
             path={route.path}
             element={<ErrorBoundary>{route.element}</ErrorBoundary>}
           />
-          {route.subs && <_MountRoutes routes={route.subs} />}
+          {route.subs && <MountRoutes routes={route.subs} />}
         </Fragment>
       ))}
     </Routes>

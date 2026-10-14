@@ -62,17 +62,16 @@ export function TableOfContents() {
     setOptionsMenu([...menusWithActive]);
   }
 
-  useEffect(
-    () => load(),
-    [scrollPosition, location.pathname, currentLanguage, isLoadingLazy],
-  );
+  useEffect(() => {
+    load();
+  }, [scrollPosition, location.pathname, currentLanguage, isLoadingLazy]);
 
   if (!optionsMenu.length) {
     return null;
   }
 
   return (
-    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2 overflow-hidden">
       <p>{translate('TABLE_OF_CONTENTS')}</p>
       <nav>
         <ul>
@@ -88,8 +87,9 @@ export function TableOfContents() {
               ])}
             >
               <button
+                type="button"
                 className={managerClassNames({
-                  '!text-primary-700 border-l-4 border-primary-700 pl-1':
+                  'text-primary-700! border-l-4 border-primary-700 pl-1':
                     item.active,
                 })}
                 onClick={() => scrollToSection(item.anchor)}

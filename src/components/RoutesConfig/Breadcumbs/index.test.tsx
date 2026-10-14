@@ -9,20 +9,17 @@ import * as useBreadcrumbsMock from '~/hooks/useBreadcrumbs';
 
 import Breadcrumbs from '.';
 
+vi.mock('react-router', async () => {
+  const mod = await vi.importActual<any>('react-router');
+  return {
+    ...mod,
+  };
+});
+
 describe('Components/Breadcrumbs', () => {
   afterEach(() => {
     vi.clearAllMocks();
     vi.resetAllMocks();
-
-    vi.mock('react-router', async () => {
-      const mod = await vi.importActual<any>('react-router');
-      return {
-        ...mod,
-        useLocation: () => ({
-          pathname: '/',
-        }),
-      };
-    });
   });
 
   it(`must render null`, async () => {

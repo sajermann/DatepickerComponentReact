@@ -13,7 +13,7 @@ export function OtherComponents() {
   }
 
   return (
-    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2">
+    <main className="border rounded-2xl p-5 text-sm flex flex-col gap-2 overflow-hidden">
       <p>{translate('OTHERS_COMPONENTS')}</p>
       <div className="flex justify-between items-center">
         <div>
