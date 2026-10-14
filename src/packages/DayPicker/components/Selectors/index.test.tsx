@@ -7,7 +7,13 @@ import { Selectors } from './index';
 describe('packages/DayPicker/components/Selectors', () => {
   it('should toggle viewMode and trigger arrow navigation in all modes', () => {
     const { container } = render(
-      <DayPickerProvider date={new Date(2025, 4, 15)}>
+      <DayPickerProvider
+        date={new Date(2025, 4, 15)}
+        single={{
+          selectedDate: new Date(2025, 4, 15),
+          onSelectedDate: vi.fn(),
+        }}
+      >
         <Selectors />
       </DayPickerProvider>,
     );
